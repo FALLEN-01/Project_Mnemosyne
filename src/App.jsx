@@ -9,8 +9,7 @@ import Room1 from './components/Room1'
 import Room2 from './components/Room2'
 import Room3 from './components/Room3'
 import Room4 from './components/Room4'
-import Room5 from './components/Room5'
-import Completion from './components/Completion'
+import ExitHall from './components/ExitHall'
 
 // Game state context
 const GameContext = createContext()
@@ -57,8 +56,7 @@ function App() {
             <Route path="/room2" element={<Room2 />} />
             <Route path="/room3" element={<Room3 />} />
             <Route path="/room4" element={<Room4 />} />
-            <Route path="/room5" element={<Room5 />} />
-            <Route path="/completion" element={<Completion />} />
+            <Route path="/exit-hall" element={<ExitHall />} />
           </Routes>
         </div>
       </Router>

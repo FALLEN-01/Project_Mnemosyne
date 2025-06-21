@@ -51,9 +51,8 @@ const Room4 = () => {
       updateGameState({ room4Answer: riddleAnswer })
       completeRoom(4)
       setShowMemory(true)
-      
-      setTimeout(() => {
-        navigate('/room5')
+        setTimeout(() => {
+        navigate('/exit-hall')
       }, 3000)
     } else {
       setError('Security override failed. Incorrect response. Try again.')
