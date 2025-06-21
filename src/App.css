@@ -436,6 +436,25 @@ body {
   .choice-option:hover {
     transform: none;
   }
+  
+  /* Room 5 mobile adjustments */
+  .room-container div[style*="display: flex"] {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 1rem !important;
+  }
+  
+  .room-container label[style*="minWidth: 300px"] {
+    min-width: auto !important;
+    text-align: center !important;
+    font-size: 1rem !important;
+  }
+  
+  .room-container input[style*="flex: none"] {
+    width: 100% !important;
+    max-width: 300px !important;
+    margin: 0 auto !important;
+  }
 }
 
 @media (max-width: 480px) {
