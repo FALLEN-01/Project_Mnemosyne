@@ -19,7 +19,7 @@ const Room4 = () => {
   ]
 
   const correctTranscript = 'B'
-  const correctRiddle = 'FOOTSTEPS'
+  const correctRiddle = 'FOOTPRINTS'
 
   useEffect(() => {
     // Redirect to team name entry if no team name is set
@@ -47,13 +47,12 @@ const Room4 = () => {
     const cleanAnswer = riddleAnswer.trim().toLowerCase()
     const correctAnswer = correctRiddle.toLowerCase()
     
-    if (cleanAnswer === correctAnswer) {
-      updateGameState({ room4Answer: riddleAnswer })
+    if (cleanAnswer === correctAnswer) {      updateGameState({ room4Answer: riddleAnswer })
       completeRoom(4)
       setShowMemory(true)
-        setTimeout(() => {
+      setTimeout(() => {
         navigate('/exit-hall')
-      }, 3000)
+      }, 8000) // Longer timeout to show full escape story
     } else {
       setError('Security override failed. Incorrect response. Try again.')
       setRiddleAnswer('')
@@ -65,19 +64,52 @@ const Room4 = () => {
       handleRiddleSubmit()
     }
   }
-
   if (showMemory) {
     return (
       <div className="room-container">
         <div className="memory-fragment">
           <h2 style={{ color: '#00ffff', marginBottom: '1rem' }}>VOICE RECOGNIZED. MEMORY FRAGMENT RESTORED.</h2>
-          <p style={{ fontSize: '1.2rem', fontStyle: 'italic' }}>
+          <p style={{ fontSize: '1.2rem', fontStyle: 'italic', marginBottom: '2rem' }}>
             You hear your own voice — this time, clear:<br />
             "I wasn't supposed to become the subject. But no one else would do it. I had to forget to protect it.
             I had to protect them from the truth... from me."
           </p>
+          
+          {/* Final Escape Sequence */}
+          <div style={{ 
+            background: 'rgba(68, 255, 68, 0.1)', 
+            padding: '2rem', 
+            borderRadius: '15px',
+            border: '2px solid rgba(68, 255, 68, 0.3)',
+            marginTop: '2rem',
+            textAlign: 'center'
+          }}>
+            <h3 style={{ color: '#44ff44', marginBottom: '1.5rem', fontSize: '1.5rem' }}>🚪 FACILITY LOCKDOWN DISENGAGED</h3>
+            
+            <div style={{ fontSize: '1.1rem', lineHeight: '1.8', fontStyle: 'italic', color: '#e8e8e8' }}>
+              <p style={{ marginBottom: '1rem' }}>
+                The heavy blast doors begin to groan and slide open with a thunderous mechanical roar.
+              </p>
+              <p style={{ marginBottom: '1rem' }}>
+                For the first time in what feels like an eternity, you feel it — fresh air.
+              </p>
+              <p style={{ marginBottom: '1rem' }}>
+                Cool, clean air flows through the corridor, carrying with it the scent of rain and earth.
+              </p>
+              <p style={{ marginBottom: '1rem' }}>
+                Beyond the threshold, natural sunlight streams in, warm and golden.
+              </p>
+              <p style={{ marginBottom: '1rem', color: '#44ff44' }}>
+                You step forward, leaving the shadows of your past behind.
+              </p>
+              <p style={{ color: '#00ffff', fontSize: '1.2rem', fontWeight: 'bold' }}>
+                You are free.
+              </p>
+            </div>
+          </div>
+          
           <div className="loading" style={{ margin: '2rem auto' }}></div>
-          <p>Accessing memory core...</p>
+          <p>Accessing final exit...</p>
         </div>
       </div>
     )
@@ -86,14 +118,69 @@ const Room4 = () => {
   return (
     <div className="room-container">      <div className="room-header">
         <h1 className="room-title">Room 4 — The Containment Lab</h1>
-      </div>
-
-      <div className="room-description">
+      </div>      <div className="room-description">
         <p style={{ marginBottom: '2rem' }}>
           The door slides open with a mechanical hiss. This room is colder. Darker. You see shattered 
           containment pods labeled "CONSCIOUS LOOP SIMULATION – FAILED." Screens line the wall, most 
           cracked or blacked out. One flickers to life.
         </p>
+        
+        {/* Containment Lab Images */}
+        <div style={{ 
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '2rem',
+          width: '100%',
+          maxWidth: '700px',
+          alignItems: 'center',
+          margin: '2rem auto'
+        }}>
+          {/* Lab Image 1 */}
+          <div style={{ 
+            width: '100%',
+            maxWidth: '500px',
+            borderRadius: '10px',
+            overflow: 'hidden',
+            position: 'relative',
+            opacity: 1,
+            transition: 'all 0.8s ease-in-out'
+          }}>
+            <div style={{ 
+              width: '100%', 
+              aspectRatio: '16/9',
+              background: 'rgba(255, 255, 255, 0.05)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexDirection: 'column'
+            }}>
+              <div style={{ fontSize: '3rem', marginBottom: '1rem', color: '#ff4444' }}>🧪</div>
+            </div>
+          </div>
+
+          {/* Lab Image 2 */}
+          <div style={{ 
+            width: '100%',
+            maxWidth: '500px',
+            borderRadius: '10px',
+            overflow: 'hidden',
+            position: 'relative',
+            opacity: 1,
+            transition: 'all 0.8s ease-in-out'
+          }}>
+            <div style={{ 
+              width: '100%', 
+              aspectRatio: '16/9',
+              background: 'rgba(255, 255, 255, 0.05)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexDirection: 'column'
+            }}>
+              <div style={{ fontSize: '3rem', marginBottom: '1rem', color: '#00ffff' }}>💾</div>
+            </div>
+          </div>
+        </div>
         
         <p style={{ marginBottom: '2rem', color: '#ff4444' }}>
           Your voice begins to play — scrambled, broken, unrecognizable. It's part of an audio log. 

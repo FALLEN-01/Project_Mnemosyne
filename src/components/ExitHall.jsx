@@ -63,18 +63,21 @@ const ExitHall = () => {
     })
     navigate('/')
   }
-
   if (currentPhase === 1) {
     return (
       <div className={`room-container ${showContent ? 'fade-in' : ''}`}>
         <div className="memory-fragment">
-          <h2 style={{ color: '#00ffff', marginBottom: '1rem' }}>
+          <h2 style={{ color: '#44ff44', marginBottom: '1.5rem', fontSize: '2rem' }}>
             🔓 FACILITY LOCKDOWN DISENGAGED
           </h2>
-          <p style={{ fontSize: '1.2rem', fontStyle: 'italic' }}>
-            The security doors unlock with a thunderous clang. Emergency lights switch from red to green.
-            You've done it — you've escaped the facility.
-          </p>
+          <div style={{ fontSize: '1.2rem', fontStyle: 'italic', lineHeight: '1.8', marginBottom: '2rem' }}>
+            <p style={{ marginBottom: '1rem' }}>
+              The security doors unlock with a thunderous clang. Emergency lights switch from red to green.
+            </p>
+            <p style={{ color: '#44ff44', fontSize: '1.3rem', fontWeight: 'bold' }}>
+              You've done it — you've escaped the facility.
+            </p>
+          </div>
           <div className="loading" style={{ margin: '2rem auto' }}></div>
           <p>Processing escape sequence...</p>
         </div>
@@ -86,14 +89,69 @@ const ExitHall = () => {
     return (
       <div className="room-container fade-in">        <div className="room-header">
           <h1 className="room-title">🌅 The Exit Hall</h1>
-        </div>
-
-        <div className="room-description">
+        </div>        <div className="room-description">
           <p style={{ marginBottom: '2rem', fontSize: '1.2rem' }}>
             You step through the final corridor. Natural light streams through windows for the first time 
             in what feels like an eternity. The facility's oppressive atmosphere gives way to fresh air 
             and the promise of freedom.
           </p>
+
+          {/* Exit Hall Images */}
+          <div style={{ 
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '2rem',
+            width: '100%',
+            maxWidth: '600px',
+            alignItems: 'center',
+            margin: '2rem auto'
+          }}>
+            {/* Exit Image 1 */}
+            <div style={{ 
+              width: '100%',
+              maxWidth: '500px',
+              borderRadius: '10px',
+              overflow: 'hidden',
+              position: 'relative',
+              opacity: 1,
+              transition: 'all 0.8s ease-in-out'
+            }}>
+              <div style={{ 
+                width: '100%', 
+                aspectRatio: '16/9',
+                background: 'rgba(255, 255, 255, 0.05)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexDirection: 'column'
+              }}>
+                <div style={{ fontSize: '3rem', marginBottom: '1rem', color: '#44ff44' }}>🌅</div>
+              </div>
+            </div>
+
+            {/* Exit Image 2 */}
+            <div style={{ 
+              width: '100%',
+              maxWidth: '500px',
+              borderRadius: '10px',
+              overflow: 'hidden',
+              position: 'relative',
+              opacity: 1,
+              transition: 'all 0.8s ease-in-out'
+            }}>
+              <div style={{ 
+                width: '100%', 
+                aspectRatio: '16/9',
+                background: 'rgba(255, 255, 255, 0.05)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexDirection: 'column'
+              }}>
+                <div style={{ fontSize: '3rem', marginBottom: '1rem', color: '#00ffff' }}>🚪</div>
+              </div>
+            </div>
+          </div>
 
           <div className="memory-fragment">
             <h3 style={{ color: '#00ffff', marginBottom: '1rem' }}>

@@ -90,13 +90,68 @@ const Room3 = () => {
   return (
     <div className="room-container">      <div className="room-header">
         <h1 className="room-title">Room 3 — Neural Sync</h1>
-      </div>
-
-      <div className="room-description">
+      </div>      <div className="room-description">
         <p style={{ marginBottom: '2rem' }}>
           The air buzzes with static. You enter a room lined with holographic brain scans — flickering 
           blue and red, pulsing like they're alive. You approach a neural interface console labeled:
         </p>
+        
+        {/* Neural Interface Images */}
+        <div style={{ 
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '2rem',
+          width: '100%',
+          maxWidth: '700px',
+          alignItems: 'center',
+          margin: '2rem auto'
+        }}>
+          {/* Neural Image 1 */}
+          <div style={{ 
+            width: '100%',
+            maxWidth: '500px',
+            borderRadius: '10px',
+            overflow: 'hidden',
+            position: 'relative',
+            opacity: 1,
+            transition: 'all 0.8s ease-in-out'
+          }}>
+            <div style={{ 
+              width: '100%', 
+              aspectRatio: '16/9',
+              background: 'rgba(255, 255, 255, 0.05)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexDirection: 'column'
+            }}>
+              <div style={{ fontSize: '3rem', marginBottom: '1rem', color: '#00ffff' }}>🧠</div>
+            </div>
+          </div>
+
+          {/* Neural Image 2 */}
+          <div style={{ 
+            width: '100%',
+            maxWidth: '500px',
+            borderRadius: '10px',
+            overflow: 'hidden',
+            position: 'relative',
+            opacity: 1,
+            transition: 'all 0.8s ease-in-out'
+          }}>
+            <div style={{ 
+              width: '100%', 
+              aspectRatio: '16/9',
+              background: 'rgba(255, 255, 255, 0.05)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexDirection: 'column'
+            }}>
+              <div style={{ fontSize: '3rem', marginBottom: '1rem', color: '#ff4444' }}>⚡</div>
+            </div>
+          </div>
+        </div>
         
         <div className="terminal" style={{ margin: '2rem auto' }}>
           <div className="terminal-text">
@@ -210,12 +265,9 @@ const Room3 = () => {
           }}>
             <div className="terminal" style={{ marginBottom: '2rem' }}>
               <div className="terminal-text">
-                MNEMO-SYNC OUTPUT: CORRUPTED MESSAGE DETECTED<br />                <br />
-                <span style={{ fontSize: '1.5rem', color: '#ff4444', letterSpacing: '2px' }}>
+                MNEMO-SYNC OUTPUT: CORRUPTED MESSAGE DETECTED<br />                <br />                <span style={{ fontSize: '1.5rem', color: '#ff4444', letterSpacing: '2px' }}>
                   Iudphqwv duh ohwkdov.
                 </span><br />
-                <br />
-                CIPHER KEY: SHIFT +3
               </div>
             </div>            <div style={{ textAlign: 'center' }}>
               <p style={{ marginBottom: '1rem', color: '#888' }}>

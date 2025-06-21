@@ -64,14 +64,69 @@ const Room2 = () => {
   return (
     <div className="room-container">      <div className="room-header">
         <h1 className="room-title">Room 2 — Surveillance</h1>
-      </div>
-
-      <div className="room-description">
+      </div>      <div className="room-description">
         <p style={{ marginBottom: '2rem' }}>
           The next chamber is lined with monitors — dozens of them, all showing static except one. 
           As you approach, it flickers to life, displaying security footage from various angles of... you. 
           You, walking through these same halls. You, entering codes. You, strapped to that chair.
         </p>
+        
+        {/* Surveillance Images */}
+        <div style={{ 
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '2rem',
+          width: '100%',
+          maxWidth: '700px',
+          alignItems: 'center',
+          margin: '2rem auto'
+        }}>
+          {/* Surveillance Image 1 */}
+          <div style={{ 
+            width: '100%',
+            maxWidth: '500px',
+            borderRadius: '10px',
+            overflow: 'hidden',
+            position: 'relative',
+            opacity: 1,
+            transition: 'all 0.8s ease-in-out'
+          }}>
+            <div style={{ 
+              width: '100%', 
+              aspectRatio: '16/9',
+              background: 'rgba(255, 255, 255, 0.05)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexDirection: 'column'
+            }}>
+              <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>📹</div>
+            </div>
+          </div>
+
+          {/* Surveillance Image 2 */}
+          <div style={{ 
+            width: '100%',
+            maxWidth: '500px',
+            borderRadius: '10px',
+            overflow: 'hidden',
+            position: 'relative',
+            opacity: 1,
+            transition: 'all 0.8s ease-in-out'
+          }}>
+            <div style={{ 
+              width: '100%', 
+              aspectRatio: '16/9',
+              background: 'rgba(255, 255, 255, 0.05)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexDirection: 'column'
+            }}>
+              <div style={{ fontSize: '3rem', marginBottom: '1rem', color: '#ff4444' }}>🔒</div>
+            </div>
+          </div>
+        </div>
         
         <p style={{ marginBottom: '2rem', fontStyle: 'italic', color: '#ff4444' }}>
           How long have you been here?
