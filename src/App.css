@@ -61,17 +61,18 @@ body {
   letter-spacing: 1px;
   text-align: center;
   width: 100%;
+  line-height: 1.2; /* Better spacing for two-line titles */
+  white-space: pre-line; /* Allow line breaks in title text */
 }
 
 .room-description {
   font-size: 0.9rem;
   line-height: 1.6;
   color: #b8b8b8;
-  background: rgba(0, 0, 0, 0.3);
+  background: transparent; /* Remove background for full-screen cyberpunk look */
   padding: 1rem;
-  border-radius: 10px;
-  border: 1px solid rgba(0, 255, 255, 0.2);
-  backdrop-filter: blur(10px);
+  border: none; /* Remove border for full-screen look */
+  backdrop-filter: none; /* Remove blur for cleaner hacker aesthetic */
   width: 100%;
   max-width: 100%;
   text-align: center; /* Center all description text */
@@ -164,9 +165,9 @@ body {
 }
 
 .puzzle-item {
-  background: rgba(0, 0, 0, 0.5);
-  border: 2px solid rgba(0, 255, 255, 0.3);
-  border-radius: 15px;
+  background: transparent; /* Remove background for cyberpunk look */
+  border: none; /* Remove border for full-screen hacker aesthetic */
+  border-radius: 0; /* Remove rounded corners for sharper cyberpunk look */
   padding: 2.5rem; /* Larger padding for PC */
   text-align: center;
   transition: all 0.3s ease;
@@ -178,8 +179,8 @@ body {
 }
 
 .puzzle-item:hover {
-  border-color: #00ffff;
-  box-shadow: 0 0 25px rgba(0, 255, 255, 0.4);
+  color: #00ffff; /* Cyberpunk glow effect on text */
+  text-shadow: 0 0 10px rgba(0, 255, 255, 0.6);
   transform: translateY(-5px);
 }
 
@@ -254,10 +255,10 @@ body {
 
 /* Memory Fragment */
 .memory-fragment {
-  background: linear-gradient(135deg, rgba(0, 255, 255, 0.1), rgba(255, 0, 255, 0.1));
-  border: 1px solid rgba(0, 255, 255, 0.3);
+  background: transparent; /* Remove background for cyberpunk aesthetic */
+  border: none; /* Remove border for full-screen hacker look */
   padding: 3rem; /* Larger padding for PC */
-  border-radius: 15px;
+  border-radius: 0; /* Remove rounded corners for sharp cyberpunk look */
   margin: 3rem 0;
   font-style: italic;
   text-align: center;
@@ -269,9 +270,9 @@ body {
 }
 
 @keyframes pulse {
-  0% { box-shadow: 0 0 10px rgba(0, 255, 255, 0.3); }
-  50% { box-shadow: 0 0 30px rgba(0, 255, 255, 0.6); }
-  100% { box-shadow: 0 0 10px rgba(0, 255, 255, 0.3); }
+  0% { text-shadow: 0 0 5px rgba(0, 255, 255, 0.3); }
+  50% { text-shadow: 0 0 20px rgba(0, 255, 255, 0.8), 0 0 30px rgba(0, 255, 255, 0.6); }
+  100% { text-shadow: 0 0 5px rgba(0, 255, 255, 0.3); }
 }
 
 /* Glitch Effect */
@@ -434,12 +435,13 @@ body {
     max-width: 1000px;
     margin: 0 auto; /* Force center */
   }
-  
-  .room-title {
+    .room-title {
     font-size: 2.5rem;
     letter-spacing: 2px;
     margin-bottom: 2rem;
     text-align: center;
+    line-height: 1.2;
+    white-space: pre-line;
   }
   
   .room-description {
@@ -527,12 +529,13 @@ body {
     justify-content: flex-start;
     box-sizing: border-box;
   }
-  
-  .room-title {
+    .room-title {
     font-size: 2.8rem;
     letter-spacing: 3px;
     margin-bottom: 2rem;
     text-align: center;
+    line-height: 1.2;
+    white-space: pre-line;
   }
   
   .room-description {
@@ -595,11 +598,12 @@ body {
     margin: 0 auto;
     width: 100%;
   }
-  
-  .room-title {
+    .room-title {
     font-size: 3rem;
     letter-spacing: 3px;
     text-align: center;
+    line-height: 1.2;
+    white-space: pre-line;
   }
   
   .room-description {
@@ -694,10 +698,10 @@ body {
 }
 
 .puzzle-item {
-  background: rgba(0, 0, 0, 0.5);
+  background: transparent; /* Remove background for cyberpunk look */
   padding: 1rem;
-  border-radius: 10px;
-  border: 1px solid rgba(0, 255, 255, 0.3);
+  border: none; /* Remove border for full-screen look */
+  border-radius: 0; /* Sharp cyberpunk edges */
   text-align: center;
   min-height: 150px;
   display: flex;
@@ -764,10 +768,10 @@ body {
 }
 
 .memory-fragment {
-  background: rgba(0, 0, 0, 0.7);
-  border: 2px solid rgba(0, 255, 255, 0.5);
+  background: transparent; /* Remove background for cyberpunk look */
+  border: none; /* Remove border for full-screen hacker aesthetic */
   padding: 1.5rem;
-  border-radius: 15px;
+  border-radius: 0; /* Sharp cyberpunk edges */
   text-align: center;
   max-width: 100%;
   margin: 1rem auto;

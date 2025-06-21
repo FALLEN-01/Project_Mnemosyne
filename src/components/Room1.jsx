@@ -112,9 +112,9 @@ const Room1 = () => {
         background: 'linear-gradient(135deg, #0a0a0a 0%, #1a2e1a 50%, #163e16 100%)',
         minHeight: '100vh'
       }}
-    >      <div className="room-header">
-        <h1 className="room-title" style={{ color: '#44ff44', fontSize: '3rem' }}>
-          🔐 ROOM 1 — MEMORY RECOVERY LAB
+    >      <div className="room-header">        <h1 className="room-title" style={{ color: '#44ff44', fontSize: '3rem' }}>
+          🔐 ROOM 1
+MEMORY RECOVERY LAB
         </h1>
         <p style={{ fontSize: '1.2rem', color: '#00ffff', marginBottom: '1rem' }}>
           SECURITY CLEARANCE: LEVEL 1 RESTRICTED

@@ -89,7 +89,8 @@ const Room3 = () => {
 
   return (
     <div className="room-container">      <div className="room-header">
-        <h1 className="room-title">Room 3 — Neural Sync</h1>
+        <h1 className="room-title">Room 3
+Neural Sync</h1>
       </div>      <div className="room-description">
         <p style={{ marginBottom: '2rem' }}>
           The air buzzes with static. You enter a room lined with holographic brain scans — flickering 

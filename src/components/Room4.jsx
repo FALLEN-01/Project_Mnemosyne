@@ -115,7 +115,8 @@ const Room4 = () => {
       width: '100%'
     }}>
       <div className="room-header">
-        <h1 className="room-title">Room 4 — The Containment Lab</h1>
+        <h1 className="room-title">Room 4
+The Containment Lab</h1>
       </div>      <div className="room-description" style={{
         textAlign: 'center',
         maxWidth: '800px',

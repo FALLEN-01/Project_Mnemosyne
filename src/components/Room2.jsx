@@ -63,7 +63,8 @@ const Room2 = () => {
 
   return (
     <div className="room-container">      <div className="room-header">
-        <h1 className="room-title">Room 2 — Surveillance</h1>
+        <h1 className="room-title">Room 2
+Surveillance</h1>
       </div>      <div className="room-description">
         <p style={{ marginBottom: '2rem' }}>
           The next chamber is lined with monitors — dozens of them, all showing static except one. 
