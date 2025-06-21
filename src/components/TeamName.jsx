@@ -32,7 +32,7 @@ const TeamName = () => {
   return (
     <div className="room-container">
       <div className="room-header">
-        <h1 className="room-title glitch">🧠 Project Mnemosyne</h1>
+        <h1 className="room-title glitch">Project Mnemosyne</h1>
         <p style={{ fontSize: '1.3rem', color: '#00ffff', marginBottom: '2rem' }}>
           An Online Escape Room Experience
         </p>

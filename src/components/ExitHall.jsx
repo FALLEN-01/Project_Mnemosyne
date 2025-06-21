@@ -274,7 +274,7 @@ const ExitHall = () => {
           textAlign: 'center'
         }}>
           <h2 style={{ color: '#44ff44', marginBottom: '2rem', fontSize: '2rem' }}>
-            🧠 PROJECT MNEMOSYNE COMPLETE 🧠
+            PROJECT MNEMOSYNE COMPLETE
           </h2>
           
           <p style={{ fontSize: '1.3rem', marginBottom: '1.5rem' }}>

@@ -1,4 +1,4 @@
-# 🧠 Project Mnemosyne - Online Escape Room
+# Project Mnemosyne - Online Escape Room
 
 **A dark sci-fi escape room experience optimized for mobile competition play.**
 
@@ -19,7 +19,7 @@ Project Mnemosyne is an immersive online escape room where players recover lost 
 
 1. **🔐 Room 1 - Memory Recovery Lab**: Visual pattern recognition
 2. **📹 Room 2 - Surveillance**: Cipher decryption challenge  
-3. **🧠 Room 3 - Neural Sync**: Multi-stage logic puzzle
+3. **Room 3 - Neural Sync**: Multi-stage logic puzzle
 4. **🧪 Room 4 - Containment Lab**: Audio reconstruction + riddle
 5. **🌅 Exit Hall**: Victory celebration with escape story
 

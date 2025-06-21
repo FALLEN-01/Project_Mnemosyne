@@ -79,7 +79,7 @@ const Room1 = () => {
     return (
       <div className="room-container">
         <div className="memory-fragment">
-          <h2 style={{ color: '#44ff44', marginBottom: '1rem' }}>🧠 MEMORY FRAGMENT RECOVERED</h2>
+          <h2 style={{ color: '#44ff44', marginBottom: '1rem' }}>MEMORY FRAGMENT RECOVERED</h2>
           <div style={{ 
             background: 'rgba(68, 255, 68, 0.1)', 
             padding: '1.5rem', 

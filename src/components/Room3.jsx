@@ -126,7 +126,7 @@ Neural Sync</h1>
               justifyContent: 'center',
               flexDirection: 'column'
             }}>
-              <div style={{ fontSize: '3rem', marginBottom: '1rem', color: '#00ffff' }}>🧠</div>
+              <div style={{ fontSize: '3rem', marginBottom: '1rem', color: '#00ffff' }}>🔬</div>
             </div>
           </div>
 
@@ -212,7 +212,7 @@ Neural Sync</h1>
                   margin: '1rem 0',
                   color: key === 'A' ? '#ff4444' : key === 'B' ? '#ffaa44' : '#44ff44'
                 }}>
-                  {key === 'A' ? '🧠❌' : key === 'B' ? '🔄🧠' : '🧠✨'}
+                  {key === 'A' ? '❌' : key === 'B' ? '🔄' : '✨'}
                 </div>
                 <p style={{ fontSize: '0.9rem' }}>{pattern.description}</p>
                 <div style={{ 
