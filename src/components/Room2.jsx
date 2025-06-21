@@ -100,22 +100,17 @@ const Room2 = () => {
         <h3 style={{ color: '#00ffff', marginBottom: '1.5rem', textAlign: 'center' }}>
           Encrypted Surveillance Log
         </h3>
-        
-        <div className="terminal" style={{ background: '#111', marginBottom: '2rem' }}>
+          <div className="terminal" style={{ background: '#111', marginBottom: '2rem' }}>
           <div className="terminal-text" style={{ color: '#00ff00' }}>
             ENCRYPTED MESSAGE FOUND:<br />
             <br />
             XIR DN V?<br />
-            <br />
-            CIPHER KEY: REVERSE ALPHABET<br />
-            A=Z, B=Y, C=X, D=W, E=V, F=U, G=T, H=S, I=R, J=Q, K=P, L=O, M=N<br />
-            N=M, O=L, P=K, Q=J, R=I, S=H, T=G, U=F, V=E, W=D, X=C, Y=B, Z=A
           </div>
-        </div>        <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+        </div><div style={{ textAlign: 'center', marginBottom: '2rem' }}>
           <h4 style={{ color: '#00ffff', marginBottom: '1rem' }}>Instructions:</h4>
           <p style={{ marginBottom: '1.5rem' }}>
             The surveillance system recorded a critical question about your identity. 
-            Decode the encrypted message using the reverse alphabet cipher.
+            Decode the encrypted message.
           </p>
         </div>
 
@@ -163,26 +158,10 @@ const Room2 = () => {
 
       <div className="terminal" style={{ marginTop: '3rem', maxWidth: '500px' }}>
         <div className="terminal-prompt">DECRYPTION STATUS:</div>
-        <div className="terminal-text">
-          CIPHER TYPE... REVERSE ALPHABET<br />
-          PROGRESS... {answer.length > 0 ? 'ANALYZING' : 'WAITING FOR INPUT'}<br />
+        <div className="terminal-text">          PROGRESS... {answer.length > 0 ? 'ANALYZING' : 'WAITING FOR INPUT'}<br />
           MEMORY CORE... LOCKED<br />
           NEXT SECTOR... STANDBY<br />
         </div>
-      </div>
-
-      <div style={{ 
-        marginTop: '3rem', 
-        fontSize: '0.9rem', 
-        color: '#666',
-        textAlign: 'center',
-        maxWidth: '600px',
-        margin: '3rem auto 0'
-      }}>
-        <p>
-          💡 Need help? Remember: In a reverse alphabet cipher, A becomes Z, B becomes Y, 
-          and so on. Work through each letter of "XIR DN V?" step by step.
-        </p>
       </div>
     </div>
   )

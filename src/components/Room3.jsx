@@ -195,9 +195,8 @@ const Room3 = () => {
           <div style={{ textAlign: 'center', margin: '3rem 0' }}>
             <h3 style={{ color: '#00ffff', marginBottom: '1rem' }}>
               Part 2: Decode Corrupted Message
-            </h3>
-            <p style={{ marginBottom: '2rem' }}>
-              A corrupted memory fragment has been unlocked. Decode the message using Caesar cipher.
+            </h3>            <p style={{ marginBottom: '2rem' }}>
+              A corrupted memory fragment has been unlocked. Decode the message.
             </p>
           </div>
 
@@ -218,14 +217,9 @@ const Room3 = () => {
                 <br />
                 CIPHER KEY: SHIFT +3
               </div>
-            </div>
-
-            <div style={{ textAlign: 'center' }}>
+            </div>            <div style={{ textAlign: 'center' }}>
               <p style={{ marginBottom: '1rem', color: '#888' }}>
                 Decode the encrypted neural sync message.
-              </p>
-              <p style={{ fontSize: '0.9rem', color: '#666' }}>
-                Example: D → A, E → B, F → C, etc.
               </p>
             </div>
           </div>

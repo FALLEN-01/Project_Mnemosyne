@@ -245,20 +245,6 @@ const Room4 = () => {
           >
             Submit Answer
           </button>
-
-          <div style={{ 
-            marginTop: '3rem', 
-            fontSize: '0.9rem', 
-            color: '#666',
-            textAlign: 'center',
-            maxWidth: '500px',
-            margin: '3rem auto 0'
-          }}>
-            <p>
-              💡 Think about something physical that increases as you move, 
-              but what you create stays behind you...
-            </p>
-          </div>
         </div>
       )}
 

@@ -119,237 +119,153 @@ const Room1 = () => {
         <p style={{ fontSize: '1.2rem', color: '#00ffff', marginBottom: '1rem' }}>
           SECURITY CLEARANCE: LEVEL 1 RESTRICTED
         </p>
-      </div>
-
-      <div className="room-description">
+      </div>      <div className="room-description" style={{ 
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        textAlign: 'center',
+        width: '100%',
+        maxWidth: '800px',
+        margin: '0 auto'
+      }}>
         <h2 style={{ color: '#44ff44', marginBottom: '1.5rem', fontSize: '1.6rem' }}>
           🧬 Neural Pattern Analysis Required
         </h2>
         
-        <p style={{ marginBottom: '2rem', fontSize: '1.1rem' }}>
+        <p style={{ marginBottom: '2rem', fontSize: '1.1rem', maxWidth: '600px' }}>
           You step into the Memory Recovery Laboratory. The walls are lined with broken containment pods 
           and flickering neural interface equipment. A central console displays fragments of your past — 
           scattered images that don't quite make sense yet.
-        </p>        <div style={{ 
-          background: 'rgba(68, 255, 68, 0.1)', 
-          padding: '1rem', 
-          borderRadius: '15px',
-          border: '2px solid rgba(68, 255, 68, 0.3)',
-          marginBottom: '1.5rem'
+        </p><div style={{ 
+          marginBottom: '2rem',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          width: '100%'
         }}>
-          <h3 style={{ color: '#44ff44', marginBottom: '1rem' }}>🧩 MEMORY FRAGMENTS — VISUAL PUZZLE:</h3>
-          <p style={{ marginBottom: '1rem', fontSize: '0.9rem' }}>
-            These manga panels contain fragments of your lost identity. Study each image carefully and count the clues to unlock your memories.
+          <p style={{ marginBottom: '2rem', fontSize: '1rem', textAlign: 'center', maxWidth: '600px' }}>
+            These manga panels contain fragments of your lost identity. Study each image carefully to unlock your memories.
           </p>
           
-          {/* Mobile: Single column stack, Desktop: 2x2 grid */}
+          {/* Manga images with fade-in effect */}
           <div style={{ 
-            display: 'grid',
-            gridTemplateColumns: 'repeat(1, 1fr)', // Mobile: single column
-            gap: '1rem',
-            marginTop: '1rem'
-          }} className="manga-grid">
-            
-            {/* Manga Image 1 - Family Photo */}
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '2rem',
+            width: '100%',
+            maxWidth: '800px',
+            alignItems: 'center'
+          }} className="manga-sequence">            
+            {/* Manga Image 1 */}
             <div style={{ 
-              background: 'rgba(0, 0, 0, 0.7)', 
+              width: '100%',
+              maxWidth: '600px',
               borderRadius: '10px',
-              border: '2px solid rgba(68, 255, 68, 0.3)',
               overflow: 'hidden',
-              position: 'relative'
-            }}>
-              {/* This entire div will be replaced by manga image */}
-              <div style={{ 
-                width: '100%', 
-                aspectRatio: '16/9', // Maintain aspect ratio
-                background: 'rgba(255, 255, 255, 0.1)',
-                border: '2px dashed rgba(68, 255, 68, 0.5)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexDirection: 'column',
-                position: 'relative'
-              }}>
-                <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>👨‍👩‍👧</div>
-                <div style={{ 
-                  position: 'absolute',
-                  top: '10px',
-                  left: '10px',
-                  background: 'rgba(0, 0, 0, 0.8)',
-                  color: '#44ff44',
-                  padding: '0.3rem 0.6rem',
-                  borderRadius: '5px',
-                  fontSize: '0.7rem',
-                  fontFamily: 'Courier New, monospace'
-                }}>
-                  MANGA PAGE 1
-                </div>
-                <p style={{ fontSize: '0.8rem', color: '#aaa', textAlign: 'center' }}>
-                  [FAMILY PHOTO SCENE]<br/>
-                  Replace this placeholder with manga image
-                </p>
-              </div>
-              <div style={{ 
-                padding: '0.8rem',
-                background: 'rgba(0, 0, 0, 0.8)',
-                borderTop: '1px solid rgba(68, 255, 68, 0.3)'
-              }}>                <h4 style={{ color: '#00ffff', marginBottom: '0.3rem', fontSize: '0.9rem' }}>Fragment A: Family Memory</h4>
-                <p style={{ fontSize: '0.8rem', color: '#ccc' }}>A torn manga panel showing people together</p>
-              </div>
-            </div>
-
-            {/* Manga Image 2 - Journal Entry */}
-            <div style={{ 
-              background: 'rgba(0, 0, 0, 0.7)', 
-              borderRadius: '10px',
-              border: '2px solid rgba(68, 255, 68, 0.3)',
-              overflow: 'hidden',
-              position: 'relative'
+              position: 'relative',
+              opacity: showContent ? 1 : 0,
+              transform: showContent ? 'translateY(0)' : 'translateY(20px)',
+              transition: 'all 0.8s ease-in-out',
+              transitionDelay: '0.2s'
             }}>
               <div style={{ 
                 width: '100%', 
                 aspectRatio: '16/9',
-                background: 'rgba(255, 255, 255, 0.1)',
-                border: '2px dashed rgba(68, 255, 68, 0.5)',
+                background: 'rgba(255, 255, 255, 0.05)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                flexDirection: 'column',
-                position: 'relative'
+                flexDirection: 'column'
               }}>
-                <div style={{ fontSize: '2rem', marginBottom: '0.5rem', color: '#ff4444' }}>07</div>
-                <div style={{ 
-                  position: 'absolute',
-                  top: '10px',
-                  left: '10px',
-                  background: 'rgba(0, 0, 0, 0.8)',
-                  color: '#44ff44',
-                  padding: '0.3rem 0.6rem',
-                  borderRadius: '5px',
-                  fontSize: '0.7rem',
-                  fontFamily: 'Courier New, monospace'
-                }}>
-                  MANGA PAGE 2
-                </div>
-                <p style={{ fontSize: '0.8rem', color: '#aaa', textAlign: 'center' }}>
-                  [JOURNAL ENTRY SCENE]<br/>
-                  Replace this placeholder with manga image
-                </p>
-              </div>
-              <div style={{ 
-                padding: '0.8rem',
-                background: 'rgba(0, 0, 0, 0.8)',
-                borderTop: '1px solid rgba(68, 255, 68, 0.3)'
-              }}>                <h4 style={{ color: '#00ffff', marginBottom: '0.3rem', fontSize: '0.9rem' }}>Fragment B: Research Log</h4>
-                <p style={{ fontSize: '0.8rem', color: '#ccc' }}>A bloodstained journal page with circled numbers</p>
+                <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>👨‍👩‍👧</div>
               </div>
             </div>
 
-            {/* Manga Image 3 - Desert Map */}
+            {/* Manga Image 2 */}
             <div style={{ 
-              background: 'rgba(0, 0, 0, 0.7)', 
+              width: '100%',
+              maxWidth: '600px',
               borderRadius: '10px',
-              border: '2px solid rgba(68, 255, 68, 0.3)',
               overflow: 'hidden',
-              position: 'relative'
+              position: 'relative',
+              opacity: showContent ? 1 : 0,
+              transform: showContent ? 'translateY(0)' : 'translateY(20px)',
+              transition: 'all 0.8s ease-in-out',
+              transitionDelay: '0.6s'
             }}>
               <div style={{ 
                 width: '100%', 
                 aspectRatio: '16/9',
-                background: 'rgba(255, 255, 255, 0.1)',
-                border: '2px dashed rgba(68, 255, 68, 0.5)',
+                background: 'rgba(255, 255, 255, 0.05)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                flexDirection: 'column',
-                position: 'relative'
+                flexDirection: 'column'
               }}>
-                <div style={{ fontSize: '2rem', marginBottom: '0.5rem', color: '#ff4444' }}>❌</div>
-                <div style={{ 
-                  position: 'absolute',
-                  top: '10px',
-                  left: '10px',
-                  background: 'rgba(0, 0, 0, 0.8)',
-                  color: '#44ff44',
-                  padding: '0.3rem 0.6rem',
-                  borderRadius: '5px',
-                  fontSize: '0.7rem',
-                  fontFamily: 'Courier New, monospace'
-                }}>
-                  MANGA PAGE 3
-                </div>
-                <p style={{ fontSize: '0.8rem', color: '#aaa', textAlign: 'center' }}>
-                  [DESERT MAP SCENE]<br/>
-                  Replace this placeholder with manga image
-                </p>
-              </div>
-              <div style={{ 
-                padding: '0.8rem',
-                background: 'rgba(0, 0, 0, 0.8)',
-                borderTop: '1px solid rgba(68, 255, 68, 0.3)'
-              }}>                <h4 style={{ color: '#00ffff', marginBottom: '0.3rem', fontSize: '0.9rem' }}>Fragment C: Location Data</h4>
-                <p style={{ fontSize: '0.8rem', color: '#ccc' }}>A desert map with marked locations</p>
+                <div style={{ fontSize: '3rem', marginBottom: '1rem', color: '#ff4444' }}>07</div>
               </div>
             </div>
 
-            {/* Manga Image 4 - Timer Display */}
+            {/* Manga Image 3 */}
             <div style={{ 
-              background: 'rgba(0, 0, 0, 0.7)', 
+              width: '100%',
+              maxWidth: '600px',
               borderRadius: '10px',
-              border: '2px solid rgba(68, 255, 68, 0.3)',
               overflow: 'hidden',
-              position: 'relative'
+              position: 'relative',
+              opacity: showContent ? 1 : 0,
+              transform: showContent ? 'translateY(0)' : 'translateY(20px)',
+              transition: 'all 0.8s ease-in-out',
+              transitionDelay: '1.0s'
             }}>
               <div style={{ 
                 width: '100%', 
                 aspectRatio: '16/9',
-                background: 'rgba(255, 255, 255, 0.1)',
-                border: '2px dashed rgba(68, 255, 68, 0.5)',
+                background: 'rgba(255, 255, 255, 0.05)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                flexDirection: 'column',
-                position: 'relative'
+                flexDirection: 'column'
               }}>
-                <div style={{ fontSize: '2rem', marginBottom: '0.5rem', color: '#00ffff' }}>04</div>
-                <div style={{ 
-                  position: 'absolute',
-                  top: '10px',
-                  left: '10px',
-                  background: 'rgba(0, 0, 0, 0.8)',
-                  color: '#44ff44',
-                  padding: '0.3rem 0.6rem',
-                  borderRadius: '5px',
-                  fontSize: '0.7rem',
-                  fontFamily: 'Courier New, monospace'
-                }}>
-                  MANGA PAGE 4
-                </div>
-                <p style={{ fontSize: '0.8rem', color: '#aaa', textAlign: 'center' }}>
-                  [TIMER SCENE]<br/>
-                  Replace this placeholder with manga image
-                </p>
+                <div style={{ fontSize: '3rem', marginBottom: '1rem', color: '#ff4444' }}>❌</div>
               </div>
+            </div>
+
+            {/* Manga Image 4 */}
+            <div style={{ 
+              width: '100%',
+              maxWidth: '600px',
+              borderRadius: '10px',
+              overflow: 'hidden',
+              position: 'relative',
+              opacity: showContent ? 1 : 0,
+              transform: showContent ? 'translateY(0)' : 'translateY(20px)',
+              transition: 'all 0.8s ease-in-out',
+              transitionDelay: '1.4s'
+            }}>
               <div style={{ 
-                padding: '0.8rem',
-                background: 'rgba(0, 0, 0, 0.8)',
-                borderTop: '1px solid rgba(68, 255, 68, 0.3)'
-              }}>                <h4 style={{ color: '#00ffff', marginBottom: '0.3rem', fontSize: '0.9rem' }}>Fragment D: Final Countdown</h4>
-                <p style={{ fontSize: '0.8rem', color: '#ccc' }}>A timer screen showing critical moments</p>
+                width: '100%', 
+                aspectRatio: '16/9',
+                background: 'rgba(255, 255, 255, 0.05)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexDirection: 'column'
+              }}>
+                <div style={{ fontSize: '3rem', marginBottom: '1rem', color: '#00ffff' }}>04</div>
               </div>
             </div>
           </div>
         </div>        <div style={{ 
-          background: 'rgba(0, 255, 255, 0.1)', 
-          padding: '2rem', 
-          borderRadius: '10px',
-          border: '1px solid rgba(0, 255, 255, 0.3)',
-          marginBottom: '2rem'
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          marginBottom: '3rem',
+          width: '100%'
         }}>
-          <h3 style={{ color: '#00ffff', marginBottom: '1rem' }}>🧮 NEURAL SEQUENCE PUZZLE:</h3>
-          <p style={{ marginBottom: '1rem' }}>
-            The memory fragments contain numeric clues. Count the elements in each fragment 
-            and enter the 4-digit sequence to unlock the next memory layer.
+          <h3 style={{ color: '#00ffff', marginBottom: '1.5rem', textAlign: 'center' }}>🧮 NEURAL SEQUENCE PUZZLE</h3>
+          <p style={{ marginBottom: '2rem', textAlign: 'center', maxWidth: '600px' }}>
+            The memory fragments contain numeric elements. Enter the 4-digit sequence to unlock the next memory layer.
           </p>
         </div>
       </div>      <div className="code-input">
@@ -407,11 +323,12 @@ const Room1 = () => {
         }}
       >
         🔓 UNLOCK MEMORY
-      </button>
-
-      <div className="terminal" style={{ 
+      </button>      <div className="terminal" style={{ 
         color: '#44ff44',
-        border: '1px solid #44ff44'
+        border: '1px solid #44ff44',
+        maxWidth: '600px',
+        margin: '0 auto',
+        textAlign: 'center'
       }}>
         <div style={{ color: '#00ffff', fontWeight: 'bold', marginBottom: '0.5rem' }}>
           NEURAL ANALYZER STATUS:

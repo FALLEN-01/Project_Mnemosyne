@@ -49,6 +49,7 @@ body {
   align-items: center;
   justify-content: center;
 }
+}
 
 .room-title {
   font-size: 1.8rem;
@@ -318,6 +319,23 @@ body {
   }
 }
 
+/* Manga Sequence Animation */
+.manga-sequence {
+  opacity: 0;
+  animation: fadeInSequence 0.8s ease-in-out forwards;
+}
+
+@keyframes fadeInSequence {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* Multiple Choice - Optimized for PC */
 .multiple-choice {
   max-width: 800px; /* Wider for PC */
@@ -410,22 +428,23 @@ body {
   body {
     font-size: 16px;
   }
-    .room-container {
-    padding: 1.5rem;
-    max-width: 800px;
+  
+  .room-container {
+    padding: 2rem;
+    max-width: 1000px;
     margin: 0 auto; /* Force center */
   }
   
   .room-title {
-    font-size: 2.2rem;
+    font-size: 2.5rem;
     letter-spacing: 2px;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
     text-align: center;
   }
   
   .room-description {
-    font-size: 1rem;
-    padding: 1.5rem;
+    font-size: 1.1rem;
+    padding: 2rem;
     text-align: center;
     border-radius: 15px;
     max-width: 100%;
@@ -434,30 +453,32 @@ body {
   
   .puzzle-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
+    gap: 2rem;
     justify-items: center;
     margin: 0 auto;
+    max-width: 800px;
   }
   
   .puzzle-item {
-    padding: 1.5rem;
-    min-height: 200px;
+    padding: 2rem;
+    min-height: 220px;
   }
   
   .code-input {
-    gap: 1rem;
+    gap: 1.5rem;
     justify-content: center;
+    margin: 3rem auto;
   }
   
   .code-digit {
-    width: 60px;
-    height: 60px;
-    font-size: 1.5rem;
+    width: 70px;
+    height: 70px;
+    font-size: 1.8rem;
   }
   
   .btn {
-    padding: 1rem 1.5rem;
-    font-size: 1rem;
+    padding: 1.2rem 2rem;
+    font-size: 1.1rem;
     min-width: 150px;
     display: block;
     margin: 1rem auto;
@@ -759,16 +780,6 @@ body {
 
 @keyframes spin {
   to { transform: rotate(360deg); }
-}
-
-/* Fade-in Animation */
-.fade-in {
-  animation: fadeIn 0.5s ease-in;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
 }
 
 /* Touch-friendly focus states */
