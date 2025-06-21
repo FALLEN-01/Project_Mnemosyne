@@ -193,9 +193,8 @@ const Room1 = () => {
                 padding: '0.8rem',
                 background: 'rgba(0, 0, 0, 0.8)',
                 borderTop: '1px solid rgba(68, 255, 68, 0.3)'
-              }}>
-                <h4 style={{ color: '#00ffff', marginBottom: '0.3rem', fontSize: '0.9rem' }}>Fragment A: Family Memory</h4>
-                <p style={{ fontSize: '0.8rem', color: '#ccc' }}>Count: Three people standing together</p>
+              }}>                <h4 style={{ color: '#00ffff', marginBottom: '0.3rem', fontSize: '0.9rem' }}>Fragment A: Family Memory</h4>
+                <p style={{ fontSize: '0.8rem', color: '#ccc' }}>A torn manga panel showing people together</p>
               </div>
             </div>
 
@@ -241,9 +240,8 @@ const Room1 = () => {
                 padding: '0.8rem',
                 background: 'rgba(0, 0, 0, 0.8)',
                 borderTop: '1px solid rgba(68, 255, 68, 0.3)'
-              }}>
-                <h4 style={{ color: '#00ffff', marginBottom: '0.3rem', fontSize: '0.9rem' }}>Fragment B: Research Log</h4>
-                <p style={{ fontSize: '0.8rem', color: '#ccc' }}>Count: Page number "07" circled in red</p>
+              }}>                <h4 style={{ color: '#00ffff', marginBottom: '0.3rem', fontSize: '0.9rem' }}>Fragment B: Research Log</h4>
+                <p style={{ fontSize: '0.8rem', color: '#ccc' }}>A bloodstained journal page with circled numbers</p>
               </div>
             </div>
 
@@ -289,9 +287,8 @@ const Room1 = () => {
                 padding: '0.8rem',
                 background: 'rgba(0, 0, 0, 0.8)',
                 borderTop: '1px solid rgba(68, 255, 68, 0.3)'
-              }}>
-                <h4 style={{ color: '#00ffff', marginBottom: '0.3rem', fontSize: '0.9rem' }}>Fragment C: Location Data</h4>
-                <p style={{ fontSize: '0.8rem', color: '#ccc' }}>Count: Look for the hidden "0" in the image</p>
+              }}>                <h4 style={{ color: '#00ffff', marginBottom: '0.3rem', fontSize: '0.9rem' }}>Fragment C: Location Data</h4>
+                <p style={{ fontSize: '0.8rem', color: '#ccc' }}>A desert map with marked locations</p>
               </div>
             </div>
 
@@ -337,15 +334,12 @@ const Room1 = () => {
                 padding: '0.8rem',
                 background: 'rgba(0, 0, 0, 0.8)',
                 borderTop: '1px solid rgba(68, 255, 68, 0.3)'
-              }}>
-                <h4 style={{ color: '#00ffff', marginBottom: '0.3rem', fontSize: '0.9rem' }}>Fragment D: Final Countdown</h4>
-                <p style={{ fontSize: '0.8rem', color: '#ccc' }}>Count: Timer shows "04" seconds</p>
+              }}>                <h4 style={{ color: '#00ffff', marginBottom: '0.3rem', fontSize: '0.9rem' }}>Fragment D: Final Countdown</h4>
+                <p style={{ fontSize: '0.8rem', color: '#ccc' }}>A timer screen showing critical moments</p>
               </div>
             </div>
           </div>
-        </div>
-
-        <div style={{ 
+        </div>        <div style={{ 
           background: 'rgba(0, 255, 255, 0.1)', 
           padding: '2rem', 
           borderRadius: '10px',
@@ -356,9 +350,6 @@ const Room1 = () => {
           <p style={{ marginBottom: '1rem' }}>
             The memory fragments contain numeric clues. Count the elements in each fragment 
             and enter the 4-digit sequence to unlock the next memory layer.
-          </p>
-          <p style={{ fontSize: '0.9rem', fontStyle: 'italic', color: '#888' }}>
-            Hint: Family members → Journal page → Map markers → Timer seconds
           </p>
         </div>
       </div>      <div className="code-input">

@@ -84,14 +84,8 @@ const ExitHall = () => {
 
   if (currentPhase === 2) {
     return (
-      <div className="room-container fade-in">
-        <div className="room-header">
+      <div className="room-container fade-in">        <div className="room-header">
           <h1 className="room-title">🌅 The Exit Hall</h1>
-          {gameState.teamName && (
-            <p style={{ fontSize: '1rem', color: '#44ff44', marginBottom: '1rem' }}>
-              Team: <strong>{gameState.teamName}</strong>
-            </p>
-          )}
         </div>
 
         <div className="room-description">
@@ -120,14 +114,8 @@ const ExitHall = () => {
   }
 
   return (
-    <div className="room-container fade-in">
-      <div className="room-header">
+    <div className="room-container fade-in">      <div className="room-header">
         <h1 className="room-title glitch">🎉 ESCAPE SUCCESSFUL</h1>
-        {gameState.teamName && (
-          <p style={{ fontSize: '1.3rem', color: '#44ff44', marginBottom: '2rem' }}>
-            Team: <strong>{gameState.teamName}</strong>
-          </p>
-        )}
       </div>
 
       <div className="room-description">

@@ -90,11 +90,6 @@ const Room3 = () => {
   return (
     <div className="room-container">      <div className="room-header">
         <h1 className="room-title">Room 3 — Neural Sync</h1>
-        {gameState.teamName && (
-          <p style={{ fontSize: '1rem', color: '#44ff44', marginBottom: '1rem' }}>
-            Team: <strong>{gameState.teamName}</strong>
-          </p>
-        )}
       </div>
 
       <div className="room-description">
@@ -216,21 +211,18 @@ const Room3 = () => {
           }}>
             <div className="terminal" style={{ marginBottom: '2rem' }}>
               <div className="terminal-text">
-                MNEMO-SYNC OUTPUT: CORRUPTED MESSAGE DETECTED<br />
-                <br />
+                MNEMO-SYNC OUTPUT: CORRUPTED MESSAGE DETECTED<br />                <br />
                 <span style={{ fontSize: '1.5rem', color: '#ff4444', letterSpacing: '2px' }}>
                   Iudphqwv duh ohwkdov.
                 </span><br />
                 <br />
-                CIPHER KEY: SHIFT +3<br />
-                HINT: Reverse the encryption (shift -3)
+                CIPHER KEY: SHIFT +3
               </div>
             </div>
 
             <div style={{ textAlign: 'center' }}>
               <p style={{ marginBottom: '1rem', color: '#888' }}>
-                Each letter has been shifted forward by 3 positions in the alphabet.
-                To decode, shift each letter backward by 3 positions.
+                Decode the encrypted neural sync message.
               </p>
               <p style={{ fontSize: '0.9rem', color: '#666' }}>
                 Example: D → A, E → B, F → C, etc.

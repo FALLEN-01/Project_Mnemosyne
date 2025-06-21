@@ -86,11 +86,6 @@ const Room4 = () => {
   return (
     <div className="room-container">      <div className="room-header">
         <h1 className="room-title">Room 4 — The Containment Lab</h1>
-        {gameState.teamName && (
-          <p style={{ fontSize: '1rem', color: '#44ff44', marginBottom: '1rem' }}>
-            Team: <strong>{gameState.teamName}</strong>
-          </p>
-        )}
       </div>
 
       <div className="room-description">

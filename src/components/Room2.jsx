@@ -64,11 +64,6 @@ const Room2 = () => {
   return (
     <div className="room-container">      <div className="room-header">
         <h1 className="room-title">Room 2 — Surveillance</h1>
-        {gameState.teamName && (
-          <p style={{ fontSize: '1rem', color: '#44ff44', marginBottom: '1rem' }}>
-            Team: <strong>{gameState.teamName}</strong>
-          </p>
-        )}
       </div>
 
       <div className="room-description">
@@ -116,16 +111,11 @@ const Room2 = () => {
             A=Z, B=Y, C=X, D=W, E=V, F=U, G=T, H=S, I=R, J=Q, K=P, L=O, M=N<br />
             N=M, O=L, P=K, Q=J, R=I, S=H, T=G, U=F, V=E, W=D, X=C, Y=B, Z=A
           </div>
-        </div>
-
-        <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+        </div>        <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
           <h4 style={{ color: '#00ffff', marginBottom: '1rem' }}>Instructions:</h4>
           <p style={{ marginBottom: '1.5rem' }}>
             The surveillance system recorded a critical question about your identity. 
             Decode the encrypted message using the reverse alphabet cipher.
-          </p>
-          <p style={{ fontSize: '0.9rem', color: '#888' }}>
-            Hint: Each letter is replaced by its reverse position in the alphabet (A↔Z, B↔Y, etc.)
           </p>
         </div>
 
