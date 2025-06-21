@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useGameState } from '../App'
 
@@ -22,6 +22,14 @@ const Room5 = () => {
     room3: 'FRAGMENT',
     room4: 'FOOTSTEPS'
   }
+
+  useEffect(() => {
+    // Redirect to team name entry if no team name is set
+    if (!gameState.teamName) {
+      navigate('/')
+      return
+    }
+  }, [gameState.teamName, navigate])
 
   const handleAnswersSubmit = () => {
     const isCorrect = Object.keys(correctAnswers).every(room => {

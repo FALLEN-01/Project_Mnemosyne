@@ -1,18 +1,26 @@
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useGameState } from '../App'
 
 const Completion = () => {
+  const navigate = useNavigate()
   const { gameState } = useGameState()
   const [timeCompleted, setTimeCompleted] = useState('')
 
   useEffect(() => {
+    // Redirect to team name entry if no team name is set
+    if (!gameState.teamName) {
+      navigate('/')
+      return
+    }
+    
     if (gameState.startTime && gameState.endTime) {
       const timeDiff = gameState.endTime - gameState.startTime
       const minutes = Math.floor(timeDiff / 60000)
       const seconds = Math.floor((timeDiff % 60000) / 1000)
       setTimeCompleted(`${minutes}:${seconds.toString().padStart(2, '0')}`)
     }
-  }, [gameState])
+  }, [gameState, navigate])
 
   const restartGame = () => {
     window.location.href = '/'
