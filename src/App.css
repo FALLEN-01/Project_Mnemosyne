@@ -83,7 +83,7 @@ body {
   letter-spacing: 1.5px;
   border-radius: 8px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: background 0.2s ease, box-shadow 0.2s ease; /* Faster, more specific transitions */
   box-shadow: 0 4px 15px rgba(0, 255, 255, 0.3);
   min-width: 200px; /* Minimum width for PC */
 }
@@ -91,7 +91,12 @@ body {
 .btn:hover {
   background: linear-gradient(45deg, #0080ff, #00ffff);
   box-shadow: 0 8px 25px rgba(0, 255, 255, 0.5);
-  transform: translateY(-3px);
+  transform: translateY(-2px); /* Reduced transform for faster response */
+}
+
+.btn:active {
+  transform: translateY(0); /* Immediate response on click */
+  transition: transform 0.1s ease;
 }
 
 .btn:disabled {

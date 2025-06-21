@@ -15,14 +15,12 @@ const Introduction = () => {
     
     // Initialize start time when component loads
     updateGameState({ startTime: new Date() })
-    
-    // Fade in effect
+      // Fade in effect
     const timer = setTimeout(() => {
       setShowContent(true)
-    }, 500)
+    }, 100) // Reduced from 500ms to 100ms
 
-    return () => clearTimeout(timer)
-  }, [updateGameState, gameState.teamName, navigate])
+    return () => clearTimeout(timer)  }, [updateGameState, gameState.teamName, navigate])
 
   const enterFacility = () => {
     navigate('/room1')
