@@ -59,12 +59,11 @@ const Introduction = () => {
       case 0:
         return (
           <div style={{ textAlign: 'center', minHeight: '400px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-            <div style={{ fontSize: '4rem', marginBottom: '2rem', animation: 'pulse 2s infinite' }}>🧠</div>
+            <div style={{ fontSize: '4rem', marginBottom: '2rem' }}>🧠</div>
             <h2 style={{ color: '#00ffff', marginBottom: '2rem' }}>Initializing Neural Interface...</h2>
-            <div className="terminal" style={{ maxWidth: '600px', margin: '0 auto' }}>
-              <div className="terminal-text" style={{ whiteSpace: 'pre-line', minHeight: '120px' }}>
+            <div className="terminal" style={{ maxWidth: '600px', margin: '0 auto' }}>              <div className="terminal-text" style={{ whiteSpace: 'pre-line', minHeight: '120px' }}>
                 {terminalText}
-                <span className="cursor">_</span>
+                <span>_</span>
               </div>
             </div>
           </div>
@@ -72,11 +71,10 @@ const Introduction = () => {
 
       case 1:
         return (
-          <div style={{ textAlign: 'center' }}>
-            <div style={{ display: 'flex', justifyContent: 'center', gap: '2rem', marginBottom: '2rem', fontSize: '3rem' }}>
-              <span style={{ animation: 'flicker 1.5s infinite' }}>💡</span>
-              <span style={{ animation: 'pulse 2s infinite' }}>👁️</span>
-              <span style={{ animation: 'flicker 1.8s infinite' }}>⚡</span>
+          <div style={{ textAlign: 'center' }}>            <div style={{ display: 'flex', justifyContent: 'center', gap: '2rem', marginBottom: '2rem', fontSize: '3rem' }}>
+              <span>💡</span>
+              <span>👁️</span>
+              <span>⚡</span>
             </div>
             <h2 style={{ color: '#ff6b6b', marginBottom: '2rem' }}>🔴 AWAKENING COMPLETE</h2>
             <div style={{ 
@@ -181,7 +179,7 @@ const Introduction = () => {
       case 3:
         return (
           <div style={{ textAlign: 'center' }}>
-            <div style={{ fontSize: '4rem', marginBottom: '2rem', animation: 'bounce 2s infinite' }}>🎮</div>
+            <div style={{ fontSize: '4rem', marginBottom: '2rem' }}>🎮</div>
             <h2 style={{ color: '#44ff44', marginBottom: '2rem' }}>🚀 MISSION BRIEFING</h2>
             
             <div style={{ 
