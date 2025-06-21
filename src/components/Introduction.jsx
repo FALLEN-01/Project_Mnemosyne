@@ -27,9 +27,9 @@ const Introduction = () => {
   const enterFacility = () => {
     navigate('/room1')
   }
-
   return (
-    <div className={`room-container ${showContent ? 'fade-in' : ''}`}>      <div className="room-header">
+    <div className={`room-container ${showContent ? 'fade-in' : ''}`}>
+      <div className="room-header">
         <h1 className="room-title glitch">🧠 Project Mnemosyne</h1>
         <p style={{ fontSize: '1.3rem', color: '#00ffff', marginBottom: '1rem' }}>
           An Online Escape Room Experience
