@@ -193,19 +193,17 @@ const Room5 = () => {
             <p style={{ marginBottom: '2rem' }}>
               To activate the Core, enter the correct answers recovered from each stage.
             </p>
-          </div>
-
-          <div style={{ 
+          </div>          <div style={{ 
             background: 'rgba(0, 0, 0, 0.5)', 
-            padding: '2rem', 
-            borderRadius: '10px',
+            padding: '3rem', 
+            borderRadius: '15px',
             border: '1px solid rgba(0, 255, 255, 0.3)',
             margin: '2rem auto',
-            maxWidth: '700px'
+            maxWidth: '900px'
           }}>
-            <div className="code-input" style={{ flexDirection: 'column', gap: '1.5rem' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                <label style={{ minWidth: '300px', textAlign: 'left', color: '#00ffff' }}>
+            <div style={{ display: 'grid', gap: '2rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '2rem', flexWrap: 'wrap' }}>
+                <label style={{ minWidth: '300px', textAlign: 'left', color: '#00ffff', fontSize: '1.1rem' }}>
                   1. Room 1 - 4-digit access code:
                 </label>
                 <input
@@ -215,12 +213,12 @@ const Room5 = () => {
                   onChange={(e) => handleAnswerChange('room1', e.target.value)}
                   placeholder="####"
                   maxLength={4}
-                  style={{ width: '100px' }}
+                  style={{ width: '120px', flex: 'none' }}
                 />
               </div>
 
-              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                <label style={{ minWidth: '300px', textAlign: 'left', color: '#00ffff' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '2rem', flexWrap: 'wrap' }}>
+                <label style={{ minWidth: '300px', textAlign: 'left', color: '#00ffff', fontSize: '1.1rem' }}>
                   2. Room 2 - Decoded surveillance phrase:
                 </label>
                 <input
@@ -229,12 +227,12 @@ const Room5 = () => {
                   value={answers.room2}
                   onChange={(e) => handleAnswerChange('room2', e.target.value.toUpperCase())}
                   placeholder="PHRASE"
-                  style={{ width: '200px' }}
+                  style={{ width: '250px', flex: 'none' }}
                 />
               </div>
 
-              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                <label style={{ minWidth: '300px', textAlign: 'left', color: '#00ffff' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '2rem', flexWrap: 'wrap' }}>
+                <label style={{ minWidth: '300px', textAlign: 'left', color: '#00ffff', fontSize: '1.1rem' }}>
                   3. Room 3 - Neural sync pattern word:
                 </label>
                 <input
@@ -243,12 +241,12 @@ const Room5 = () => {
                   value={answers.room3}
                   onChange={(e) => handleAnswerChange('room3', e.target.value.toUpperCase())}
                   placeholder="WORD"
-                  style={{ width: '200px' }}
+                  style={{ width: '200px', flex: 'none' }}
                 />
               </div>
 
-              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                <label style={{ minWidth: '300px', textAlign: 'left', color: '#00ffff' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '2rem', flexWrap: 'wrap' }}>
+                <label style={{ minWidth: '300px', textAlign: 'left', color: '#00ffff', fontSize: '1.1rem' }}>
                   4. Room 4 - Security riddle answer:
                 </label>
                 <input
@@ -257,7 +255,7 @@ const Room5 = () => {
                   value={answers.room4}
                   onChange={(e) => handleAnswerChange('room4', e.target.value.toUpperCase())}
                   placeholder="ANSWER"
-                  style={{ width: '200px' }}
+                  style={{ width: '200px', flex: 'none' }}
                 />
               </div>
             </div>

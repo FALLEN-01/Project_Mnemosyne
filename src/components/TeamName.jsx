@@ -38,19 +38,17 @@ const TeamName = () => {
         <p style={{ fontSize: '1.3rem', color: '#00ffff', marginBottom: '2rem' }}>
           An Online Escape Room Experience
         </p>
-      </div>
-
-      <div className="room-description" style={{ maxWidth: '600px' }}>
+      </div>      <div className="room-description" style={{ maxWidth: '700px' }}>
         <h2 style={{ color: '#00ffff', marginBottom: '2rem', fontSize: '1.8rem', textAlign: 'center' }}>
           Welcome to the Facility
         </h2>
         
-        <p style={{ marginBottom: '2rem', textAlign: 'center', fontSize: '1.1rem' }}>
+        <p style={{ marginBottom: '2rem', textAlign: 'center', fontSize: '1.1rem', lineHeight: '1.6' }}>
           Before you enter the Mnemosyne research facility, we need to register your team 
           in the system for tracking and security purposes.
         </p>
 
-        <div className="terminal" style={{ margin: '2rem auto', maxWidth: '500px' }}>
+        <div className="terminal" style={{ margin: '2rem auto', maxWidth: '600px' }}>
           <div className="terminal-text">
             FACILITY ACCESS CONTROL<br />
             SECURITY CLEARANCE... PENDING<br />
@@ -63,13 +61,13 @@ const TeamName = () => {
 
         <div style={{ 
           background: 'rgba(0, 255, 255, 0.1)', 
-          padding: '2rem', 
-          borderRadius: '10px',
+          padding: '3rem', 
+          borderRadius: '15px',
           border: '1px solid rgba(0, 255, 255, 0.3)',
           marginBottom: '2rem',
           textAlign: 'center'
         }}>
-          <h3 style={{ color: '#00ffff', marginBottom: '1.5rem' }}>Enter Team Name</h3>
+          <h3 style={{ color: '#00ffff', marginBottom: '2rem', fontSize: '1.4rem' }}>Enter Team Name</h3>
           
           <input
             type="text"
@@ -80,6 +78,7 @@ const TeamName = () => {
             placeholder="Your Team Name"
             style={{ 
               width: '100%', 
+              maxWidth: '400px',
               fontSize: '1.3rem',
               textAlign: 'center',
               marginBottom: '1rem'
@@ -88,7 +87,7 @@ const TeamName = () => {
             autoFocus
           />
           
-          <p style={{ fontSize: '0.9rem', color: '#888', marginBottom: '1.5rem' }}>
+          <p style={{ fontSize: '1rem', color: '#888', marginBottom: '2rem' }}>
             Choose a memorable name for your team (2-50 characters)
           </p>
 
@@ -100,7 +99,7 @@ const TeamName = () => {
             disabled={!teamName.trim()}
             style={{ 
               fontSize: '1.2rem', 
-              padding: '1rem 2rem',
+              padding: '1.2rem 2.5rem',
               marginTop: '1rem'
             }}
           >
