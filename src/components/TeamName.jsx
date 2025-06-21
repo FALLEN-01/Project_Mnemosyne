@@ -19,10 +19,8 @@ const TeamName = () => {
     if (cleanTeamName.length < 2) {
       setError('Team name must be at least 2 characters long')
       return
-    }
-
-    updateGameState({ teamName: cleanTeamName })
-    navigate('/intro')
+    }    updateGameState({ teamName: cleanTeamName })
+    navigate('/room1')
   }
 
   const handleKeyPress = (e) => {

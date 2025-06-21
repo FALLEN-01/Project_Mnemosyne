@@ -11,12 +11,16 @@ const Room1 = () => {
   const [showContent, setShowContent] = useState(false)
 
   const correctCode = '3704'
-
   useEffect(() => {
     // Redirect to team name entry if no team name is set
     if (!gameState.teamName) {
       navigate('/')
       return
+    }
+
+    // Initialize start time when first room loads (since we removed intro)
+    if (!gameState.startTime) {
+      updateGameState({ startTime: new Date() })
     }
 
     // Fade in effect
