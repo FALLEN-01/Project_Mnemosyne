@@ -22,15 +22,16 @@ body {
 /* Common Layout - Optimized for PC */
 .room-container {
   min-height: 100vh;
-  padding: 3rem 2rem; /* More padding for PC */
+  padding: 2rem 1rem; /* Reduced padding for better space usage */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   position: relative;
-  max-width: 1400px; /* Max width for large screens */
+  max-width: 1200px; /* Reduced max width for better centering */
   margin: 0 auto; /* Center content */
   width: 100%; /* Ensure full width usage */
+  box-sizing: border-box; /* Include padding in width calculation */
   background: 
     radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
     radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.1) 0%, transparent 50%),
@@ -39,15 +40,15 @@ body {
 
 .room-header {
   text-align: center;
-  margin-bottom: 4rem; /* Increased for PC */
-  max-width: 900px; /* Wider for PC */
+  margin-bottom: 3rem; /* Reduced for better space usage */
+  max-width: 800px; /* Reduced for better centering */
   width: 100%; /* Ensure full width */
   margin-left: auto;
   margin-right: auto;
 }
 
 .room-title {
-  font-size: 3.5rem; /* Larger for PC */
+  font-size: 3rem; /* Slightly reduced for better fit */
   font-weight: bold;
   margin-bottom: 1.5rem;
   color: #00ffff;
@@ -61,14 +62,15 @@ body {
   line-height: 1.7;
   color: #b8b8b8;
   background: rgba(0, 0, 0, 0.3);
-  padding: 3rem; /* Increased padding for PC */
+  padding: 2.5rem; /* Reduced padding for better space usage */
   border-radius: 15px; /* Larger border radius */
   border: 1px solid rgba(0, 255, 255, 0.2);
   backdrop-filter: blur(10px);
-  max-width: 1000px; /* Wider for PC */
+  max-width: 900px; /* Reduced for better centering */
   width: 100%; /* Ensure it takes available width */
   margin: 0 auto;
   text-align: center; /* Center text content */
+  box-sizing: border-box; /* Include padding in width calculation */
 }
 
 /* Buttons - Optimized for PC */

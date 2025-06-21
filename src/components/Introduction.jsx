@@ -6,6 +6,7 @@ const Introduction = () => {
   const navigate = useNavigate()
   const { gameState, updateGameState } = useGameState()
   const [showContent, setShowContent] = useState(false)
+
   useEffect(() => {
     // Redirect to team name entry if no team name is set
     if (!gameState.teamName) {
@@ -15,16 +16,18 @@ const Introduction = () => {
     
     // Initialize start time when component loads
     updateGameState({ startTime: new Date() })
-      // Fade in effect
+    
+    // Fade in effect
     const timer = setTimeout(() => {
       setShowContent(true)
-    }, 100) // Reduced from 500ms to 100ms
+    }, 100)
 
     return () => clearTimeout(timer)  }, [updateGameState, gameState.teamName, navigate])
 
   const enterFacility = () => {
     navigate('/room1')
   }
+  
   return (
     <div className={`room-container ${showContent ? 'fade-in' : ''}`}>
       <div className="room-header">
@@ -37,7 +40,9 @@ const Introduction = () => {
             Team: <strong>{gameState.teamName}</strong>
           </p>
         )}
-      </div>      <div className="room-description">
+      </div>
+
+      <div className="room-description">
         <h2 style={{ color: '#00ffff', marginBottom: '1.5rem', fontSize: '1.5rem' }}>
           🧬 Subject Awakening Protocol Complete
         </h2>
@@ -62,7 +67,9 @@ const Introduction = () => {
 
         <p style={{ marginBottom: '2rem', color: '#ff4444', fontWeight: 'bold' }}>
           The exit is locked. You must find a way out before it's too late.
-        </p>        <div style={{ 
+        </p>
+
+        <div style={{ 
           background: 'rgba(255, 68, 68, 0.1)', 
           padding: '2rem', 
           borderRadius: '10px',
@@ -70,7 +77,13 @@ const Introduction = () => {
           marginBottom: '2rem'
         }}>
           <h3 style={{ color: '#ff4444', marginBottom: '1rem' }}>🚨 ESCAPE PROTOCOL ACTIVATED:</h3>
-          <ul style={{ textAlign: 'left', lineHeight: '1.8', maxWidth: '600px', margin: '0 auto' }}>
+          <ul style={{ 
+            lineHeight: '1.8', 
+            maxWidth: '600px', 
+            margin: '0 auto',
+            textAlign: 'left',
+            paddingLeft: '2rem'
+          }}>
             <li>Navigate through the facility's security rooms</li>
             <li>Solve the puzzles to unlock each door</li>
             <li>Recover your memories to understand what happened</li>
@@ -80,7 +93,9 @@ const Introduction = () => {
             </li>
           </ul>
         </div>
-      </div>      <button 
+      </div>
+
+      <button 
         className="btn" 
         onClick={enterFacility}
         style={{ 

@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
 import { useState, createContext, useContext } from 'react'
 import './App.css'
 
@@ -20,6 +20,24 @@ export const useGameState = () => {
     throw new Error('useGameState must be used within GameProvider')
   }
   return context
+}
+
+function AppRoutes() {
+  const location = useLocation()
+  
+  return (
+    <Routes key={location.pathname}>
+      <Route path="/" element={<TeamName />} />
+      <Route path="/intro" element={<Introduction />} />
+      <Route path="/room1" element={<Room1 />} />
+      <Route path="/room2" element={<Room2 />} />
+      <Route path="/room3" element={<Room3 />} />
+      <Route path="/room4" element={<Room4 />} />
+      <Route path="/exit-hall" element={<ExitHall />} />
+      {/* Catch-all route for debugging */}
+      <Route path="*" element={<div>Route not found: {location.pathname}</div>} />
+    </Routes>
+  )
 }
 
 function App() {
@@ -49,15 +67,7 @@ function App() {
     <GameContext.Provider value={{ gameState, updateGameState, completeRoom }}>
       <Router>
         <div className="app">
-          <Routes>
-            <Route path="/" element={<TeamName />} />
-            <Route path="/intro" element={<Introduction />} />
-            <Route path="/room1" element={<Room1 />} />
-            <Route path="/room2" element={<Room2 />} />
-            <Route path="/room3" element={<Room3 />} />
-            <Route path="/room4" element={<Room4 />} />
-            <Route path="/exit-hall" element={<ExitHall />} />
-          </Routes>
+          <AppRoutes />
         </div>
       </Router>
     </GameContext.Provider>
