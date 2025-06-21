@@ -410,17 +410,17 @@ body {
   body {
     font-size: 16px;
   }
-  
-  .room-container {
-    padding: 1.5rem 1rem;
+    .room-container {
+    padding: 1.5rem;
     max-width: 800px;
-    margin: 0 auto;
+    margin: 0 auto; /* Force center */
   }
   
   .room-title {
     font-size: 2.2rem;
     letter-spacing: 2px;
     margin-bottom: 1.5rem;
+    text-align: center;
   }
   
   .room-description {
@@ -428,11 +428,15 @@ body {
     padding: 1.5rem;
     text-align: center;
     border-radius: 15px;
+    max-width: 100%;
+    margin: 0 auto;
   }
   
   .puzzle-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
+    justify-items: center;
+    margin: 0 auto;
   }
   
   .puzzle-item {
@@ -442,6 +446,7 @@ body {
   
   .code-input {
     gap: 1rem;
+    justify-content: center;
   }
   
   .code-digit {
@@ -454,23 +459,30 @@ body {
     padding: 1rem 1.5rem;
     font-size: 1rem;
     min-width: 150px;
+    display: block;
+    margin: 1rem auto;
   }
   
   .input-field {
     padding: 1rem;
     font-size: 1rem;
     min-width: 200px;
+    display: block;
+    margin: 0 auto;
   }
   
   .terminal {
     padding: 1.5rem;
     font-size: 1rem;
     max-width: 600px;
+    margin: 1rem auto;
   }
   
   .memory-fragment {
     padding: 2rem;
     font-size: 1rem;
+    margin: 1rem auto;
+    max-width: 600px;
   }
   
   .manga-grid {
