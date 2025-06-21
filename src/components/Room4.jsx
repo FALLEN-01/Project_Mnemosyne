@@ -66,30 +66,69 @@ const Room4 = () => {
 
   if (showMemory) {
     return (
-      <div className="room-container">
-        <div className="memory-fragment">
-          <h2 style={{ color: '#44ff44', marginBottom: '2rem', fontSize: '2rem' }}>
-            � FACILITY LOCKDOWN DISENGAGED
+      <div className="room-container" style={{ 
+        display: 'flex', 
+        alignItems: 'center', 
+        justifyContent: 'center',
+        textAlign: 'center',
+        padding: '2rem 1rem'
+      }}>
+        <div className="memory-fragment" style={{
+          width: '100%',
+          maxWidth: '600px',
+          margin: '0 auto'
+        }}>
+          <h2 style={{ 
+            color: '#44ff44', 
+            marginBottom: '2rem', 
+            fontSize: '2rem',
+            textAlign: 'center'
+          }}>
+            🔓 FACILITY LOCKDOWN DISENGAGED
           </h2>
-          <p style={{ fontSize: '1.1rem', marginBottom: '2rem', color: '#44ff44' }}>
+          <p style={{ 
+            fontSize: '1.1rem', 
+            marginBottom: '2rem', 
+            color: '#44ff44',
+            textAlign: 'center'
+          }}>
             Security doors unlocking... Emergency systems disabled...
           </p>
           
           <div className="loading" style={{ margin: '2rem auto' }}></div>
-          <p>Accessing final exit...</p>
+          <p style={{ textAlign: 'center' }}>Accessing final exit...</p>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="room-container">      <div className="room-header">
+    <div className="room-container" style={{
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'flex-start',
+      textAlign: 'center',
+      padding: '2rem 1rem',
+      maxWidth: '1200px',
+      margin: '0 auto',
+      width: '100%'
+    }}>
+      <div className="room-header">
         <h1 className="room-title">Room 4 — The Containment Lab</h1>
-      </div>      <div className="room-description">
-        <p style={{ marginBottom: '2rem' }}>
-          The door slides open with a mechanical hiss. This room is colder. Darker. You see shattered 
-          containment pods labeled "CONSCIOUS LOOP SIMULATION – FAILED." Screens line the wall, most 
-          cracked or blacked out. One flickers to life.
+      </div>      <div className="room-description" style={{
+        textAlign: 'center',
+        maxWidth: '800px',
+        margin: '0 auto'
+      }}>
+        <p style={{ 
+          marginBottom: '2rem',
+          fontSize: '1.1rem',
+          lineHeight: '1.6'
+        }}>
+          The door slides open with a mechanical hiss. This room is colder. Darker.<br />
+          You see shattered containment pods labeled "CONSCIOUS LOOP SIMULATION – FAILED."<br />
+          Screens line the wall, most cracked or blacked out. One flickers to life.
         </p>
         
         {/* Containment Lab Images */}
@@ -98,11 +137,11 @@ const Room4 = () => {
           flexDirection: 'column',
           gap: '2rem',
           width: '100%',
-          maxWidth: '700px',
+          maxWidth: '600px',
           alignItems: 'center',
           margin: '2rem auto'
         }}>
-          {/* Lab Image 1 */}
+          {/* Lab Image 1 - Remove brain emoji, keep only containment pod */}
           <div style={{ 
             width: '100%',
             maxWidth: '500px',
@@ -149,12 +188,20 @@ const Room4 = () => {
           </div>
         </div>
         
-        <p style={{ marginBottom: '2rem', color: '#ff4444' }}>
-          Your voice begins to play — scrambled, broken, unrecognizable. It's part of an audio log. 
-          You step closer, heart pounding.
+        <p style={{ 
+          marginBottom: '2rem', 
+          color: '#ff4444',
+          fontSize: '1.1rem',
+          lineHeight: '1.6'
+        }}>
+          Your voice begins to play — scrambled, broken, unrecognizable.<br />
+          It's part of an audio log. You step closer, heart pounding.
         </p>
 
-        <div className="terminal" style={{ margin: '2rem auto' }}>
+        <div className="terminal" style={{ 
+          margin: '2rem auto',
+          maxWidth: '600px'
+        }}>
           <div className="terminal-text">
             RECOVERED FILE: Subject Log 47 – Transcript Incomplete<br />
             <span style={{ color: '#ff4444' }}>
@@ -162,15 +209,18 @@ const Room4 = () => {
             </span>
           </div>
         </div>
-      </div>
-
-      {currentStep === 1 && (
-        <div>
+      </div>      {currentStep === 1 && (
+        <div style={{
+          width: '100%',
+          maxWidth: '800px',
+          margin: '0 auto',
+          textAlign: 'center'
+        }}>
           <div style={{ textAlign: 'center', margin: '3rem 0' }}>
             <h3 style={{ color: '#00ffff', marginBottom: '1rem' }}>
               Part A: Broken Transcript Reconstruction
             </h3>
-            <p style={{ marginBottom: '2rem' }}>
+            <p style={{ marginBottom: '2rem', fontSize: '1rem', lineHeight: '1.5' }}>
               Reconstruct the corrupted audio log by filling in the missing words.
             </p>
           </div>
@@ -186,7 +236,7 @@ const Room4 = () => {
           }}>
             <h4 style={{ color: '#ff4444', marginBottom: '2rem' }}>Distorted Transcript</h4>
             <div style={{ 
-              fontSize: '1.3rem', 
+              fontSize: '1.2rem', 
               lineHeight: '2',
               fontFamily: 'monospace',
               color: '#00ffff'
@@ -197,7 +247,7 @@ const Room4 = () => {
             </div>
           </div>
 
-          <div className="multiple-choice">
+          <div className="multiple-choice" style={{ maxWidth: '600px', margin: '0 auto' }}>
             <h4 style={{ color: '#00ffff', marginBottom: '1rem', textAlign: 'center' }}>
               Choose the correct set of missing words:
             </h4>
@@ -223,10 +273,13 @@ const Room4 = () => {
             Reconstruct Transcript
           </button>
         </div>
-      )}
-
-      {currentStep === 2 && (
-        <div>
+      )}      {currentStep === 2 && (
+        <div style={{
+          width: '100%',
+          maxWidth: '800px',
+          margin: '0 auto',
+          textAlign: 'center'
+        }}>
           <div className="success-message">
             ✅ Transcript Reconstructed Successfully
           </div>
@@ -242,7 +295,7 @@ const Room4 = () => {
           }}>
             <h4 style={{ color: '#44ff44', marginBottom: '1rem' }}>Complete Transcript:</h4>
             <div style={{ 
-              fontSize: '1.2rem', 
+              fontSize: '1.1rem', 
               lineHeight: '1.8',
               fontStyle: 'italic',
               color: '#e8e8e8'
@@ -257,12 +310,15 @@ const Room4 = () => {
             <h3 style={{ color: '#00ffff', marginBottom: '1rem' }}>
               Part B: Security Override
             </h3>
-            <p style={{ marginBottom: '2rem' }}>
+            <p style={{ marginBottom: '2rem', fontSize: '1rem', lineHeight: '1.5' }}>
               A glowing terminal flickers. The screen reads:
             </p>
           </div>
 
-          <div className="terminal" style={{ margin: '2rem auto', maxWidth: '600px' }}>
+          <div className="terminal" style={{ 
+            margin: '2rem auto', 
+            maxWidth: '600px'
+          }}>
             <div className="terminal-text">
               SECURITY OVERRIDE REQUIRED<br />
               Solve the riddle to initiate unlock protocol.<br />
@@ -283,7 +339,8 @@ const Room4 = () => {
               onKeyPress={handleKeyPress}
               placeholder="ENTER YOUR ANSWER"
               style={{ 
-                width: '300px', 
+                width: '100%',
+                maxWidth: '300px',
                 fontSize: '1.2rem'
               }}
             />
@@ -300,9 +357,11 @@ const Room4 = () => {
             Submit Answer
           </button>
         </div>
-      )}
-
-      <div className="terminal" style={{ marginTop: '3rem', maxWidth: '500px' }}>
+      )}      <div className="terminal" style={{ 
+        marginTop: '3rem', 
+        maxWidth: '500px',
+        margin: '3rem auto 0 auto'
+      }}>
         <div className="terminal-prompt">CONTAINMENT STATUS:</div>
         <div className="terminal-text">
           RECONSTRUCTION... {currentStep}/2<br />

@@ -38,6 +38,7 @@ body {
     radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.1) 0%, transparent 50%),
     radial-gradient(circle at 40% 40%, rgba(120, 219, 226, 0.1) 0%, transparent 50%);
 }
+}
 
 .room-header {
   text-align: center;
@@ -48,7 +49,6 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-}
 }
 
 .room-title {
@@ -517,14 +517,22 @@ body {
 /* Desktop (1024px+) */
 @media (min-width: 1024px) {
   .room-container {
-    padding: 2rem 1rem;
-    max-width: 1000px;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    box-sizing: border-box;
   }
   
   .room-title {
     font-size: 2.8rem;
     letter-spacing: 3px;
     margin-bottom: 2rem;
+    text-align: center;
   }
   
   .room-description {
@@ -532,11 +540,13 @@ body {
     padding: 2rem;
     max-width: 800px;
     margin: 0 auto;
+    text-align: center;
   }
   
   .puzzle-grid {
     max-width: 900px;
     gap: 2rem;
+    margin: 0 auto;
   }
   
   .puzzle-item {
@@ -548,56 +558,88 @@ body {
     padding: 1.2rem 2rem;
     font-size: 1.1rem;
     min-width: 180px;
+    display: block;
+    margin: 1rem auto;
   }
   
   .terminal {
     max-width: 700px;
     padding: 2rem;
     font-size: 1.1rem;
+    margin: 1rem auto;
   }
   
   .manga-grid {
     max-width: 900px;
     gap: 2rem;
+    margin: 0 auto;
+  }
+  
+  .multiple-choice {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .input-field {
+    display: block;
+    margin: 0 auto;
+    max-width: 300px;
   }
 }
 
 /* Large Desktop (1200px+) */
 @media (min-width: 1200px) {
   .room-container {
-    padding: 2rem 1.5rem;
-    max-width: 1200px;
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
   }
   
   .room-title {
     font-size: 3rem;
     letter-spacing: 3px;
+    text-align: center;
   }
   
   .room-description {
     font-size: 1.2rem;
     padding: 2.5rem;
     max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
   }
   
   .puzzle-grid {
     max-width: 1000px;
     gap: 2.5rem;
+    margin: 0 auto;
   }
   
   .btn {
     padding: 1.2rem 2.5rem;
     font-size: 1.2rem;
     min-width: 200px;
+    display: block;
+    margin: 1rem auto;
   }
   
   .terminal {
     max-width: 800px;
+    margin: 1rem auto;
   }
   
   .manga-grid {
     max-width: 1000px;
     gap: 2.5rem;
+    margin: 0 auto;
+  }
+  
+  .multiple-choice {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+}
   }
 }
 
