@@ -84,19 +84,27 @@ const ExitHall = () => {
       </div>
     )
   }
-
   if (currentPhase === 2) {
     return (
       <div className="room-container fade-in">        <div className="room-header">
           <h1 className="room-title">🌅 The Exit Hall</h1>
         </div>        <div className="room-description">
+          <div className="memory-fragment">
+            <h2 style={{ color: '#00ffff', marginBottom: '1.5rem' }}>VOICE RECOGNIZED. MEMORY FRAGMENT RESTORED.</h2>
+            <p style={{ fontSize: '1.2rem', fontStyle: 'italic', marginBottom: '2rem' }}>
+              You hear your own voice — this time, clear:<br />
+              "I wasn't supposed to become the subject. But no one else would do it. I had to forget to protect it.
+              I had to protect them from the truth... from me."
+            </p>
+          </div>
+
           <p style={{ marginBottom: '2rem', fontSize: '1.2rem' }}>
             You step through the final corridor. Natural light streams through windows for the first time 
             in what feels like an eternity. The facility's oppressive atmosphere gives way to fresh air 
             and the promise of freedom.
           </p>
 
-          {/* Exit Hall Images */}
+          {/* Exit Hall Images with escape story */}
           <div style={{ 
             display: 'flex',
             flexDirection: 'column',
@@ -106,7 +114,7 @@ const ExitHall = () => {
             alignItems: 'center',
             margin: '2rem auto'
           }}>
-            {/* Exit Image 1 */}
+            {/* Doors Opening Image */}
             <div style={{ 
               width: '100%',
               maxWidth: '500px',
@@ -119,17 +127,25 @@ const ExitHall = () => {
               <div style={{ 
                 width: '100%', 
                 aspectRatio: '16/9',
-                background: 'rgba(255, 255, 255, 0.05)',
+                background: 'rgba(68, 255, 68, 0.1)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                flexDirection: 'column'
+                flexDirection: 'column',
+                border: '2px solid rgba(68, 255, 68, 0.3)'
               }}>
-                <div style={{ fontSize: '3rem', marginBottom: '1rem', color: '#44ff44' }}>🌅</div>
+                <div style={{ fontSize: '3rem', marginBottom: '1rem', color: '#44ff44' }}>🚪</div>
+                <div style={{ fontSize: '0.9rem', color: '#44ff44', textAlign: 'center', padding: '0 1rem' }}>
+                  Heavy blast doors grinding open with mechanical thunder
+                </div>
               </div>
             </div>
 
-            {/* Exit Image 2 */}
+            <p style={{ fontSize: '1.1rem', fontStyle: 'italic', color: '#e8e8e8' }}>
+              The heavy blast doors begin to groan and slide open with a thunderous mechanical roar.
+            </p>
+
+            {/* Fresh Air Image */}
             <div style={{ 
               width: '100%',
               maxWidth: '500px',
@@ -142,15 +158,86 @@ const ExitHall = () => {
               <div style={{ 
                 width: '100%', 
                 aspectRatio: '16/9',
-                background: 'rgba(255, 255, 255, 0.05)',
+                background: 'rgba(0, 255, 255, 0.1)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                flexDirection: 'column'
+                flexDirection: 'column',
+                border: '2px solid rgba(0, 255, 255, 0.3)'
               }}>
-                <div style={{ fontSize: '3rem', marginBottom: '1rem', color: '#00ffff' }}>🚪</div>
+                <div style={{ fontSize: '3rem', marginBottom: '1rem', color: '#00ffff' }}>💨</div>
+                <div style={{ fontSize: '0.9rem', color: '#00ffff', textAlign: 'center', padding: '0 1rem' }}>
+                  Cool, clean air flowing through the corridor
+                </div>
               </div>
             </div>
+
+            <p style={{ fontSize: '1.1rem', fontStyle: 'italic', color: '#e8e8e8' }}>
+              For the first time in what feels like an eternity, you feel it — fresh air. 
+              Cool, clean air flows through the corridor, carrying with it the scent of rain and earth.
+            </p>
+
+            {/* Sunlight Image */}
+            <div style={{ 
+              width: '100%',
+              maxWidth: '500px',
+              borderRadius: '10px',
+              overflow: 'hidden',
+              position: 'relative',
+              opacity: 1,
+              transition: 'all 0.8s ease-in-out'
+            }}>
+              <div style={{ 
+                width: '100%', 
+                aspectRatio: '16/9',
+                background: 'rgba(255, 215, 0, 0.1)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexDirection: 'column',
+                border: '2px solid rgba(255, 215, 0, 0.3)'
+              }}>
+                <div style={{ fontSize: '3rem', marginBottom: '1rem', color: '#ffd700' }}>🌅</div>
+                <div style={{ fontSize: '0.9rem', color: '#ffd700', textAlign: 'center', padding: '0 1rem' }}>
+                  Natural sunlight streaming in, warm and golden
+                </div>
+              </div>
+            </div>
+
+            <p style={{ fontSize: '1.1rem', fontStyle: 'italic', color: '#e8e8e8' }}>
+              Beyond the threshold, natural sunlight streams in, warm and golden.
+            </p>
+
+            {/* Freedom Image */}
+            <div style={{ 
+              width: '100%',
+              maxWidth: '500px',
+              borderRadius: '10px',
+              overflow: 'hidden',
+              position: 'relative',
+              opacity: 1,
+              transition: 'all 0.8s ease-in-out'
+            }}>
+              <div style={{ 
+                width: '100%', 
+                aspectRatio: '16/9',
+                background: 'linear-gradient(135deg, rgba(68, 255, 68, 0.1), rgba(0, 255, 255, 0.1))',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexDirection: 'column',
+                border: '2px solid rgba(68, 255, 68, 0.4)'
+              }}>
+                <div style={{ fontSize: '3rem', marginBottom: '1rem', color: '#44ff44' }}>🏃‍♂️</div>
+                <div style={{ fontSize: '0.9rem', color: '#44ff44', textAlign: 'center', padding: '0 1rem' }}>
+                  Stepping forward, leaving the shadows behind
+                </div>
+              </div>
+            </div>
+
+            <p style={{ fontSize: '1.2rem', fontStyle: 'italic', color: '#44ff44', fontWeight: 'bold' }}>
+              You step forward, leaving the shadows of your past behind. You are free.
+            </p>
           </div>
 
           <div className="memory-fragment">

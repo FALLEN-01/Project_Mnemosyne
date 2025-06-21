@@ -42,7 +42,6 @@ const Room4 = () => {
       setSelectedTranscript('')
     }
   }
-
   const handleRiddleSubmit = () => {
     const cleanAnswer = riddleAnswer.trim().toLowerCase()
     const correctAnswer = correctRiddle.toLowerCase()
@@ -52,7 +51,7 @@ const Room4 = () => {
       setShowMemory(true)
       setTimeout(() => {
         navigate('/exit-hall')
-      }, 8000) // Longer timeout to show full escape story
+      }, 3000) // Navigate to exit hall after showing lockdown message
     } else {
       setError('Security override failed. Incorrect response. Try again.')
       setRiddleAnswer('')
@@ -64,49 +63,17 @@ const Room4 = () => {
       handleRiddleSubmit()
     }
   }
+
   if (showMemory) {
     return (
       <div className="room-container">
         <div className="memory-fragment">
-          <h2 style={{ color: '#00ffff', marginBottom: '1rem' }}>VOICE RECOGNIZED. MEMORY FRAGMENT RESTORED.</h2>
-          <p style={{ fontSize: '1.2rem', fontStyle: 'italic', marginBottom: '2rem' }}>
-            You hear your own voice — this time, clear:<br />
-            "I wasn't supposed to become the subject. But no one else would do it. I had to forget to protect it.
-            I had to protect them from the truth... from me."
+          <h2 style={{ color: '#44ff44', marginBottom: '2rem', fontSize: '2rem' }}>
+            � FACILITY LOCKDOWN DISENGAGED
+          </h2>
+          <p style={{ fontSize: '1.1rem', marginBottom: '2rem', color: '#44ff44' }}>
+            Security doors unlocking... Emergency systems disabled...
           </p>
-          
-          {/* Final Escape Sequence */}
-          <div style={{ 
-            background: 'rgba(68, 255, 68, 0.1)', 
-            padding: '2rem', 
-            borderRadius: '15px',
-            border: '2px solid rgba(68, 255, 68, 0.3)',
-            marginTop: '2rem',
-            textAlign: 'center'
-          }}>
-            <h3 style={{ color: '#44ff44', marginBottom: '1.5rem', fontSize: '1.5rem' }}>🚪 FACILITY LOCKDOWN DISENGAGED</h3>
-            
-            <div style={{ fontSize: '1.1rem', lineHeight: '1.8', fontStyle: 'italic', color: '#e8e8e8' }}>
-              <p style={{ marginBottom: '1rem' }}>
-                The heavy blast doors begin to groan and slide open with a thunderous mechanical roar.
-              </p>
-              <p style={{ marginBottom: '1rem' }}>
-                For the first time in what feels like an eternity, you feel it — fresh air.
-              </p>
-              <p style={{ marginBottom: '1rem' }}>
-                Cool, clean air flows through the corridor, carrying with it the scent of rain and earth.
-              </p>
-              <p style={{ marginBottom: '1rem' }}>
-                Beyond the threshold, natural sunlight streams in, warm and golden.
-              </p>
-              <p style={{ marginBottom: '1rem', color: '#44ff44' }}>
-                You step forward, leaving the shadows of your past behind.
-              </p>
-              <p style={{ color: '#00ffff', fontSize: '1.2rem', fontWeight: 'bold' }}>
-                You are free.
-              </p>
-            </div>
-          </div>
           
           <div className="loading" style={{ margin: '2rem auto' }}></div>
           <p>Accessing final exit...</p>
