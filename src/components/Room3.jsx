@@ -81,19 +81,26 @@ const Room3 = () => {
   }
 
   const checkSequence = () => {
-    if (videoSegments.includes('')) {
-      setError('Please arrange all video segments')
+    // Check if any segments are placed
+    const placedSegments = videoSegments.filter(segment => segment !== '')
+    
+    if (placedSegments.length === 0) {
+      setError('Please place at least one video segment')
       return
     }
 
+    // Check if the placed segments are in correct order (ignoring empty slots)
+    const nonEmptySegments = videoSegments.filter(segment => segment !== '')
+    const nonEmptyCorrectSequence = correctSequence.slice(0, nonEmptySegments.length)
+    
     if (JSON.stringify(videoSegments) === JSON.stringify(correctSequence)) {
-      // Success - show reveal first, then terminal
+      // Perfect sequence - show reveal first, then terminal
       setShowReveal(true)
       setTimeout(() => {
         setShowTerminal(true)
       }, 4000)
-    } else {
-      // Error - show modal
+    } else if (placedSegments.length === 6) {
+      // All segments placed but wrong order - show error
       setStatusModalType('error')
       setShowStatusModal(true)
       
@@ -104,6 +111,15 @@ const Room3 = () => {
           setError('')
         }, 500)
       }, 2000)
+    } else {
+      // Partial sequence - show warning but allow reconstruction
+      setError(`Partial memory reconstruction (${placedSegments.length}/6 segments). Some memories may be corrupted or incomplete.`)
+      
+      // Show reveal with partial reconstruction
+      setShowReveal(true)
+      setTimeout(() => {
+        setShowTerminal(true)
+      }, 4000)
     }
   }
 
@@ -288,11 +304,8 @@ const Room3 = () => {
             <button 
               className="btn" 
               onClick={checkSequence}
-              disabled={videoSegments.includes('')}
               style={{ 
-                background: videoSegments.includes('') 
-                  ? '#666' 
-                  : 'linear-gradient(45deg, #ff9900, #cc7700)',
+                background: 'linear-gradient(45deg, #ff9900, #cc7700)',
                 minWidth: '180px'
               }}
             >
