@@ -78,7 +78,8 @@ const Room3 = () => {
     if (JSON.stringify(videoSegments) === JSON.stringify(correctSequence)) {
       setShowReveal(true)
       setTimeout(() => {
-        completeRoom('room3', { memorySequence: videoSegments })
+        completeRoom('room3')
+        updateGameState({ room3_memorySequence: videoSegments })
         navigate('/room4')
       }, 4000)
     } else {

@@ -103,9 +103,10 @@ const Room4 = () => {
   }
 
   const proceedToFinalRoom = () => {
-    completeRoom('room4', { 
-      neuralAlignment: neuralNodes.map(n => n.rotation),
-      confessionViewed: true 
+    completeRoom('room4')
+    updateGameState({ 
+      room4_neuralAlignment: neuralNodes.map(n => n.rotation),
+      room4_confessionViewed: true 
     })
     navigate('/exit-hall')
   }
