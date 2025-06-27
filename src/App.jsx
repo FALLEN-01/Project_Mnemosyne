@@ -52,12 +52,13 @@ function App() {
     isLoading: false // For Google Sheets operations
   })
 
-  // Google Sheets integration
-  const GOOGLE_SHEETS_URL = process.env.REACT_APP_GOOGLE_SHEETS_URL || ''
+  // Google Sheets integration - temporarily disabled for debugging
+  const GOOGLE_SHEETS_URL = '' // process.env.REACT_APP_GOOGLE_SHEETS_URL || ''
   
-  // Load progress from localStorage and Google Sheets
+  // Load progress from localStorage only (Google Sheets temporarily disabled)
   useEffect(() => {
-    loadProgress()
+    // Skip loading for now to debug
+    console.log('App loaded, gameState:', gameState)
   }, [])
 
   const loadProgress = async () => {
@@ -68,9 +69,9 @@ function App() {
         const parsed = JSON.parse(savedState)
         setGameState(prev => ({ ...prev, ...parsed }))
         
-        // If we have a team name, try to get latest from Google Sheets
-        if (parsed.teamName) {
-          await syncWithGoogleSheets(parsed.teamName)
+        // Only sync with Google Sheets if URL is configured and we have a team name
+        if (parsed.teamName && GOOGLE_SHEETS_URL) {
+          syncWithGoogleSheets(parsed.teamName)
         }
       }
     } catch (error) {
@@ -79,7 +80,10 @@ function App() {
   }
 
   const syncWithGoogleSheets = async (teamName) => {
-    if (!GOOGLE_SHEETS_URL || !teamName) return
+    if (!GOOGLE_SHEETS_URL || !teamName) {
+      console.log('Google Sheets URL not configured or no team name')
+      return
+    }
 
     try {
       setGameState(prev => ({ ...prev, isLoading: true }))
@@ -99,11 +103,14 @@ function App() {
           
           // Save to localStorage as backup
           localStorage.setItem('mnemosyne-progress', JSON.stringify(data.progress))
+        } else {
+          setGameState(prev => ({ ...prev, isLoading: false }))
         }
+      } else {
+        setGameState(prev => ({ ...prev, isLoading: false }))
       }
     } catch (error) {
       console.error('Error syncing with Google Sheets:', error)
-    } finally {
       setGameState(prev => ({ ...prev, isLoading: false }))
     }
   }
@@ -117,7 +124,7 @@ function App() {
     // Save to localStorage immediately
     localStorage.setItem('mnemosyne-progress', JSON.stringify(newState))
     
-    // Update Google Sheets if we have a team name
+    // Update Google Sheets if we have a team name and URL is configured
     if (newState.teamName && GOOGLE_SHEETS_URL) {
       try {
         await fetch(GOOGLE_SHEETS_URL, {
@@ -134,6 +141,7 @@ function App() {
         })
       } catch (error) {
         console.error('Error updating Google Sheets:', error)
+        // Don't block the game if Google Sheets fails
       }
     }
   }

@@ -17,26 +17,23 @@ const Intro = () => {
   const correctCode = '20217'
 
   useEffect(() => {
-    // Check if player has existing progress
-    if (gameState.teamName && gameState.roomsCompleted.length > 0) {
-      setShowRestoreOption(true)
-      setTeamName(gameState.teamName)
-    } else {
-      // Show normal intro sequence
-      const timer = setTimeout(() => {
-        setShowContent(true)
-      }, 1000)
+    // Temporarily disable progress checking for debugging
+    console.log('Intro component loaded, gameState:', gameState)
+    
+    // Always show normal intro sequence for now
+    const timer = setTimeout(() => {
+      setShowContent(true)
+    }, 1000)
 
-      const nameTimer = setTimeout(() => {
-        setShowNameInput(true)
-      }, 2500)
+    const nameTimer = setTimeout(() => {
+      setShowNameInput(true)
+    }, 2500)
 
-      return () => {
-        clearTimeout(timer)
-        clearTimeout(nameTimer)
-      }
+    return () => {
+      clearTimeout(timer)
+      clearTimeout(nameTimer)
     }
-  }, [gameState])
+  }, [])
 
   const handleRestoreProgress = () => {
     const route = getProgressRoute()
