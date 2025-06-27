@@ -410,38 +410,38 @@ const Room3 = () => {
                   : '1px solid rgba(255, 68, 68, 0.5)',
                 marginBottom: '1rem',
                 textAlign: 'center'
+              }}>              <div className="terminal" style={{ 
+                background: statusModalType === 'success' ? '#1a0f0a' : '#1a0a0a',
+                border: statusModalType === 'success' ? '2px solid #ff9900' : '2px solid #ff4444',
+                color: statusModalType === 'success' ? '#ff9900' : '#ff4444',
+                padding: '1rem',
+                borderRadius: '8px'
               }}>
-                {statusModalType === 'success' ? (
-                  <div>
-                    <p style={{ fontSize: '1.1rem', marginBottom: '1rem', color: '#ffcc99' }}>
-                      ARCHIVE SYSTEM STATUS: SEQUENCE COMPLETE
-                    </p>
-                    <p style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>
-                      MEMORY RECONSTRUCTION: 75% COMPLETE
-                    </p>
-                    <p style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>
-                      NEURAL PATTERN... STABILIZING
-                    </p>
-                    <p style={{ fontSize: '1rem', color: '#ffaa44' }}>
-                      ACCESSING CORE SYSTEMS...
-                    </p>
-                  </div>
-                ) : (
-                  <div>
-                    <p style={{ fontSize: '1.1rem', marginBottom: '1rem', color: '#ffcccc' }}>
-                      MEMORY ARCHIVE SYSTEM:
-                    </p>
-                    <p style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>
-                      CHRONOLOGICAL ERROR... DETECTED
-                    </p>
-                    <p style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>
-                      MEMORY FRAGMENTS... MISALIGNED
-                    </p>
-                    <p style={{ fontSize: '1rem', color: '#ff4444' }}>
-                      RESETTING ARCHIVE SEQUENCE...
-                    </p>
-                  </div>
-                )}
+                <div style={{ 
+                  color: statusModalType === 'success' ? '#ffcc00' : '#ffcccc', 
+                  fontWeight: 'bold', 
+                  marginBottom: '0.5rem' 
+                }}>
+                  {statusModalType === 'success' ? 'ARCHIVE STATUS:' : 'SEQUENCE ERROR:'}
+                </div>
+                <div style={{ lineHeight: '1.4' }}>
+                  {statusModalType === 'success' ? (
+                    <>
+                      MEMORY FRAGMENTS... {videoSegments.filter(s => s !== '').length}/6 LOADED<br />
+                      SEQUENCE INTEGRITY... VERIFIED<br />
+                      IDENTITY RECONSTRUCTION... ACTIVE<br />
+                      NEXT CHAMBER... UNLOCKING
+                    </>
+                  ) : (
+                    <>
+                      MEMORY FRAGMENTS... {videoSegments.filter(s => s !== '').length}/6 LOADED<br />
+                      SEQUENCE INTEGRITY... INCOMPLETE<br />
+                      IDENTITY RECONSTRUCTION... PENDING<br />
+                      NEXT CHAMBER... LOCKED
+                    </>
+                  )}
+                </div>
+              </div>
               </div>
             </div>
           </div>

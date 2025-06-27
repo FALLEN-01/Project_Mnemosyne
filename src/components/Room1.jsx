@@ -399,37 +399,38 @@ const Room1 = () => {
               marginBottom: '1rem',
               textAlign: 'center'
             }}>
-              {statusModalType === 'success' ? (
-                <div>
-                  <p style={{ fontSize: '1.1rem', marginBottom: '1rem', color: '#ccffcc' }}>
-                    SYSTEM STATUS: ACCESS GRANTED
-                  </p>
-                  <p style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>
-                    MEMORY RECONSTRUCTION: 25% COMPLETE
-                  </p>
-                  <p style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>
-                    ACCESSING DEEPER FACILITY LEVELS...
-                  </p>
-                  <p style={{ fontSize: '1rem', color: '#ffaa44' }}>
-                    WARNING: Neural echoes detected
-                  </p>
+              <div className="terminal" style={{ 
+                background: statusModalType === 'success' ? '#0a0a1a' : '#1a0a0a',
+                border: statusModalType === 'success' ? '2px solid #6666ff' : '2px solid #ff4444',
+                color: statusModalType === 'success' ? '#6666ff' : '#ff4444',
+                padding: '1rem',
+                borderRadius: '8px'
+              }}>
+                <div style={{ 
+                  color: statusModalType === 'success' ? '#88aaff' : '#ffcccc', 
+                  fontWeight: 'bold', 
+                  marginBottom: '0.5rem' 
+                }}>
+                  {statusModalType === 'success' ? 'SURVEILLANCE STATUS:' : 'SYSTEM ERROR:'}
                 </div>
-              ) : (
-                <div>
-                  <p style={{ fontSize: '1.1rem', marginBottom: '1rem', color: '#ffcccc' }}>
-                    SURVEILLANCE TRACKING SYSTEM:
-                  </p>
-                  <p style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>
-                    PATH SEQUENCE... INCORRECT
-                  </p>
-                  <p style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>
-                    NEURAL PATTERN... ANALYZING
-                  </p>
-                  <p style={{ fontSize: '1rem', color: '#ff4444' }}>
-                    RESETTING SURVEILLANCE SYSTEM...
-                  </p>
+                <div style={{ lineHeight: '1.4' }}>
+                  {statusModalType === 'success' ? (
+                    <>
+                      PATH SEQUENCE... {currentStep}/{correctSequence.length} STEPS<br />
+                      NEURAL PATTERN... RECOGNIZED<br />
+                      MEMORY ACCESS... GRANTED<br />
+                      NEXT CHAMBER... UNLOCKING
+                    </>
+                  ) : (
+                    <>
+                      PATH SEQUENCE... {currentStep}/9 STEPS<br />
+                      NEURAL PATTERN... ANALYZING<br />
+                      MEMORY ACCESS... RESTRICTED<br />
+                      NEXT CHAMBER... LOCKED
+                    </>
+                  )}
                 </div>
-              )}
+              </div>
             </div>
           </div>
         </div>

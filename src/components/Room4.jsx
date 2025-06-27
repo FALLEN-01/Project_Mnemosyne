@@ -474,38 +474,38 @@ const Room4 = () => {
                   : '1px solid rgba(255, 68, 68, 0.5)',
                 marginBottom: '1rem',
                 textAlign: 'center'
+              }}>              <div className="terminal" style={{ 
+                background: statusModalType === 'success' ? '#1a0f2d' : '#1a0a0a',
+                border: statusModalType === 'success' ? '2px solid #bb88ff' : '2px solid #ff4444',
+                color: statusModalType === 'success' ? '#bb88ff' : '#ff4444',
+                padding: '1rem',
+                borderRadius: '8px'
               }}>
-                {statusModalType === 'success' ? (
-                  <div>
-                    <p style={{ fontSize: '1.1rem', marginBottom: '1rem', color: '#ccaaff' }}>
-                      NEURAL CORE STATUS: SYNCHRONIZED
-                    </p>
-                    <p style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>
-                      NODES ALIGNED... 5/5
-                    </p>
-                    <p style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>
-                      PULSE FLOW... ACTIVE
-                    </p>
-                    <p style={{ fontSize: '1rem', color: '#ffaa44' }}>
-                      HOLOGRAM... BROADCASTING
-                    </p>
-                  </div>
-                ) : (
-                  <div>
-                    <p style={{ fontSize: '1.1rem', marginBottom: '1rem', color: '#ffcccc' }}>
-                      NEURAL CORE STATUS:
-                    </p>
-                    <p style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>
-                      NODES ALIGNED... MISALIGNED
-                    </p>
-                    <p style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>
-                      PULSE FLOW... STANDBY
-                    </p>
-                    <p style={{ fontSize: '1rem', color: '#ff4444' }}>
-                      ADJUSTING NODE ROTATIONS...
-                    </p>
-                  </div>
-                )}
+                <div style={{ 
+                  color: statusModalType === 'success' ? '#ccaaff' : '#ffcccc', 
+                  fontWeight: 'bold', 
+                  marginBottom: '0.5rem' 
+                }}>
+                  {statusModalType === 'success' ? 'NEURAL CORE STATUS:' : 'SYNC ERROR:'}
+                </div>
+                <div style={{ lineHeight: '1.4' }}>
+                  {statusModalType === 'success' ? (
+                    <>
+                      NODES ALIGNED... {neuralNodes.filter((n, index) => correctRotations[index] === n.rotation).length}/5<br />
+                      PULSE FLOW... ACTIVE<br />
+                      HOLOGRAM... BROADCASTING<br />
+                      INTEGRITY OVERWRITE... INITIATED
+                    </>
+                  ) : (
+                    <>
+                      NODES ALIGNED... {neuralNodes.filter((n, index) => correctRotations[index] === n.rotation).length}/5<br />
+                      PULSE FLOW... STANDBY<br />
+                      HOLOGRAM... OFFLINE<br />
+                      INTEGRITY OVERWRITE... PENDING
+                    </>
+                  )}
+                </div>
+              </div>
               </div>
             </div>
           </div>

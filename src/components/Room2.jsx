@@ -489,37 +489,38 @@ const Room2 = () => {
               marginBottom: '1rem',
               textAlign: 'center'
             }}>
-              {statusModalType === 'success' ? (
-                <div>
-                  <p style={{ fontSize: '1.1rem', marginBottom: '1rem', color: '#ccffff' }}>
-                    SYSTEM STATUS: FACILITY ACTIVATED
-                  </p>
-                  <p style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>
-                    KEYPAD... ACTIVE
-                  </p>
-                  <p style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>
-                    ACCESS CODE... VERIFIED
-                  </p>
-                  <p style={{ fontSize: '1rem', color: '#ffaa44' }}>
-                    RETINAL SCAN REQUIRED
-                  </p>
+              <div className="terminal" style={{ 
+                background: statusModalType === 'success' ? '#0a1a1a' : '#1a0a0a',
+                border: statusModalType === 'success' ? '2px solid #00ffff' : '2px solid #ff4444',
+                color: statusModalType === 'success' ? '#00ffff' : '#ff4444',
+                padding: '1rem',
+                borderRadius: '8px'
+              }}>
+                <div style={{ 
+                  color: statusModalType === 'success' ? '#66ffff' : '#ffcccc', 
+                  fontWeight: 'bold', 
+                  marginBottom: '0.5rem' 
+                }}>
+                  {statusModalType === 'success' ? 'FACILITY STATUS:' : 'CONTAINMENT ERROR:'}
                 </div>
-              ) : (
-                <div>
-                  <p style={{ fontSize: '1.1rem', marginBottom: '1rem', color: '#ffcccc' }}>
-                    CHEMICAL SECURITY SYSTEM:
-                  </p>
-                  <p style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>
-                    CONTAINMENT BREACH... LOCALIZED
-                  </p>
-                  <p style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>
-                    MEMORY RECONSTRUCTION... UNSTABLE
-                  </p>
-                  <p style={{ fontSize: '1rem', color: '#ff4444' }}>
-                    REALIGNING MOLECULAR COMPOUNDS...
-                  </p>
+                <div style={{ lineHeight: '1.4' }}>
+                  {statusModalType === 'success' ? (
+                    <>
+                      KEYPAD... ACTIVE<br />
+                      ACCESS CODE... VERIFIED<br />
+                      RETINAL SCAN... REQUIRED<br />
+                      NEXT CHAMBER... UNLOCKING
+                    </>
+                  ) : (
+                    <>
+                      KEYPAD... ACTIVE<br />
+                      ACCESS CODE... DENIED<br />
+                      MOLECULAR SEQUENCE... MISALIGNED<br />
+                      NEXT CHAMBER... LOCKED
+                    </>
+                  )}
                 </div>
-              )}
+              </div>
             </div>
           </div>
         </div>
