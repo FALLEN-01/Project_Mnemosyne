@@ -3,6 +3,7 @@ import { useState, createContext, useContext, useEffect } from 'react'
 import './App.css'
 
 // Import components
+import TeamEntry from './components/TeamEntry'
 import Intro from './components/Intro'
 import Room1 from './components/Room1'
 import Room2 from './components/Room2'
@@ -26,7 +27,8 @@ function AppRoutes() {
   
   return (
     <Routes key={location.pathname}>
-      <Route path="/" element={<Intro />} />
+      <Route path="/" element={<TeamEntry />} />
+      <Route path="/intro" element={<Intro />} />
       <Route path="/room1" element={<Room1 />} />
       <Route path="/room2" element={<Room2 />} />
       <Route path="/room3" element={<Room3 />} />
@@ -166,7 +168,7 @@ function App() {
     if (gameState.roomsCompleted.includes(2)) return '/room3'
     if (gameState.roomsCompleted.includes(1)) return '/room2'
     if (gameState.roomsCompleted.includes(0)) return '/room1'
-    return '/'
+    return '/intro'
   }
 
   return (
