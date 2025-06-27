@@ -21,6 +21,8 @@ const Room4 = () => {
   const [confessionStep, setConfessionStep] = useState(0)
   const [mindDialogue, setMindDialogue] = useState(false)
   const [showHint, setShowHint] = useState(false)
+  const [showStatusModal, setShowStatusModal] = useState(false)
+  const [statusModalType, setStatusModalType] = useState('') // 'success' or 'error'
 
   // Correct rotations for neural alignment (example pattern)
   const correctRotations = [45, 135, 270, 90, 315]
@@ -61,31 +63,46 @@ const Room4 = () => {
     const currentRotations = neuralNodes.map(node => node.rotation)
     
     if (JSON.stringify(currentRotations) === JSON.stringify(correctRotations)) {
-      setPulseActive(true)
+      // Success - show modal first
+      setStatusModalType('success')
+      setShowStatusModal(true)
       
-      // Animate pulse flow through nodes
-      neuralNodes.forEach((node, index) => {
-        setTimeout(() => {
-          setNeuralNodes(nodes => 
-            nodes.map(n => 
-              n.id === node.id ? { ...n, pulseFlow: 100 } : n
-            )
-          )
-        }, index * 500)
-      })
-
-      // Activate hologram after pulse completes
       setTimeout(() => {
-        setShowHologram(true)
-        startConfessionSequence()
-      }, neuralNodes.length * 500 + 1000)
+        setShowStatusModal(false)
+        setTimeout(() => {
+          setPulseActive(true)
+          
+          // Animate pulse flow through nodes
+          neuralNodes.forEach((node, index) => {
+            setTimeout(() => {
+              setNeuralNodes(nodes => 
+                nodes.map(n => 
+                  n.id === node.id ? { ...n, pulseFlow: 100 } : n
+                )
+              )
+            }, index * 500)
+          })
+
+          // Activate hologram after pulse completes
+          setTimeout(() => {
+            setShowHologram(true)
+            startConfessionSequence()
+          }, neuralNodes.length * 500 + 1000)
+        }, 500)
+      }, 3000)
     } else {
-      setError('Neural pathways misaligned - adjust node rotations')
+      // Error - show modal
+      setStatusModalType('error')
+      setShowStatusModal(true)
       
-      // Reset pulse flows
-      setNeuralNodes(nodes => 
-        nodes.map(node => ({ ...node, pulseFlow: 0 }))
-      )
+      setTimeout(() => {
+        setShowStatusModal(false)
+        // Reset pulse flows
+        setNeuralNodes(nodes => 
+          nodes.map(node => ({ ...node, pulseFlow: 0 }))
+        )
+        setError('')
+      }, 2000)
     }
   }
 
@@ -411,7 +428,88 @@ const Room4 = () => {
           </div>
         )}
 
-
+        {/* Status Modal */}
+        {showStatusModal && (
+          <div style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            background: 'rgba(0, 0, 0, 0.8)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 1000,
+            animation: 'fadeIn 0.3s ease-in'
+          }}>
+            <div style={{
+              background: statusModalType === 'success' 
+                ? 'rgba(187, 136, 255, 0.2)' 
+                : 'rgba(255, 68, 68, 0.2)',
+              border: statusModalType === 'success'
+                ? '2px solid #bb88ff'
+                : '2px solid #ff4444',
+              borderRadius: '15px',
+              padding: '2rem',
+              maxWidth: '500px',
+              margin: '2rem',
+              animation: 'fadeIn 1s ease-in'
+            }}>
+              <h3 style={{ 
+                color: statusModalType === 'success' ? '#bb88ff' : '#ff4444',
+                marginBottom: '1rem', 
+                textAlign: 'center',
+                fontSize: '1.3rem'
+              }}>
+                {statusModalType === 'success' ? '✅ NEURAL PATHWAYS ALIGNED' : '❌ SYNCHRONIZATION ERROR'}
+              </h3>
+              
+              <div style={{
+                background: 'rgba(0, 0, 0, 0.6)',
+                padding: '1.5rem',
+                borderRadius: '10px',
+                border: statusModalType === 'success'
+                  ? '1px solid rgba(187, 136, 255, 0.5)'
+                  : '1px solid rgba(255, 68, 68, 0.5)',
+                marginBottom: '1rem',
+                textAlign: 'center'
+              }}>
+                {statusModalType === 'success' ? (
+                  <div>
+                    <p style={{ fontSize: '1.1rem', marginBottom: '1rem', color: '#ccaaff' }}>
+                      NEURAL CORE STATUS: SYNCHRONIZED
+                    </p>
+                    <p style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>
+                      NODES ALIGNED... 5/5
+                    </p>
+                    <p style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>
+                      PULSE FLOW... ACTIVE
+                    </p>
+                    <p style={{ fontSize: '1rem', color: '#ffaa44' }}>
+                      HOLOGRAM... BROADCASTING
+                    </p>
+                  </div>
+                ) : (
+                  <div>
+                    <p style={{ fontSize: '1.1rem', marginBottom: '1rem', color: '#ffcccc' }}>
+                      NEURAL CORE STATUS:
+                    </p>
+                    <p style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>
+                      NODES ALIGNED... MISALIGNED
+                    </p>
+                    <p style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>
+                      PULSE FLOW... STANDBY
+                    </p>
+                    <p style={{ fontSize: '1rem', color: '#ff4444' }}>
+                      ADJUSTING NODE ROTATIONS...
+                    </p>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   )

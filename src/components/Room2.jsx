@@ -21,6 +21,8 @@ const Room2 = () => {
   const [showContent, setShowContent] = useState(false)
   const [selectedVials, setSelectedVials] = useState([])
   const [showRetinalScan, setShowRetinalScan] = useState(false)
+  const [showStatusModal, setShowStatusModal] = useState(false)
+  const [statusModalType, setStatusModalType] = useState('') // 'success' or 'error'
 
   // Chemical containment puzzle: 7R4UM4
   const correctCode = '7R4UM4'
@@ -79,12 +81,27 @@ const Room2 = () => {
     }
 
     if (enteredCode === correctCode) {
-      setShowRetinalScan(true)
+      // Success - show modal first, then retinal scan
+      setStatusModalType('success')
+      setShowStatusModal(true)
       setError('')
+      
+      setTimeout(() => {
+        setShowStatusModal(false)
+        setTimeout(() => {
+          setShowRetinalScan(true)
+        }, 500)
+      }, 3000)
     } else {
-      setError('Molecular sequence mismatch. Realigning compounds...')
+      // Error - show modal
+      setStatusModalType('error')
+      setShowStatusModal(true)
       setCode(['', '', '', '', '', ''])
-      setTimeout(() => setError(''), 2000)
+      
+      setTimeout(() => {
+        setShowStatusModal(false)
+        setError('')
+      }, 2000)
     }
   }
 
@@ -423,6 +440,89 @@ const Room2 = () => {
         >
           VERIFY MOLECULAR SEQUENCE
         </button>
+      )}
+
+      {/* Status Modal */}
+      {showStatusModal && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          background: 'rgba(0, 0, 0, 0.8)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 1000,
+          animation: 'fadeIn 0.3s ease-in'
+        }}>
+          <div style={{
+            background: statusModalType === 'success' 
+              ? 'rgba(0, 255, 255, 0.2)' 
+              : 'rgba(255, 68, 68, 0.2)',
+            border: statusModalType === 'success'
+              ? '2px solid #00ffff'
+              : '2px solid #ff4444',
+            borderRadius: '15px',
+            padding: '2rem',
+            maxWidth: '500px',
+            margin: '2rem',
+            animation: 'fadeIn 1s ease-in'
+          }}>
+            <h3 style={{ 
+              color: statusModalType === 'success' ? '#00ffff' : '#ff4444',
+              marginBottom: '1rem', 
+              textAlign: 'center',
+              fontSize: '1.3rem'
+            }}>
+              {statusModalType === 'success' ? '✅ MOLECULAR SEQUENCE VERIFIED' : '❌ CONTAINMENT BREACH'}
+            </h3>
+            
+            <div style={{
+              background: 'rgba(0, 0, 0, 0.6)',
+              padding: '1.5rem',
+              borderRadius: '10px',
+              border: statusModalType === 'success'
+                ? '1px solid rgba(0, 255, 255, 0.5)'
+                : '1px solid rgba(255, 68, 68, 0.5)',
+              marginBottom: '1rem',
+              textAlign: 'center'
+            }}>
+              {statusModalType === 'success' ? (
+                <div>
+                  <p style={{ fontSize: '1.1rem', marginBottom: '1rem', color: '#ccffff' }}>
+                    SYSTEM STATUS: FACILITY ACTIVATED
+                  </p>
+                  <p style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>
+                    KEYPAD... ACTIVE
+                  </p>
+                  <p style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>
+                    ACCESS CODE... VERIFIED
+                  </p>
+                  <p style={{ fontSize: '1rem', color: '#ffaa44' }}>
+                    RETINAL SCAN REQUIRED
+                  </p>
+                </div>
+              ) : (
+                <div>
+                  <p style={{ fontSize: '1.1rem', marginBottom: '1rem', color: '#ffcccc' }}>
+                    CHEMICAL SECURITY SYSTEM:
+                  </p>
+                  <p style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>
+                    CONTAINMENT BREACH... LOCALIZED
+                  </p>
+                  <p style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>
+                    MEMORY RECONSTRUCTION... UNSTABLE
+                  </p>
+                  <p style={{ fontSize: '1rem', color: '#ff4444' }}>
+                    REALIGNING MOLECULAR COMPOUNDS...
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
       )}
     </div>
   )

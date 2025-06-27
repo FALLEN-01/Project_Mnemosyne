@@ -12,6 +12,8 @@ const Room3 = () => {
   const [error, setError] = useState('')
   const [showReveal, setShowReveal] = useState(false)
   const [playingSegment, setPlayingSegment] = useState(null)
+  const [showStatusModal, setShowStatusModal] = useState(false)
+  const [statusModalType, setStatusModalType] = useState('') // 'success' or 'error'
 
   // Six memory video segments (A-F) that need to be sequenced correctly
   const memorySegments = {
@@ -76,18 +78,33 @@ const Room3 = () => {
     }
 
     if (JSON.stringify(videoSegments) === JSON.stringify(correctSequence)) {
-      setShowReveal(true)
+      // Success - show modal first
+      setStatusModalType('success')
+      setShowStatusModal(true)
+      
       setTimeout(() => {
-        completeRoom('room3')
-        updateGameState({ room3_memorySequence: videoSegments })
-        navigate('/room4')
-      }, 4000)
+        setShowStatusModal(false)
+        setTimeout(() => {
+          setShowReveal(true)
+          setTimeout(() => {
+            completeRoom('room3')
+            updateGameState({ room3_memorySequence: videoSegments })
+            navigate('/room4')
+          }, 4000)
+        }, 500)
+      }, 3000)
     } else {
-      setError('Sequence incorrect - memory fragments not aligned')
-      // Reset after failed attempt
+      // Error - show modal
+      setStatusModalType('error')
+      setShowStatusModal(true)
+      
       setTimeout(() => {
-        setVideoSegments(['', '', '', '', '', ''])
-      }, 1500)
+        setShowStatusModal(false)
+        setTimeout(() => {
+          setVideoSegments(['', '', '', '', '', ''])
+          setError('')
+        }, 500)
+      }, 2000)
     }
   }
 
@@ -343,6 +360,89 @@ const Room3 = () => {
 
             <div style={{ textAlign: 'center', fontSize: '0.9rem', color: '#cc7700' }}>
               Proceeding to Neural Sync Core...
+            </div>
+          </div>
+        )}
+
+        {/* Status Modal */}
+        {showStatusModal && (
+          <div style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            background: 'rgba(0, 0, 0, 0.8)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 1000,
+            animation: 'fadeIn 0.3s ease-in'
+          }}>
+            <div style={{
+              background: statusModalType === 'success' 
+                ? 'rgba(255, 153, 0, 0.2)' 
+                : 'rgba(255, 68, 68, 0.2)',
+              border: statusModalType === 'success'
+                ? '2px solid #ff9900'
+                : '2px solid #ff4444',
+              borderRadius: '15px',
+              padding: '2rem',
+              maxWidth: '500px',
+              margin: '2rem',
+              animation: 'fadeIn 1s ease-in'
+            }}>
+              <h3 style={{ 
+                color: statusModalType === 'success' ? '#ff9900' : '#ff4444',
+                marginBottom: '1rem', 
+                textAlign: 'center',
+                fontSize: '1.3rem'
+              }}>
+                {statusModalType === 'success' ? '✅ MEMORY SEQUENCE VERIFIED' : '❌ CHRONOLOGICAL ERROR'}
+              </h3>
+              
+              <div style={{
+                background: 'rgba(0, 0, 0, 0.6)',
+                padding: '1.5rem',
+                borderRadius: '10px',
+                border: statusModalType === 'success'
+                  ? '1px solid rgba(255, 153, 0, 0.5)'
+                  : '1px solid rgba(255, 68, 68, 0.5)',
+                marginBottom: '1rem',
+                textAlign: 'center'
+              }}>
+                {statusModalType === 'success' ? (
+                  <div>
+                    <p style={{ fontSize: '1.1rem', marginBottom: '1rem', color: '#ffcc99' }}>
+                      ARCHIVE SYSTEM STATUS: SEQUENCE COMPLETE
+                    </p>
+                    <p style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>
+                      MEMORY RECONSTRUCTION: 75% COMPLETE
+                    </p>
+                    <p style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>
+                      NEURAL PATTERN... STABILIZING
+                    </p>
+                    <p style={{ fontSize: '1rem', color: '#ffaa44' }}>
+                      ACCESSING CORE SYSTEMS...
+                    </p>
+                  </div>
+                ) : (
+                  <div>
+                    <p style={{ fontSize: '1.1rem', marginBottom: '1rem', color: '#ffcccc' }}>
+                      MEMORY ARCHIVE SYSTEM:
+                    </p>
+                    <p style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>
+                      CHRONOLOGICAL ERROR... DETECTED
+                    </p>
+                    <p style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>
+                      MEMORY FRAGMENTS... MISALIGNED
+                    </p>
+                    <p style={{ fontSize: '1rem', color: '#ff4444' }}>
+                      RESETTING ARCHIVE SEQUENCE...
+                    </p>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         )}

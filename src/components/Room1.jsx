@@ -21,6 +21,8 @@ const Room1 = () => {
   const [showMemory, setShowMemory] = useState(false)
   const [showContent, setShowContent] = useState(false)
   const [currentStep, setCurrentStep] = useState(0)
+  const [showStatusModal, setShowStatusModal] = useState(false)
+  const [statusModalType, setStatusModalType] = useState('') // 'success' or 'error'
 
   // Movement path puzzle: 3x3 grid sequence
   const correctSequence = [4, 1, 2, 5, 8, 7, 6, 3, 0] // Center -> Top-left -> Top-middle -> Middle-right -> Bottom-right -> Bottom-middle -> Bottom-left -> Top-right -> Middle-left
@@ -63,19 +65,32 @@ const Room1 = () => {
       if (index === correctSequence[currentStep]) {
         setCurrentStep(currentStep + 1)
         if (currentStep + 1 === correctSequence.length) {
-          // Puzzle completed
+          // Puzzle completed - show success modal
           updateGameState({ room1Sequence: correctSequence })
           completeRoom(1)
-          setShowMemory(true)
+          setStatusModalType('success')
+          setShowStatusModal(true)
           
           setTimeout(() => {
-            navigate('/room2')
+            setShowStatusModal(false)
+            setTimeout(() => {
+              setShowMemory(true)
+              setTimeout(() => {
+                navigate('/room2')
+              }, 3000)
+            }, 500)
           }, 3000)
         }
       } else {
-        setError('Incorrect path. The surveillance system is resetting...')
+        // Wrong path - show error modal
+        setStatusModalType('error')
+        setShowStatusModal(true)
         setCurrentStep(0)
-        setTimeout(() => setError(''), 2000)
+        
+        setTimeout(() => {
+          setShowStatusModal(false)
+          setError('')
+        }, 2000)
       }
     }
   }
@@ -334,6 +349,89 @@ const Room1 = () => {
           fontSize: '1.1rem'
         }}>
           {error}
+        </div>
+      )}
+
+      {/* Status Modal */}
+      {showStatusModal && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          background: 'rgba(0, 0, 0, 0.8)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 1000,
+          animation: 'fadeIn 0.3s ease-in'
+        }}>
+          <div style={{
+            background: statusModalType === 'success' 
+              ? 'rgba(68, 255, 68, 0.2)' 
+              : 'rgba(255, 68, 68, 0.2)',
+            border: statusModalType === 'success'
+              ? '2px solid #44ff44'
+              : '2px solid #ff4444',
+            borderRadius: '15px',
+            padding: '2rem',
+            maxWidth: '500px',
+            margin: '2rem',
+            animation: 'fadeIn 1s ease-in'
+          }}>
+            <h3 style={{ 
+              color: statusModalType === 'success' ? '#44ff44' : '#ff4444',
+              marginBottom: '1rem', 
+              textAlign: 'center',
+              fontSize: '1.3rem'
+            }}>
+              {statusModalType === 'success' ? '✅ SURVEILLANCE PATTERN RECOGNIZED' : '❌ PATH SEQUENCE ERROR'}
+            </h3>
+            
+            <div style={{
+              background: 'rgba(0, 0, 0, 0.6)',
+              padding: '1.5rem',
+              borderRadius: '10px',
+              border: statusModalType === 'success'
+                ? '1px solid rgba(68, 255, 68, 0.5)'
+                : '1px solid rgba(255, 68, 68, 0.5)',
+              marginBottom: '1rem',
+              textAlign: 'center'
+            }}>
+              {statusModalType === 'success' ? (
+                <div>
+                  <p style={{ fontSize: '1.1rem', marginBottom: '1rem', color: '#ccffcc' }}>
+                    SYSTEM STATUS: ACCESS GRANTED
+                  </p>
+                  <p style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>
+                    MEMORY RECONSTRUCTION: 25% COMPLETE
+                  </p>
+                  <p style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>
+                    ACCESSING DEEPER FACILITY LEVELS...
+                  </p>
+                  <p style={{ fontSize: '1rem', color: '#ffaa44' }}>
+                    WARNING: Neural echoes detected
+                  </p>
+                </div>
+              ) : (
+                <div>
+                  <p style={{ fontSize: '1.1rem', marginBottom: '1rem', color: '#ffcccc' }}>
+                    SURVEILLANCE TRACKING SYSTEM:
+                  </p>
+                  <p style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>
+                    PATH SEQUENCE... INCORRECT
+                  </p>
+                  <p style={{ fontSize: '1rem', marginBottom: '0.5rem' }}>
+                    NEURAL PATTERN... ANALYZING
+                  </p>
+                  <p style={{ fontSize: '1rem', color: '#ff4444' }}>
+                    RESETTING SURVEILLANCE SYSTEM...
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       )}
     </div>
