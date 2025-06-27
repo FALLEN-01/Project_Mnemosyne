@@ -135,59 +135,6 @@ const Room4 = () => {
       (conn[0] === nodeId2 && conn[1] === nodeId1)
     )
   }
-    } else {
-      // Create connection
-      const newConnection = [selectedNode, nodeId].sort()
-      const connectionExists = neuralConnections.some(conn => 
-        JSON.stringify(conn.sort()) === JSON.stringify(newConnection)
-      )
-      
-      if (!connectionExists) {
-        setNeuralConnections([...neuralConnections, newConnection])
-      }
-      setSelectedNode(null)
-    }
-  }
-
-  const clearConnections = () => {
-    setNeuralConnections([])
-    setSelectedNode(null)
-    setError('')
-  }
-
-  const handleRouteSubmit = () => {
-    // Check if all correct connections are made
-    const allCorrect = correctConnections.every(correctConn => 
-      neuralConnections.some(userConn => 
-        JSON.stringify(userConn.sort()) === JSON.stringify(correctConn.sort())
-      )
-    )
-    
-    if (allCorrect && neuralConnections.length === correctConnections.length) {
-      setCurrentStep(2)
-      setMindDialogue(0)
-      
-      // Auto-advance dialogue
-      const dialogueTimer = setInterval(() => {
-        setMindDialogue(prev => {
-          if (prev >= mindMessages.length - 1) {
-            clearInterval(dialogueTimer)
-            setTimeout(() => {
-              updateGameState({ room4Neural: 'COMPLETE' })
-              completeRoom(4)
-              setShowMemory(true)
-              setTimeout(() => navigate('/exit-hall'), 3000)
-            }, 2000)
-            return prev
-          }
-          return prev + 1
-        })
-      }, 3000)
-      
-    } else {
-      setError('Neural routing incomplete. Pulse flow disrupted. Check connections.')
-    }
-  }
 
   if (showMemory) {
     return (

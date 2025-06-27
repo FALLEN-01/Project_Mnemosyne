@@ -490,33 +490,6 @@ const TeamName = () => {
           animation: 'float 10s ease-in-out infinite'
         }}></div>
       </div>
-
-      <style jsx>{`
-        @keyframes manhwaPopupIn {
-          0% { opacity: 0; transform: scale(0.5); }
-          100% { opacity: 1; transform: scale(1); }
-        }
-        
-        @keyframes manhwaGlow {
-          0% { box-shadow: 0 0 20px currentColor; }
-          100% { box-shadow: 0 0 40px currentColor; }
-        }
-        
-        @keyframes binaryFlash {
-          0%, 100% { background: rgba(0, 255, 255, 0.2); }
-          50% { background: rgba(0, 255, 255, 0.8); }
-        }
-        
-        @keyframes fadeInSlow {
-          0% { opacity: 0; transform: translateY(20px); }
-          100% { opacity: 1; transform: translateY(0); }
-        }
-        
-        @keyframes float {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-20px); }
-        }
-      `}</style>
     </div>
   )
 }
