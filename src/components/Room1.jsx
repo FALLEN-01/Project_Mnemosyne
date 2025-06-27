@@ -264,72 +264,89 @@ const Room1 = () => {
 
           {/* Movement Path Grid - Floor Blocks */}
           <div style={{ 
-            display: 'grid',
-            gridTemplateColumns: 'repeat(3, 1fr)',
-            gap: 'clamp(2px, 0.5vw, 4px)',
+            display: 'flex',
+            justifyContent: 'center',
             width: '100%',
-            maxWidth: 'min(280px, 80vw)',
-            margin: '0 auto',
-            justifyItems: 'center',
-            background: 'rgba(0, 0, 0, 0.3)',
-            padding: 'clamp(8px, 2vw, 12px)',
-            borderRadius: '12px',
-            border: '2px solid rgba(102, 102, 255, 0.3)'
+            marginBottom: '2rem'
           }}>
-            {Array.from({ length: 9 }, (_, index) => (
-              <button
-                key={index}
-                onClick={() => handleGridClick(index)}
-                style={{
-                  width: 'clamp(55px, 10vw, 75px)',
-                  height: 'clamp(55px, 10vw, 75px)',
-                  background: currentStep > 0 && correctSequence.slice(0, currentStep).includes(index)
-                    ? 'linear-gradient(45deg, #6666ff, #4444cc)'
-                    : 'linear-gradient(145deg, rgba(102, 102, 255, 0.3), rgba(102, 102, 255, 0.1))',
-                  border: '1px solid rgba(102, 102, 255, 0.6)',
-                  borderRadius: '6px',
-                  color: '#ffffff',
-                  fontSize: 'clamp(0.6rem, 1.5vw, 0.8rem)',
-                  fontWeight: 'bold',
-                  cursor: 'pointer',
-                  transition: 'all 0.15s ease',
-                  fontFamily: 'Courier New, monospace',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  boxShadow: currentStep > 0 && correctSequence.slice(0, currentStep).includes(index)
-                    ? 'inset 0 2px 4px rgba(0, 0, 0, 0.3)'
-                    : '0 2px 4px rgba(0, 0, 0, 0.2), inset 0 1px 2px rgba(255, 255, 255, 0.1)'
-                }}
-                onMouseEnter={(e) => {
-                  if (!correctSequence.slice(0, currentStep).includes(index)) {
-                    e.target.style.background = 'linear-gradient(145deg, rgba(102, 102, 255, 0.5), rgba(102, 102, 255, 0.3))'
-                    e.target.style.transform = 'translateY(-1px)'
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  if (!correctSequence.slice(0, currentStep).includes(index)) {
-                    e.target.style.background = 'linear-gradient(145deg, rgba(102, 102, 255, 0.3), rgba(102, 102, 255, 0.1))'
-                    e.target.style.transform = 'translateY(0)'
-                  }
-                }}
-                onMouseDown={(e) => {
-                  e.target.style.transform = 'translateY(1px)'
-                }}
-                onMouseUp={(e) => {
-                  e.target.style.transform = correctSequence.slice(0, currentStep).includes(index) ? 'translateY(0)' : 'translateY(-1px)'
-                }}
-              >
-                {index === 0 ? 'TL' : 
-                 index === 1 ? 'TM' : 
-                 index === 2 ? 'TR' :
-                 index === 3 ? 'ML' :
-                 index === 4 ? 'C' :
-                 index === 5 ? 'MR' :
-                 index === 6 ? 'BL' :
-                 index === 7 ? 'BM' : 'BR'}
-              </button>
-            ))}
+            <div style={{ 
+              display: 'grid',
+              gridTemplateColumns: 'repeat(3, 1fr)',
+              gridTemplateRows: 'repeat(3, 1fr)',
+              gap: '2px',
+              width: '300px',
+              height: '300px',
+              background: 'linear-gradient(145deg, #1a1a3e, #0f0f2e)',
+              padding: '12px',
+              borderRadius: '20px',
+              border: '3px solid rgba(102, 102, 255, 0.4)',
+              boxShadow: 'inset 0 2px 8px rgba(0, 0, 0, 0.6), 0 8px 20px rgba(102, 102, 255, 0.2)'
+            }}>
+              {Array.from({ length: 9 }, (_, index) => (
+                <button
+                  key={index}
+                  onClick={() => handleGridClick(index)}
+                  style={{
+                    background: currentStep > 0 && correctSequence.slice(0, currentStep).includes(index)
+                      ? 'linear-gradient(145deg, rgba(102, 102, 255, 0.8), rgba(68, 68, 204, 0.6))'
+                      : 'linear-gradient(145deg, rgba(20, 30, 60, 0.9), rgba(10, 20, 40, 0.9))',
+                    border: '1px solid rgba(102, 102, 255, 0.3)',
+                    borderRadius: '10px',
+                    color: currentStep > 0 && correctSequence.slice(0, currentStep).includes(index) ? '#ffffff' : '#6666ff',
+                    fontSize: '1rem',
+                    fontWeight: 'bold',
+                    cursor: 'pointer',
+                    transition: 'all 0.15s ease',
+                    fontFamily: 'Courier New, monospace',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    boxShadow: currentStep > 0 && correctSequence.slice(0, currentStep).includes(index)
+                      ? 'inset 0 2px 6px rgba(0, 0, 0, 0.7), 0 0 15px rgba(102, 102, 255, 0.4)'
+                      : 'inset 0 1px 3px rgba(0, 0, 0, 0.5), 0 2px 4px rgba(0, 0, 0, 0.3)',
+                    textShadow: currentStep > 0 && correctSequence.slice(0, currentStep).includes(index)
+                      ? '0 0 8px rgba(255, 255, 255, 0.8)'
+                      : '0 0 8px rgba(102, 102, 255, 0.6)',
+                    position: 'relative',
+                    overflow: 'hidden'
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!correctSequence.slice(0, currentStep).includes(index)) {
+                      e.target.style.background = 'linear-gradient(145deg, rgba(102, 102, 255, 0.3), rgba(68, 68, 204, 0.2))'
+                      e.target.style.boxShadow = 'inset 0 1px 3px rgba(102, 102, 255, 0.3), 0 0 12px rgba(102, 102, 255, 0.4)'
+                      e.target.style.transform = 'translateY(-2px)'
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!correctSequence.slice(0, currentStep).includes(index)) {
+                      e.target.style.background = 'linear-gradient(145deg, rgba(20, 30, 60, 0.9), rgba(10, 20, 40, 0.9))'
+                      e.target.style.boxShadow = 'inset 0 1px 3px rgba(0, 0, 0, 0.5), 0 2px 4px rgba(0, 0, 0, 0.3)'
+                      e.target.style.transform = 'translateY(0)'
+                    }
+                  }}
+                  onMouseDown={(e) => {
+                    if (!correctSequence.slice(0, currentStep).includes(index)) {
+                      e.target.style.transform = 'translateY(2px)'
+                      e.target.style.boxShadow = 'inset 0 3px 6px rgba(0, 0, 0, 0.7)'
+                    }
+                  }}
+                  onMouseUp={(e) => {
+                    if (!correctSequence.slice(0, currentStep).includes(index)) {
+                      e.target.style.transform = 'translateY(-2px)'
+                    }
+                  }}
+                >
+                  {index === 0 ? 'TL' : 
+                   index === 1 ? 'TM' : 
+                   index === 2 ? 'TR' :
+                   index === 3 ? 'ML' :
+                   index === 4 ? 'C' :
+                   index === 5 ? 'MR' :
+                   index === 6 ? 'BL' :
+                   index === 7 ? 'BM' : 'BR'}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       </div>

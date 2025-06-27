@@ -24,17 +24,9 @@ const Intro = () => {
       return
     }
 
-    // Show intro content and keypad after delay
-    const timer = setTimeout(() => {
-      setShowContent(true)
-      setTimeout(() => {
-        setShowKeypad(true)
-      }, 2000)
-    }, 1000)
-
-    return () => {
-      clearTimeout(timer)
-    }
+    // Show intro content and keypad immediately
+    setShowContent(true)
+    setShowKeypad(true)
   }, [gameState.teamName, navigate])
 
   // Flickering effect for terminal displays
@@ -133,16 +125,13 @@ const Intro = () => {
             A faint humming surrounds you — the kind that feels more like a memory than a sound. You are alone.
           </p>
           
-          <div style={{ 
+          <div className="terminal" style={{ 
             background: '#000033',
             color: '#00ccff',
             border: '2px solid #0066cc',
-            margin: '1.5rem auto',
+            margin: '1.5rem 0',
             padding: '1.5rem',
-            fontFamily: 'Courier New, monospace',
-            maxWidth: '400px',
-            textAlign: 'center',
-            borderRadius: '8px'
+            fontFamily: 'Courier New, monospace'
           }}>
             <div style={{ color: '#ff4444', fontWeight: 'bold', marginBottom: '0.5rem' }}>
               TERMINAL DISPLAY:
@@ -285,45 +274,70 @@ const Intro = () => {
               ))}
             </div>
 
-            {/* Interactive Keypad */}
-            <div className="keypad-container">
-              <div className="keypad-grid">
+            {/* Interactive Keypad - Centered with Equal Spacing */}
+            <div style={{
+              display: 'flex',
+              justifyContent: 'center',
+              width: '100%',
+              marginBottom: '2rem'
+            }}>
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(3, 1fr)',
+                gridTemplateRows: 'repeat(4, 1fr)',
+                gap: '2px',
+                width: '240px',
+                height: '320px',
+                background: 'linear-gradient(145deg, #1a1a2e, #0f0f1e)',
+                padding: '8px',
+                borderRadius: '16px',
+                border: '3px solid rgba(0, 204, 255, 0.4)',
+                boxShadow: 'inset 0 2px 8px rgba(0, 0, 0, 0.6), 0 8px 20px rgba(0, 204, 255, 0.2)'
+              }}>
                 {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
                   <button
                     key={num}
                     onClick={() => handleKeypadPress(num.toString())}
                     disabled={code.length >= 5}
-                    className="keypad-button"
                     style={{
-                      background: 'linear-gradient(145deg, rgba(0, 204, 255, 0.2), rgba(0, 204, 255, 0.1))',
-                      border: '1px solid rgba(0, 204, 255, 0.6)',
+                      background: 'linear-gradient(145deg, rgba(15, 25, 45, 0.9), rgba(5, 15, 25, 0.9))',
+                      border: '1px solid rgba(0, 204, 255, 0.3)',
+                      borderRadius: '8px',
                       color: '#00ccff',
+                      fontSize: '1.5rem',
+                      fontWeight: 'bold',
+                      fontFamily: 'Courier New, monospace',
+                      cursor: code.length < 5 ? 'pointer' : 'not-allowed',
+                      transition: 'all 0.15s ease',
                       opacity: code.length >= 5 ? 0.5 : 1,
-                      cursor: code.length < 5 ? 'pointer' : 'not-allowed'
-                    }}
-                    onMouseDown={(e) => {
-                      if (code.length < 5) {
-                        e.target.style.transform = 'scale(0.95)'
-                        e.target.style.boxShadow = 'inset 0 2px 4px rgba(0, 0, 0, 0.3)'
-                      }
-                    }}
-                    onMouseUp={(e) => {
-                      if (code.length < 5) {
-                        e.target.style.transform = 'scale(1)'
-                        e.target.style.boxShadow = '0 0 15px rgba(0, 204, 255, 0.4)'
-                      }
+                      boxShadow: 'inset 0 1px 3px rgba(0, 0, 0, 0.5), 0 2px 4px rgba(0, 0, 0, 0.3)',
+                      textShadow: '0 0 8px rgba(0, 204, 255, 0.6)',
+                      position: 'relative',
+                      overflow: 'hidden'
                     }}
                     onMouseEnter={(e) => {
                       if (code.length < 5) {
-                        e.target.style.background = 'linear-gradient(145deg, rgba(0, 204, 255, 0.4), rgba(0, 204, 255, 0.2))'
-                        e.target.style.boxShadow = '0 0 15px rgba(0, 204, 255, 0.4)'
+                        e.target.style.background = 'linear-gradient(145deg, rgba(0, 204, 255, 0.2), rgba(0, 150, 200, 0.1))'
+                        e.target.style.boxShadow = 'inset 0 1px 3px rgba(0, 204, 255, 0.3), 0 0 12px rgba(0, 204, 255, 0.4)'
+                        e.target.style.transform = 'translateY(-1px)'
                       }
                     }}
                     onMouseLeave={(e) => {
                       if (code.length < 5) {
-                        e.target.style.background = 'linear-gradient(145deg, rgba(0, 204, 255, 0.2), rgba(0, 204, 255, 0.1))'
-                        e.target.style.boxShadow = '0 2px 4px rgba(0, 0, 0, 0.2)'
-                        e.target.style.transform = 'scale(1)'
+                        e.target.style.background = 'linear-gradient(145deg, rgba(15, 25, 45, 0.9), rgba(5, 15, 25, 0.9))'
+                        e.target.style.boxShadow = 'inset 0 1px 3px rgba(0, 0, 0, 0.5), 0 2px 4px rgba(0, 0, 0, 0.3)'
+                        e.target.style.transform = 'translateY(0)'
+                      }
+                    }}
+                    onMouseDown={(e) => {
+                      if (code.length < 5) {
+                        e.target.style.transform = 'translateY(1px)'
+                        e.target.style.boxShadow = 'inset 0 2px 4px rgba(0, 0, 0, 0.7)'
+                      }
+                    }}
+                    onMouseUp={(e) => {
+                      if (code.length < 5) {
+                        e.target.style.transform = 'translateY(-1px)'
                       }
                     }}
                   >
@@ -331,82 +345,96 @@ const Intro = () => {
                   </button>
                 ))}
                 
-                {/* Clear and Zero buttons */}
+                {/* Clear button */}
                 <button
                   onClick={handleClear}
-                  className="keypad-button keypad-clear"
                   style={{
-                    background: 'linear-gradient(145deg, rgba(255, 68, 68, 0.3), rgba(255, 68, 68, 0.2))',
-                    border: '1px solid rgba(255, 68, 68, 0.6)',
+                    background: 'linear-gradient(145deg, rgba(40, 15, 15, 0.9), rgba(25, 5, 5, 0.9))',
+                    border: '1px solid rgba(255, 68, 68, 0.4)',
+                    borderRadius: '8px',
                     color: '#ff4444',
-                    fontSize: '0.9rem'
-                  }}
-                  onMouseDown={(e) => {
-                    e.target.style.transform = 'scale(0.95)'
-                    e.target.style.boxShadow = 'inset 0 2px 4px rgba(0, 0, 0, 0.3)'
-                  }}
-                  onMouseUp={(e) => {
-                    e.target.style.transform = 'scale(1)'
-                    e.target.style.boxShadow = '0 0 15px rgba(255, 68, 68, 0.4)'
+                    fontSize: '0.9rem',
+                    fontWeight: 'bold',
+                    fontFamily: 'Courier New, monospace',
+                    cursor: 'pointer',
+                    transition: 'all 0.15s ease',
+                    boxShadow: 'inset 0 1px 3px rgba(0, 0, 0, 0.5), 0 2px 4px rgba(0, 0, 0, 0.3)',
+                    textShadow: '0 0 8px rgba(255, 68, 68, 0.6)'
                   }}
                   onMouseEnter={(e) => {
-                    e.target.style.background = 'linear-gradient(145deg, rgba(255, 68, 68, 0.5), rgba(255, 68, 68, 0.3))'
-                    e.target.style.boxShadow = '0 0 15px rgba(255, 68, 68, 0.4)'
+                    e.target.style.background = 'linear-gradient(145deg, rgba(255, 68, 68, 0.3), rgba(200, 50, 50, 0.2))'
+                    e.target.style.boxShadow = 'inset 0 1px 3px rgba(255, 68, 68, 0.3), 0 0 12px rgba(255, 68, 68, 0.4)'
+                    e.target.style.transform = 'translateY(-1px)'
                   }}
                   onMouseLeave={(e) => {
-                    e.target.style.background = 'linear-gradient(145deg, rgba(255, 68, 68, 0.3), rgba(255, 68, 68, 0.2))'
-                    e.target.style.boxShadow = '0 2px 4px rgba(0, 0, 0, 0.2)'
-                    e.target.style.transform = 'scale(1)'
+                    e.target.style.background = 'linear-gradient(145deg, rgba(40, 15, 15, 0.9), rgba(25, 5, 5, 0.9))'
+                    e.target.style.boxShadow = 'inset 0 1px 3px rgba(0, 0, 0, 0.5), 0 2px 4px rgba(0, 0, 0, 0.3)'
+                    e.target.style.transform = 'translateY(0)'
+                  }}
+                  onMouseDown={(e) => {
+                    e.target.style.transform = 'translateY(1px)'
+                    e.target.style.boxShadow = 'inset 0 2px 4px rgba(0, 0, 0, 0.7)'
+                  }}
+                  onMouseUp={(e) => {
+                    e.target.style.transform = 'translateY(-1px)'
                   }}
                 >
                   CLR
                 </button>
                 
+                {/* Zero button */}
                 <button
                   onClick={() => handleKeypadPress('0')}
                   disabled={code.length >= 5}
-                  className="keypad-button"
                   style={{
-                    background: 'linear-gradient(145deg, rgba(0, 204, 255, 0.2), rgba(0, 204, 255, 0.1))',
-                    border: '1px solid rgba(0, 204, 255, 0.6)',
+                    background: 'linear-gradient(145deg, rgba(15, 25, 45, 0.9), rgba(5, 15, 25, 0.9))',
+                    border: '1px solid rgba(0, 204, 255, 0.3)',
+                    borderRadius: '8px',
                     color: '#00ccff',
+                    fontSize: '1.5rem',
+                    fontWeight: 'bold',
+                    fontFamily: 'Courier New, monospace',
+                    cursor: code.length < 5 ? 'pointer' : 'not-allowed',
+                    transition: 'all 0.15s ease',
                     opacity: code.length >= 5 ? 0.5 : 1,
-                    cursor: code.length < 5 ? 'pointer' : 'not-allowed'
-                  }}
-                  onMouseDown={(e) => {
-                    if (code.length < 5) {
-                      e.target.style.transform = 'scale(0.95)'
-                      e.target.style.boxShadow = 'inset 0 2px 4px rgba(0, 0, 0, 0.3)'
-                    }
-                  }}
-                  onMouseUp={(e) => {
-                    if (code.length < 5) {
-                      e.target.style.transform = 'scale(1)'
-                      e.target.style.boxShadow = '0 0 15px rgba(0, 204, 255, 0.4)'
-                    }
+                    boxShadow: 'inset 0 1px 3px rgba(0, 0, 0, 0.5), 0 2px 4px rgba(0, 0, 0, 0.3)',
+                    textShadow: '0 0 8px rgba(0, 204, 255, 0.6)'
                   }}
                   onMouseEnter={(e) => {
                     if (code.length < 5) {
-                      e.target.style.background = 'linear-gradient(145deg, rgba(0, 204, 255, 0.4), rgba(0, 204, 255, 0.2))'
-                      e.target.style.boxShadow = '0 0 15px rgba(0, 204, 255, 0.4)'
+                      e.target.style.background = 'linear-gradient(145deg, rgba(0, 204, 255, 0.2), rgba(0, 150, 200, 0.1))'
+                      e.target.style.boxShadow = 'inset 0 1px 3px rgba(0, 204, 255, 0.3), 0 0 12px rgba(0, 204, 255, 0.4)'
+                      e.target.style.transform = 'translateY(-1px)'
                     }
                   }}
                   onMouseLeave={(e) => {
                     if (code.length < 5) {
-                      e.target.style.background = 'linear-gradient(145deg, rgba(0, 204, 255, 0.2), rgba(0, 204, 255, 0.1))'
-                      e.target.style.boxShadow = '0 2px 4px rgba(0, 0, 0, 0.2)'
-                      e.target.style.transform = 'scale(1)'
+                      e.target.style.background = 'linear-gradient(145deg, rgba(15, 25, 45, 0.9), rgba(5, 15, 25, 0.9))'
+                      e.target.style.boxShadow = 'inset 0 1px 3px rgba(0, 0, 0, 0.5), 0 2px 4px rgba(0, 0, 0, 0.3)'
+                      e.target.style.transform = 'translateY(0)'
+                    }
+                  }}
+                  onMouseDown={(e) => {
+                    if (code.length < 5) {
+                      e.target.style.transform = 'translateY(1px)'
+                      e.target.style.boxShadow = 'inset 0 2px 4px rgba(0, 0, 0, 0.7)'
+                    }
+                  }}
+                  onMouseUp={(e) => {
+                    if (code.length < 5) {
+                      e.target.style.transform = 'translateY(-1px)'
                     }
                   }}
                 >
                   0
                 </button>
                 
-                <div></div> {/* Empty space for grid alignment */}
+                {/* Empty space for proper 4x3 grid alignment */}
+                <div style={{ background: 'transparent' }}></div>
               </div>
             </div>
 
-            {/* Error Display */}
+            {/* Error Display - Now positioned below keypad */}
             {error && (
               <div style={{
                 color: '#ff4444',
@@ -415,8 +443,13 @@ const Intro = () => {
                 padding: '1rem',
                 borderRadius: '8px',
                 marginTop: '1rem',
+                marginBottom: '2rem',
                 fontSize: '0.9rem',
-                animation: 'pulse 1s infinite'
+                textAlign: 'center',
+                maxWidth: '400px',
+                margin: '1rem auto 2rem auto',
+                animation: 'pulse 1s infinite',
+                boxShadow: '0 0 15px rgba(255, 68, 68, 0.2)'
               }}>
                 {error}
               </div>
@@ -442,17 +475,12 @@ const Intro = () => {
         )}
       </div>
 
-      <div style={{ 
+      <div className="terminal" style={{ 
         marginTop: '2rem', 
         maxWidth: '500px',
-        margin: '2rem auto 0 auto',
         background: '#000033',
         color: '#00ccff',
-        border: '2px solid #0066cc',
-        padding: '1.5rem',
-        fontFamily: 'Courier New, monospace',
-        borderRadius: '8px',
-        textAlign: 'center'
+        border: '2px solid #0066cc'
       }}>
         <div style={{ color: '#66aaff', fontWeight: 'bold', marginBottom: '0.5rem' }}>
           SYSTEM STATUS:
