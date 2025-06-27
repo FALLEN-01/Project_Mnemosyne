@@ -82,11 +82,6 @@ const Room4 = () => {
     } else {
       setError('Neural pathways misaligned - adjust node rotations')
       
-      // Show current vs target rotations for debugging
-      const currentRotations = neuralNodes.map(node => node.rotation)
-      console.log('Current rotations:', currentRotations)
-      console.log('Target rotations:', correctRotations)
-      
       // Reset pulse flows
       setNeuralNodes(nodes => 
         nodes.map(node => ({ ...node, pulseFlow: 0 }))
@@ -109,24 +104,23 @@ const Room4 = () => {
     }, 3000)
   }
 
-  const proceedToFinalRoom = () => {
-    completeRoom(4)
-    updateGameState({ 
-      room4_neuralAlignment: neuralNodes.map(n => n.rotation),
-      room4_confessionViewed: true 
-    })
-    navigate('/exit-hall')
-  }
-
-  const quickSolve = () => {
-    // Set all nodes to correct rotations for testing
-    setNeuralNodes(nodes => 
-      nodes.map((node, index) => ({
-        ...node,
-        rotation: correctRotations[index]
-      }))
-    )
-    setError('')
+  const proceedToFinalRoom = async () => {
+    try {
+      // Complete room and update game state
+      completeRoom(4)
+      await updateGameState({ 
+        room4_neuralAlignment: neuralNodes.map(n => n.rotation),
+        room4_confessionViewed: true 
+      })
+      
+      // Small delay to ensure state is updated
+      setTimeout(() => {
+        navigate('/exit-hall')
+      }, 100)
+      
+    } catch (error) {
+      console.error('Error in proceedToFinalRoom:', error)
+    }
   }
 
   return (
@@ -374,25 +368,22 @@ const Room4 = () => {
                     fontSize: '1.1rem',
                     lineHeight: '1.5'
                   }}>
-                    "Proceeding with integrity overwrite. The truth awaits in the final chamber."
+                    "Proceeding with integrity overwrite."
                   </div>
                   <div style={{
-                    background: 'rgba(187, 136, 255, 0.2)',
-                    border: '2px solid #bb88ff',
+                    background: 'rgba(255, 170, 136, 0.1)',
+                    border: '1px solid #ffaa88',
                     borderRadius: '10px',
-                    padding: '1rem',
-                    marginBottom: '2rem'
+                    padding: '1.5rem',
+                    marginBottom: '2rem',
+                    color: '#ffaa88',
+                    fontStyle: 'italic'
                   }}>
-                    <p style={{ 
-                      color: '#ffaa88',
-                      margin: '0 0 1rem 0',
-                      fontWeight: 'bold'
-                    }}>
-                      ⚠️ CRITICAL CHOICE POINT ⚠️
+                    <p style={{ margin: '0 0 1rem 0' }}>
+                      You stagger as the room flickers and powers down around you...
                     </p>
-                    <p style={{ color: '#ccaaff', margin: 0 }}>
-                      The final chamber holds the truth about Project Mnemosyne. 
-                      Are you ready to face what lies beyond?
+                    <p style={{ margin: 0 }}>
+                      The neural pathways dim. The hologram fades. The truth has been revealed.
                     </p>
                   </div>
                   <button 
@@ -407,7 +398,7 @@ const Room4 = () => {
                       animation: 'pulse 2s infinite'
                     }}
                   >
-                    🚪 Enter Final Chamber
+                    🚪 Exit to Final Chamber
                   </button>
                 </div>
               ) : (
@@ -459,41 +450,6 @@ const Room4 = () => {
             </div>
           </div>
         </div>
-
-        {/* Development Debug Panel */}
-        {import.meta.env.DEV && (
-          <div style={{
-            position: 'fixed',
-            top: '10px',
-            right: '10px',
-            background: 'rgba(0, 0, 0, 0.8)',
-            color: '#00ff00',
-            padding: '1rem',
-            borderRadius: '8px',
-            border: '1px solid #00ff00',
-            fontSize: '0.8rem',
-            zIndex: 1000
-          }}>
-            <div style={{ marginBottom: '0.5rem', fontWeight: 'bold' }}>DEBUG PANEL</div>
-            <button 
-              onClick={quickSolve}
-              style={{
-                background: '#006600',
-                color: '#00ff00',
-                border: '1px solid #00ff00',
-                padding: '0.5rem',
-                borderRadius: '4px',
-                cursor: 'pointer',
-                fontSize: '0.8rem',
-                marginBottom: '0.5rem',
-                display: 'block'
-              }}
-            >
-              Quick Solve Puzzle
-            </button>
-            <div>Aligned: {neuralNodes.filter((n, index) => correctRotations[index] === n.rotation).length}/5</div>
-          </div>
-        )}
       </div>
     </div>
   )

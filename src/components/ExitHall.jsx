@@ -17,10 +17,9 @@ const ExitHall = () => {
 
   const voiceEchoes = [
     "Erase it.",
-    "No, not yet.",
+    "No, not yet.", 
     "What if I deserve to remember?",
-    "The truth... or peace?",
-    "Choose wisely, Dr. Vale."
+    "The truth... or peace?"
   ]
 
   const correctAnswer = "forgetfulness"
@@ -96,8 +95,11 @@ const ExitHall = () => {
           color: '#ffff88',
           textShadow: '0 0 20px rgba(255, 255, 136, 0.8)'
         }}>
-          FINAL CHAMBER - THE ITOR
+          FINAL ROOM - ITOR CHAMBER
         </h1>
+        <p style={{ color: '#cccc66', fontSize: '1.1rem' }}>
+          🔘 A clean, round room. In the center: a console. One glowing button.
+        </p>
         <p style={{ color: '#cccc77', fontSize: '1.1rem' }}>
           ⚖️ DECISION NEXUS
         </p>
@@ -112,8 +114,8 @@ const ExitHall = () => {
           marginBottom: '2rem'
         }}>
           <p style={{ marginBottom: '1.5rem', fontSize: '1.1rem', lineHeight: '1.6' }}>
-            A perfectly round chamber with walls that pulse like breathing. In the center floats a singular chair.
-            You've reached the Itor — the choice chamber where all paths converge.
+            A clean, round room. In the center: a console. One glowing button.
+            You've reached the Itor Chamber — where the final choice awaits.
           </p>
           
           <div style={{
@@ -124,7 +126,7 @@ const ExitHall = () => {
             fontStyle: 'italic',
             color: '#ffffcc'
           }}>
-            Whispered voices echo from every direction, fragments of your former self debating the choice ahead.
+            The room echoes with fragments of your voice, trapped memories seeking resolution.
           </div>
         </div>
 
@@ -139,7 +141,7 @@ const ExitHall = () => {
             animation: 'fadeIn 1s ease-in'
           }}>
             <h3 style={{ color: '#ffff88', marginBottom: '1rem', textAlign: 'center' }}>
-              👤 MEMORY ECHOES
+              �️ VOICE FRAGMENTS
             </h3>
             
             <div style={{ textAlign: 'center', fontSize: '1.2rem', minHeight: '60px' }}>
@@ -170,7 +172,7 @@ const ExitHall = () => {
             animation: 'fadeIn 1s ease-in'
           }}>
             <h3 style={{ color: '#ffff88', marginBottom: '1rem', textAlign: 'center' }}>
-              🔮 THE FINAL RIDDLE
+              � FINAL TERMINAL
             </h3>
             
             <div style={{
@@ -186,12 +188,7 @@ const ExitHall = () => {
                 textAlign: 'center',
                 fontStyle: 'italic'
               }}>
-                "I am the gift that erases pain,<br />
-                The mercy that breaks memory's chain.<br />
-                When burdens grow too much to bear,<br />
-                I offer peace beyond compare.<br />
-                <br />
-                What am I?"
+                "The more you remember me, the less I exist. What am I?"
               </p>
             </div>
 
@@ -243,7 +240,7 @@ const ExitHall = () => {
             animation: 'fadeIn 1s ease-in'
           }}>
             <h3 style={{ color: '#ffff88', marginBottom: '2rem', textAlign: 'center' }}>
-              ⚖️ THE FINAL CHOICE
+              ⚖️ RESTORE ORIGINAL IDENTITY?
             </h3>
             
             <div style={{
@@ -259,13 +256,13 @@ const ExitHall = () => {
                 lineHeight: '1.6',
                 marginBottom: '1rem'
               }}>
-                Dr. Eon Vale, you stand at the threshold of your own creation.
+                The decision interface appears before you.
               </p>
               <p style={{ 
                 fontSize: '1.1rem', 
                 color: '#ffffcc'
               }}>
-                Project Mnemosyne can grant you the peace you sought... or you can reclaim your memories, your pain, your truth.
+                Will you restore your original identity, or let the purge complete?
               </p>
             </div>
 
@@ -277,36 +274,32 @@ const ExitHall = () => {
             }}>
               <button 
                 className="btn" 
-                onClick={() => handleFinalChoice('forget')}
-                style={{ 
-                  background: 'linear-gradient(45deg, #666666, #999999)',
-                  color: '#fff',
-                  fontSize: '1.1rem',
-                  padding: '1.5rem 2rem',
-                  minWidth: '200px'
-                }}
-              >
-                🌫️ FORGET EVERYTHING
-                <div style={{ fontSize: '0.9rem', opacity: 0.8, marginTop: '0.5rem' }}>
-                  Embrace the peace of oblivion
-                </div>
-              </button>
-              
-              <button 
-                className="btn" 
                 onClick={() => handleFinalChoice('remember')}
                 style={{ 
                   background: 'linear-gradient(45deg, #ffff88, #cccc77)',
                   color: '#000',
-                  fontSize: '1.1rem',
+                  fontSize: '1.3rem',
                   padding: '1.5rem 2rem',
-                  minWidth: '200px'
+                  minWidth: '150px',
+                  fontWeight: 'bold'
                 }}
               >
-                🧠 REMEMBER EVERYTHING
-                <div style={{ fontSize: '0.9rem', opacity: 0.8, marginTop: '0.5rem' }}>
-                  Reclaim your painful truth
-                </div>
+                YES
+              </button>
+              
+              <button 
+                className="btn" 
+                onClick={() => handleFinalChoice('forget')}
+                style={{ 
+                  background: 'linear-gradient(45deg, #666666, #999999)',
+                  color: '#fff',
+                  fontSize: '1.3rem',
+                  padding: '1.5rem 2rem',
+                  minWidth: '150px',
+                  fontWeight: 'bold'
+                }}
+              >
+                NO
               </button>
             </div>
           </div>
@@ -323,7 +316,7 @@ const ExitHall = () => {
             animation: 'fadeIn 1s ease-in'
           }}>
             <h3 style={{ color: '#ffff88', marginBottom: '1rem', textAlign: 'center' }}>
-              {endingScene === 'forget' ? '🌫️ ENDING: FORGOTTEN' : '🧠 ENDING: REMEMBERED'}
+              {endingScene === 'forget' ? '❓ PRESS "NO"' : '☢ PRESS "YES"'}
             </h3>
             
             <div style={{
@@ -336,15 +329,22 @@ const ExitHall = () => {
               {endingScene === 'forget' ? (
                 <div style={{ textAlign: 'center', fontSize: '1.1rem', lineHeight: '1.6' }}>
                   <p style={{ marginBottom: '1rem' }}>
-                    The chair embraces you like an old friend. Warm light floods your mind, 
-                    washing away decades of guilt, pain, and regret.
+                    The purge restarts.
                   </p>
                   <p style={{ marginBottom: '1rem' }}>
-                    You feel yourself dissolving... becoming lighter... becoming nothing.
+                    You collapse.
+                  </p>
+                  <p style={{ marginBottom: '1rem' }}>
+                    Fade to white.
+                  </p>
+                  <p style={{ marginBottom: '1rem' }}>
+                    You awaken again, unsure of what was lost.
+                  </p>
+                  <p style={{ marginBottom: '1rem' }}>
+                    The doors open.
                   </p>
                   <p style={{ fontStyle: 'italic', color: '#ffffcc' }}>
-                    In the end, there is only peace. Dr. Eon Vale sleeps forever, 
-                    and someone new awakens in his place — unburdened, innocent, free.
+                    You step out into the unknown, with no memory but a strange calm.
                   </p>
                   <div style={{ 
                     marginTop: '2rem', 
@@ -353,23 +353,25 @@ const ExitHall = () => {
                     borderRadius: '8px',
                     background: 'rgba(255, 255, 136, 0.1)'
                   }}>
-                    <strong>You chose the path of mercy.</strong><br />
-                    Sometimes forgetting is the kindest act of all.
+                    <strong>You have escaped — but you are not the same.</strong>
                   </div>
                 </div>
               ) : (
                 <div style={{ textAlign: 'center', fontSize: '1.1rem', lineHeight: '1.6' }}>
                   <p style={{ marginBottom: '1rem' }}>
-                    The memories flood back like a broken dam — every moment, every mistake, 
-                    every life lost in your pursuit of "healing."
+                    You remember. The ethics breach. The deaths. Your mistake.
                   </p>
                   <p style={{ marginBottom: '1rem' }}>
-                    The car accident. The family you destroyed. The guilt that drove you to create 
-                    Project Mnemosyne. The patients you experimented on.
+                    You feel the weight of every moment you erased.
+                  </p>
+                  <p style={{ marginBottom: '1rem' }}>
+                    The doors open.
+                  </p>
+                  <p style={{ marginBottom: '1rem' }}>
+                    You walk out carrying everything.
                   </p>
                   <p style={{ fontStyle: 'italic', color: '#ffffcc' }}>
-                    It hurts. God, it hurts so much. But it's yours. It's real. 
-                    You are Dr. Eon Vale, flawed and broken and human.
+                    But not whole.
                   </p>
                   <div style={{ 
                     marginTop: '2rem', 
@@ -378,26 +380,10 @@ const ExitHall = () => {
                     borderRadius: '8px',
                     background: 'rgba(255, 255, 136, 0.1)'
                   }}>
-                    <strong>You chose the path of truth.</strong><br />
-                    The hardest courage is facing who you really are.
+                    <strong>You have escaped — but you are no longer whole.</strong>
                   </div>
                 </div>
               )}
-            </div>
-
-            <div style={{ textAlign: 'center' }}>
-              <button 
-                className="btn" 
-                onClick={restartGame}
-                style={{ 
-                  background: 'linear-gradient(45deg, #ffff88, #cccc77)',
-                  color: '#000',
-                  fontSize: '1.1rem',
-                  padding: '1rem 2rem'
-                }}
-              >
-                🔄 Begin Again
-              </button>
             </div>
           </div>
         )}
