@@ -2,40 +2,54 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useGameState } from '../App'
 
+// === VISUAL & SOUND NOTES ===
+// Archive: Orange/Shadow | VHS glitch, echo FX | Voice loops
+
 const Room3 = () => {
   const navigate = useNavigate()
   const { gameState, updateGameState, completeRoom } = useGameState()
-  const [selectedLog, setSelectedLog] = useState('')
-  const [audioSequence, setAudioSequence] = useState([])
+  const [videoSegments, setVideoSegments] = useState(['', '', '', '', '', ''])
   const [currentStep, setCurrentStep] = useState(1)
   const [error, setError] = useState('')
-  const [showMemory, setShowMemory] = useState(false)
-  const [playingLog, setPlayingLog] = useState(null)
+  const [showReveal, setShowReveal] = useState(false)
+  const [playingSegment, setPlayingSegment] = useState(null)
 
-  // Video logs with timestamps and corruption levels
-  const videoLogs = {
-    LOG_001: { 
-      timestamp: '2087.03.15', 
-      status: 'CORRUPTED',
-      snippet: 'Project M.I.N.D. initialization... subjects responding well...',
-      corruption: 'high'
+  // Six memory video segments (A-F) that need to be sequenced correctly
+  const memorySegments = {
+    A: { 
+      content: 'Subject exhibits... abnormal neural activity...',
+      audioTone: 'high-pitch',
+      glitchLevel: 'medium'
     },
-    LOG_047: { 
-      timestamp: '2087.11.23', 
-      status: 'PARTIAL',
-      snippet: 'Ethical concerns raised by the board... proceeding anyway...',
-      corruption: 'medium'
+    B: { 
+      content: 'Identity fragmentation accelerating... memory gaps forming...',
+      audioTone: 'low-rumble',
+      glitchLevel: 'high'
     },
-    LOG_101: { 
-      timestamp: '2088.01.07', 
-      status: 'INTACT',
-      snippet: 'I am Dr. Eon Vale... if you find this, I tried to stop it...',
-      corruption: 'low'
+    C: { 
+      content: 'Dr. Eon Vale, personal log... what have I done...',
+      audioTone: 'clear',
+      glitchLevel: 'low'
+    },
+    D: { 
+      content: 'The board demands results... ethics be damned...',
+      audioTone: 'distorted',
+      glitchLevel: 'extreme'
+    },
+    E: { 
+      content: 'If you find this... I failed... I am you...',
+      audioTone: 'whisper',
+      glitchLevel: 'low'
+    },
+    F: { 
+      content: 'Memory reconstruction protocol... initiating wipe...',
+      audioTone: 'static',
+      glitchLevel: 'high'
     }
   }
 
-  const correctLog = 'LOG_101'
-  const correctSequence = ['ALPHA', 'OMEGA', 'DELTA', 'THETA']
+  // Correct sequence based on story chronology: C-A-D-F-B-E
+  const correctSequence = ['C', 'A', 'D', 'F', 'B', 'E']
 
   useEffect(() => {
     // Redirect to team name entry if no team name is set
@@ -45,9 +59,42 @@ const Room3 = () => {
     }
   }, [gameState.teamName, navigate])
 
-  const handleLogSelect = (logId) => {
-    setSelectedLog(logId)
+  const handleSegmentSelect = (position, segment) => {
+    const newSegments = [...videoSegments]
+    newSegments[position] = segment
+    setVideoSegments(newSegments)
     setError('')
+    
+    // Play segment preview
+    setPlayingSegment(segment)
+    setTimeout(() => setPlayingSegment(null), 2000)
+  }
+
+  const checkSequence = () => {
+    if (videoSegments.includes('')) {
+      setError('Please arrange all video segments')
+      return
+    }
+
+    if (JSON.stringify(videoSegments) === JSON.stringify(correctSequence)) {
+      setShowReveal(true)
+      setTimeout(() => {
+        completeRoom('room3', { memorySequence: videoSegments })
+        navigate('/room4')
+      }, 4000)
+    } else {
+      setError('Sequence incorrect - memory fragments not aligned')
+      // Reset after failed attempt
+      setTimeout(() => {
+        setVideoSegments(['', '', '', '', '', ''])
+      }, 1500)
+    }
+  }
+
+  const clearSequence = () => {
+    setVideoSegments(['', '', '', '', '', ''])
+    setError('')
+  }
     
     // Simulate playing the log
     setPlayingLog(logId)
