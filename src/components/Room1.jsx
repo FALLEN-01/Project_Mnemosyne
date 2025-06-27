@@ -25,6 +25,7 @@ const Room1 = () => {
   const [showStatusModal, setShowStatusModal] = useState(false)
   const [statusModalType, setStatusModalType] = useState('') // 'success' or 'error'
   const [showTerminal, setShowTerminal] = useState(false)
+  const [clickedBlocks, setClickedBlocks] = useState([]) // Track which blocks have been clicked
 
   // Movement path puzzle: 3x3 grid sequence
   const correctSequence = [4, 1, 2, 5, 8, 7, 6, 3, 0] // Center -> Top-left -> Top-middle -> Middle-right -> Bottom-right -> Bottom-middle -> Bottom-left -> Top-right -> Middle-left
@@ -63,6 +64,11 @@ const Room1 = () => {
   }
 
   const handleGridClick = (index) => {
+    // Add this block to clicked blocks if not already clicked
+    if (!clickedBlocks.includes(index)) {
+      setClickedBlocks([...clickedBlocks, index])
+    }
+
     if (index === correctSequence[currentStep]) {
       setCurrentStep(currentStep + 1)
       if (currentStep + 1 === correctSequence.length) {
@@ -72,15 +78,18 @@ const Room1 = () => {
         setShowTerminal(true)
       }
     } else {
-      // Wrong path - show error modal and reset
-      setStatusModalType('error')
-      setShowStatusModal(true)
-      setCurrentStep(0)
-      
-      setTimeout(() => {
-        setShowStatusModal(false)
-        setError('')
-      }, 2000)
+      // Wrong path - only show error if all 9 blocks have been clicked
+      if (clickedBlocks.length >= 8) { // 8 because we're adding current one
+        setStatusModalType('error')
+        setShowStatusModal(true)
+        setCurrentStep(0)
+        setClickedBlocks([]) // Reset clicked blocks
+        
+        setTimeout(() => {
+          setShowStatusModal(false)
+          setError('')
+        }, 2000)
+      }
     }
   }
 
