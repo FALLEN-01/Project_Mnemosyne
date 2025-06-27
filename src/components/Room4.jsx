@@ -25,19 +25,19 @@ const Room4 = () => {
   const getNodePositions = () => {
     if (isMobile) {
       return [
-        { id: 'A1', x: 150, y: 80, rotation: 0, locked: false, pulseFlow: 0 },  // A slightly higher
-        { id: 'B2', x: 450, y: 80, rotation: 90, locked: false, pulseFlow: 0 }, // B slightly higher
-        { id: 'C3', x: 300, y: 250, rotation: 180, locked: false, pulseFlow: 0 }, // C unchanged
-        { id: 'D4', x: 150, y: 420, rotation: 270, locked: false, pulseFlow: 0 }, // D slightly lower
-        { id: 'E5', x: 450, y: 420, rotation: 45, locked: false, pulseFlow: 0 }   // E slightly lower
+        { id: 'A1', x: 25, y: 18, rotation: 0, locked: false, pulseFlow: 0 },  // A slightly higher (left-top)
+        { id: 'B2', x: 75, y: 18, rotation: 90, locked: false, pulseFlow: 0 }, // B slightly higher (right-top)
+        { id: 'C3', x: 50, y: 50, rotation: 180, locked: false, pulseFlow: 0 }, // C center
+        { id: 'D4', x: 25, y: 82, rotation: 270, locked: false, pulseFlow: 0 }, // D slightly lower (left-bottom)
+        { id: 'E5', x: 75, y: 82, rotation: 45, locked: false, pulseFlow: 0 }   // E slightly lower (right-bottom)
       ]
     } else {
       return [
-        { id: 'A1', x: 150, y: 100, rotation: 0, locked: false, pulseFlow: 0 },
-        { id: 'B2', x: 450, y: 100, rotation: 90, locked: false, pulseFlow: 0 },
-        { id: 'C3', x: 300, y: 250, rotation: 180, locked: false, pulseFlow: 0 },
-        { id: 'D4', x: 150, y: 400, rotation: 270, locked: false, pulseFlow: 0 },
-        { id: 'E5', x: 450, y: 400, rotation: 45, locked: false, pulseFlow: 0 }
+        { id: 'A1', x: 25, y: 20, rotation: 0, locked: false, pulseFlow: 0 },
+        { id: 'B2', x: 75, y: 20, rotation: 90, locked: false, pulseFlow: 0 },
+        { id: 'C3', x: 50, y: 50, rotation: 180, locked: false, pulseFlow: 0 },
+        { id: 'D4', x: 25, y: 80, rotation: 270, locked: false, pulseFlow: 0 },
+        { id: 'E5', x: 75, y: 80, rotation: 45, locked: false, pulseFlow: 0 }
       ]
     }
   }
@@ -146,8 +146,8 @@ const Room4 = () => {
       
       if (step >= confessionMessages.length) {
         clearInterval(interval)
-        // After all messages displayed, show continue button (no auto-navigation)
-        // The continue button will handle navigation when clicked
+        // Set confession step to final value to trigger continue button
+        setConfessionStep(confessionMessages.length)
       }
     }, 3000)
   }
@@ -230,34 +230,34 @@ const Room4 = () => {
                 height: '100%',
                 zIndex: 1
               }}
-              viewBox="0 0 600 500"
+              viewBox="0 0 100 100"
               preserveAspectRatio="xMidYMid meet"
             >
               {/* Connection lines - adjust for mobile */}
               {isMobile ? (
                 <>
-                  <line x1="150" y1="80" x2="300" y2="250" stroke="rgba(187, 136, 255, 0.3)" strokeWidth="2" />
-                  <line x1="450" y1="80" x2="300" y2="250" stroke="rgba(187, 136, 255, 0.3)" strokeWidth="2" />
-                  <line x1="300" y1="250" x2="150" y2="420" stroke="rgba(187, 136, 255, 0.3)" strokeWidth="2" />
-                  <line x1="300" y1="250" x2="450" y2="420" stroke="rgba(187, 136, 255, 0.3)" strokeWidth="2" />
-                  <line x1="150" y1="80" x2="450" y2="80" stroke="rgba(187, 136, 255, 0.3)" strokeWidth="2" />
+                  <line x1="25" y1="18" x2="50" y2="50" stroke="rgba(187, 136, 255, 0.3)" strokeWidth="0.5" />
+                  <line x1="75" y1="18" x2="50" y2="50" stroke="rgba(187, 136, 255, 0.3)" strokeWidth="0.5" />
+                  <line x1="50" y1="50" x2="25" y2="82" stroke="rgba(187, 136, 255, 0.3)" strokeWidth="0.5" />
+                  <line x1="50" y1="50" x2="75" y2="82" stroke="rgba(187, 136, 255, 0.3)" strokeWidth="0.5" />
+                  <line x1="25" y1="18" x2="75" y2="18" stroke="rgba(187, 136, 255, 0.3)" strokeWidth="0.5" />
                 </>
               ) : (
                 <>
-                  <line x1="150" y1="100" x2="300" y2="250" stroke="rgba(187, 136, 255, 0.3)" strokeWidth="2" />
-                  <line x1="450" y1="100" x2="300" y2="250" stroke="rgba(187, 136, 255, 0.3)" strokeWidth="2" />
-                  <line x1="300" y1="250" x2="150" y2="400" stroke="rgba(187, 136, 255, 0.3)" strokeWidth="2" />
-                  <line x1="300" y1="250" x2="450" y2="400" stroke="rgba(187, 136, 255, 0.3)" strokeWidth="2" />
-                  <line x1="150" y1="100" x2="450" y2="100" stroke="rgba(187, 136, 255, 0.3)" strokeWidth="2" />
+                  <line x1="25" y1="20" x2="50" y2="50" stroke="rgba(187, 136, 255, 0.3)" strokeWidth="0.5" />
+                  <line x1="75" y1="20" x2="50" y2="50" stroke="rgba(187, 136, 255, 0.3)" strokeWidth="0.5" />
+                  <line x1="50" y1="50" x2="25" y2="80" stroke="rgba(187, 136, 255, 0.3)" strokeWidth="0.5" />
+                  <line x1="50" y1="50" x2="75" y2="80" stroke="rgba(187, 136, 255, 0.3)" strokeWidth="0.5" />
+                  <line x1="25" y1="20" x2="75" y2="20" stroke="rgba(187, 136, 255, 0.3)" strokeWidth="0.5" />
                 </>
               )}
               
               {/* Pulse animations when active */}
               {pulseActive && (
                 <>
-                  <circle r="5" fill="#bb88ff" opacity="0.8">
+                  <circle r="1" fill="#bb88ff" opacity="0.8">
                     <animateMotion dur="2s" repeatCount="indefinite">
-                      <path d={isMobile ? "M150,80 L300,250 L150,420 L450,420 L450,80 Z" : "M150,100 L300,250 L150,400 L450,400 L450,100 Z"} />
+                      <path d={isMobile ? "M25,18 L50,50 L25,82 L75,82 L75,18 Z" : "M25,20 L50,50 L25,80 L75,80 L75,20 Z"} />
                     </animateMotion>
                   </circle>
                 </>
@@ -270,10 +270,11 @@ const Room4 = () => {
                 key={node.id}
                 style={{
                   position: 'absolute',
-                  left: `calc(${(node.x / 600) * 100}% - clamp(30px, 6vw, 40px))`,
-                  top: `calc(${(node.y / 500) * 100}% - clamp(30px, 6vw, 40px))`,
-                  width: 'clamp(60px, 12vw, 80px)',
-                  height: 'clamp(60px, 12vw, 80px)',
+                  left: `${node.x}%`,
+                  top: `${node.y}%`,
+                  width: 'clamp(50px, 10vw, 70px)',
+                  height: 'clamp(50px, 10vw, 70px)',
+                  transform: `translate(-50%, -50%) rotate(${node.rotation}deg)`,
                   background: `radial-gradient(circle, rgba(187, 136, 255, ${node.pulseFlow / 100}) 0%, rgba(0, 0, 0, 0.8) 70%)`,
                   border: '3px solid #bb88ff',
                   borderRadius: '50%',
@@ -282,7 +283,6 @@ const Room4 = () => {
                   justifyContent: 'center',
                   cursor: 'pointer',
                   transition: 'all 0.3s ease',
-                  transform: `rotate(${node.rotation}deg)`,
                   zIndex: 2,
                   boxShadow: node.pulseFlow > 0 ? '0 0 20px #bb88ff' : 'none'
                 }}
