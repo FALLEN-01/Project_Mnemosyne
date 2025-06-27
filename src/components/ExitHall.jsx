@@ -2,12 +2,22 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useGameState } from '../App'
 
+// === VISUAL & SOUND NOTES (for future polish) ===
+// Prologue: White/Blue | Static flickers, minimal UI | Low hum
+// Obs. Hall: Blue/Grey | CCTV, glass panels | Buzzing/static
+// Containment: Cyan/Red | Liquid glass, broken tech | Drips/gas hiss
+// Archive: Orange/Shadow | VHS glitch, echo FX | Voice loops
+// Core: Violet/Neon | Live UI, hologram pulses | Pulse beeps
+// Itor Room: Pale Yellow | Circular, clean, ominous | Whispered dialogue
+
 const ExitHall = () => {
   const navigate = useNavigate()
   const { gameState, updateGameState } = useGameState()
   const [showContent, setShowContent] = useState(false)
   const [currentPhase, setCurrentPhase] = useState(1)
   const [timeElapsed, setTimeElapsed] = useState('')
+  const [ending, setEnding] = useState('YES') // 'YES' or 'NO'
+  const [noPhase, setNoPhase] = useState(0) // For NO ending sequence
 
   useEffect(() => {
     // Redirect to team name entry if no team name is set
@@ -63,6 +73,62 @@ const ExitHall = () => {
     })
     navigate('/')
   }
+
+  if (ending === 'NO') {
+    // NO Ending Sequence
+    if (noPhase === 0) {
+      return (
+        <div className="room-container fade-in">
+          <div className="memory-fragment">
+            <h2 style={{ color: '#ff4444', marginBottom: '2rem', fontSize: '2rem' }}>
+              ❓ PURGE INITIATED
+            </h2>
+            <p style={{ fontSize: '1.2rem', color: '#e8e8e8', marginBottom: '2rem' }}>
+              The purge restarts.<br />You collapse.<br />
+              <span style={{ color: '#fff', opacity: 0.7 }}>Fade to white.</span>
+            </p>
+            <button className="btn" onClick={() => setNoPhase(1)} style={{ marginTop: '2rem' }}>Continue</button>
+          </div>
+        </div>
+      );
+    }
+    if (noPhase === 1) {
+      return (
+        <div className="room-container fade-in">
+          <div className="memory-fragment">
+            <h2 style={{ color: '#00ffff', marginBottom: '2rem', fontSize: '2rem' }}>
+              You awaken again, unsure of what was lost.
+            </h2>
+            <p style={{ fontSize: '1.2rem', color: '#e8e8e8', marginBottom: '2rem' }}>
+              The doors open.<br />You step out into the unknown, with no memory but a strange calm.<br />
+              You have escaped — but you are not the same.
+            </p>
+            <button className="btn" onClick={restartExperience} style={{ marginTop: '2rem' }}>Restart</button>
+          </div>
+        </div>
+      );
+    }
+  }
+
+  // YES Ending (default)
+  if (currentPhase === 3 && ending === 'YES') {
+    return (
+      <div className="room-container fade-in">
+        <div className="memory-fragment">
+          <h2 style={{ color: '#44ff44', marginBottom: '2rem', fontSize: '2rem' }}>
+            You feel the weight of every moment you erased.
+          </h2>
+          <p style={{ fontSize: '1.2rem', color: '#e8e8e8', marginBottom: '2rem' }}>
+            The doors open.<br />You walk out carrying everything.<br />
+            You have escaped — but you are no longer whole.<br />
+            But not whole.
+          </p>
+          <button className="btn" onClick={() => setEnding('NO')} style={{ marginTop: '2rem' }}>NO</button>
+        </div>
+      </div>
+    );
+  }
+
   if (currentPhase === 1) {
     return (
       <div className={`room-container ${showContent ? 'fade-in' : ''}`}>
