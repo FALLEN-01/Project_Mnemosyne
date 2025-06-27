@@ -3,7 +3,7 @@ import { useState, createContext, useContext } from 'react'
 import './App.css'
 
 // Import components
-import TeamName from './components/TeamName'
+import Intro from './components/Intro'
 import Room1 from './components/Room1'
 import Room2 from './components/Room2'
 import Room3 from './components/Room3'
@@ -26,7 +26,7 @@ function AppRoutes() {
   
   return (
     <Routes key={location.pathname}>
-      <Route path="/" element={<TeamName />} />
+      <Route path="/" element={<Intro />} />
       <Route path="/room1" element={<Room1 />} />
       <Route path="/room2" element={<Room2 />} />
       <Route path="/room3" element={<Room3 />} />

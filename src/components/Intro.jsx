@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useGameState } from '../App'
 
-const TeamName = () => {
+const Intro = () => {
   const navigate = useNavigate()
   const { updateGameState } = useGameState()
   const [showContent, setShowContent] = useState(false)
@@ -369,4 +369,4 @@ const TeamName = () => {
   )
 }
 
-export default TeamName
+export default Intro
