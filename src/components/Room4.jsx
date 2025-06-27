@@ -8,13 +8,46 @@ import { useGameState } from '../App'
 const Room4 = () => {
   const navigate = useNavigate()
   const { gameState, updateGameState, completeRoom } = useGameState()
-  const [neuralNodes, setNeuralNodes] = useState([
-    { id: 'A1', x: 150, y: 100, rotation: 0, locked: false, pulseFlow: 0 },
-    { id: 'B2', x: 450, y: 100, rotation: 90, locked: false, pulseFlow: 0 },
-    { id: 'C3', x: 300, y: 250, rotation: 180, locked: false, pulseFlow: 0 },
-    { id: 'D4', x: 150, y: 400, rotation: 270, locked: false, pulseFlow: 0 },
-    { id: 'E5', x: 450, y: 400, rotation: 45, locked: false, pulseFlow: 0 }
-  ])
+  
+  // Check if we're on mobile (screen width < 768px)
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
+  
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+    
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+  
+  // Adjust node positions based on screen size
+  const getNodePositions = () => {
+    if (isMobile) {
+      return [
+        { id: 'A1', x: 150, y: 80, rotation: 0, locked: false, pulseFlow: 0 },  // A slightly higher
+        { id: 'B2', x: 450, y: 80, rotation: 90, locked: false, pulseFlow: 0 }, // B slightly higher
+        { id: 'C3', x: 300, y: 250, rotation: 180, locked: false, pulseFlow: 0 }, // C unchanged
+        { id: 'D4', x: 150, y: 420, rotation: 270, locked: false, pulseFlow: 0 }, // D slightly lower
+        { id: 'E5', x: 450, y: 420, rotation: 45, locked: false, pulseFlow: 0 }   // E slightly lower
+      ]
+    } else {
+      return [
+        { id: 'A1', x: 150, y: 100, rotation: 0, locked: false, pulseFlow: 0 },
+        { id: 'B2', x: 450, y: 100, rotation: 90, locked: false, pulseFlow: 0 },
+        { id: 'C3', x: 300, y: 250, rotation: 180, locked: false, pulseFlow: 0 },
+        { id: 'D4', x: 150, y: 400, rotation: 270, locked: false, pulseFlow: 0 },
+        { id: 'E5', x: 450, y: 400, rotation: 45, locked: false, pulseFlow: 0 }
+      ]
+    }
+  }
+  
+  const [neuralNodes, setNeuralNodes] = useState(getNodePositions())
+  
+  // Update node positions when screen size changes
+  useEffect(() => {
+    setNeuralNodes(getNodePositions())
+  }, [isMobile])
   const [pulseActive, setPulseActive] = useState(false)
   const [error, setError] = useState('')
   const [showHologram, setShowHologram] = useState(false)
@@ -200,19 +233,31 @@ const Room4 = () => {
               viewBox="0 0 600 500"
               preserveAspectRatio="xMidYMid meet"
             >
-              {/* Connection lines */}
-              <line x1="150" y1="100" x2="300" y2="250" stroke="rgba(187, 136, 255, 0.3)" strokeWidth="2" />
-              <line x1="450" y1="100" x2="300" y2="250" stroke="rgba(187, 136, 255, 0.3)" strokeWidth="2" />
-              <line x1="300" y1="250" x2="150" y2="400" stroke="rgba(187, 136, 255, 0.3)" strokeWidth="2" />
-              <line x1="300" y1="250" x2="450" y2="400" stroke="rgba(187, 136, 255, 0.3)" strokeWidth="2" />
-              <line x1="150" y1="100" x2="450" y2="100" stroke="rgba(187, 136, 255, 0.3)" strokeWidth="2" />
+              {/* Connection lines - adjust for mobile */}
+              {isMobile ? (
+                <>
+                  <line x1="150" y1="80" x2="300" y2="250" stroke="rgba(187, 136, 255, 0.3)" strokeWidth="2" />
+                  <line x1="450" y1="80" x2="300" y2="250" stroke="rgba(187, 136, 255, 0.3)" strokeWidth="2" />
+                  <line x1="300" y1="250" x2="150" y2="420" stroke="rgba(187, 136, 255, 0.3)" strokeWidth="2" />
+                  <line x1="300" y1="250" x2="450" y2="420" stroke="rgba(187, 136, 255, 0.3)" strokeWidth="2" />
+                  <line x1="150" y1="80" x2="450" y2="80" stroke="rgba(187, 136, 255, 0.3)" strokeWidth="2" />
+                </>
+              ) : (
+                <>
+                  <line x1="150" y1="100" x2="300" y2="250" stroke="rgba(187, 136, 255, 0.3)" strokeWidth="2" />
+                  <line x1="450" y1="100" x2="300" y2="250" stroke="rgba(187, 136, 255, 0.3)" strokeWidth="2" />
+                  <line x1="300" y1="250" x2="150" y2="400" stroke="rgba(187, 136, 255, 0.3)" strokeWidth="2" />
+                  <line x1="300" y1="250" x2="450" y2="400" stroke="rgba(187, 136, 255, 0.3)" strokeWidth="2" />
+                  <line x1="150" y1="100" x2="450" y2="100" stroke="rgba(187, 136, 255, 0.3)" strokeWidth="2" />
+                </>
+              )}
               
               {/* Pulse animations when active */}
               {pulseActive && (
                 <>
                   <circle r="5" fill="#bb88ff" opacity="0.8">
                     <animateMotion dur="2s" repeatCount="indefinite">
-                      <path d="M150,100 L300,250 L150,400 L450,400 L450,100 Z" />
+                      <path d={isMobile ? "M150,80 L300,250 L150,420 L450,420 L450,80 Z" : "M150,100 L300,250 L150,400 L450,400 L450,100 Z"} />
                     </animateMotion>
                   </circle>
                 </>
