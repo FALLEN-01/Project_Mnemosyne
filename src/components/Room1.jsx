@@ -63,26 +63,24 @@ const Room1 = () => {
   }
 
   const handleGridClick = (index) => {
-    if (currentStep < correctSequence.length) {
-      if (index === correctSequence[currentStep]) {
-        setCurrentStep(currentStep + 1)
-        if (currentStep + 1 === correctSequence.length) {
-          // Puzzle completed - show terminal
-          updateGameState({ room1Sequence: correctSequence })
-          completeRoom(1)
-          setShowTerminal(true)
-        }
-      } else {
-        // Wrong path - show error modal
-        setStatusModalType('error')
-        setShowStatusModal(true)
-        setCurrentStep(0)
-        
-        setTimeout(() => {
-          setShowStatusModal(false)
-          setError('')
-        }, 2000)
+    if (index === correctSequence[currentStep]) {
+      setCurrentStep(currentStep + 1)
+      if (currentStep + 1 === correctSequence.length) {
+        // Puzzle completed - show terminal
+        updateGameState({ room1Sequence: correctSequence })
+        completeRoom(1)
+        setShowTerminal(true)
       }
+    } else {
+      // Wrong path - show error modal and reset
+      setStatusModalType('error')
+      setShowStatusModal(true)
+      setCurrentStep(0)
+      
+      setTimeout(() => {
+        setShowStatusModal(false)
+        setError('')
+      }, 2000)
     }
   }
 
@@ -295,31 +293,26 @@ const Room1 = () => {
               <button
                 key={index}
                 onClick={() => handleGridClick(index)}
-                disabled={currentStep >= correctSequence.length}
                 style={{
                   width: '80px',
                   height: '80px',
                   background: currentStep > 0 && correctSequence.slice(0, currentStep).includes(index)
                     ? 'linear-gradient(45deg, #6666ff, #4444cc)'
                     : 'rgba(102, 102, 255, 0.2)',
-                  border: currentStep < correctSequence.length && index === correctSequence[currentStep]
-                    ? '3px solid #ffff00'
-                    : '2px solid rgba(102, 102, 255, 0.5)',
+                  border: '2px solid rgba(102, 102, 255, 0.5)',
                   borderRadius: '8px',
                   color: '#ffffff',
                   fontSize: '1.2rem',
                   fontWeight: 'bold',
-                  cursor: currentStep < correctSequence.length ? 'pointer' : 'not-allowed',
+                  cursor: 'pointer',
                   transition: 'all 0.2s ease',
                   fontFamily: 'Courier New, monospace'
                 }}
                 onMouseEnter={(e) => {
-                  if (currentStep < correctSequence.length) {
-                    e.target.style.background = 'rgba(102, 102, 255, 0.4)'
-                  }
+                  e.target.style.background = 'rgba(102, 102, 255, 0.4)'
                 }}
                 onMouseLeave={(e) => {
-                  if (currentStep < correctSequence.length && !correctSequence.slice(0, currentStep).includes(index)) {
+                  if (!correctSequence.slice(0, currentStep).includes(index)) {
                     e.target.style.background = 'rgba(102, 102, 255, 0.2)'
                   }
                 }}

@@ -59,24 +59,24 @@ const Room2 = () => {
       // Check if complete and correct
       const fullCode = newCode.join('')
       if (fullCode.length === 6 && fullCode === correctCode) {
-        setShowTerminal(true)
+        setShowRetinalScan(true)
       }
     }
   }
 
   const handleRetinalScan = () => {
+    setShowTerminal(true)
+  }
+
+  const handleTerminalComplete = () => {
     updateGameState({ room2Code: correctCode })
     completeRoom(2)
+    setShowTerminal(false)
     setShowMemory(true)
     
     setTimeout(() => {
       navigate('/room3')
     }, 3000)
-  }
-
-  const handleTerminalComplete = () => {
-    setShowTerminal(false)
-    setShowRetinalScan(true)
   }
 
   const handleSubmit = () => {

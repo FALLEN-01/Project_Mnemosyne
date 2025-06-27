@@ -64,12 +64,9 @@ const Room3 = () => {
 
   const handleTerminalComplete = () => {
     setShowTerminal(false)
-    setShowReveal(true)
-    setTimeout(() => {
-      completeRoom('room3')
-      updateGameState({ room3_memorySequence: videoSegments })
-      navigate('/room4')
-    }, 4000)
+    completeRoom('room3')
+    updateGameState({ room3_memorySequence: videoSegments })
+    navigate('/room4')
   }
 
   const handleSegmentSelect = (position, segment) => {
@@ -90,8 +87,11 @@ const Room3 = () => {
     }
 
     if (JSON.stringify(videoSegments) === JSON.stringify(correctSequence)) {
-      // Success - show terminal
-      setShowTerminal(true)
+      // Success - show reveal first, then terminal
+      setShowReveal(true)
+      setTimeout(() => {
+        setShowTerminal(true)
+      }, 4000)
     } else {
       // Error - show modal
       setStatusModalType('error')
