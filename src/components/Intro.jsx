@@ -4,33 +4,68 @@ import { useGameState } from '../App'
 
 const Intro = () => {
   const navigate = useNavigate()
-  const { updateGameState } = useGameState()
+  const { gameState, updateGameState, getProgressRoute } = useGameState()
   const [showContent, setShowContent] = useState(false)
   const [teamName, setTeamName] = useState('')
   const [showNameInput, setShowNameInput] = useState(false)
   const [code, setCode] = useState(['', '', '', '', ''])
   const [showKeypad, setShowKeypad] = useState(false)
   const [error, setError] = useState('')
+  const [showRestoreOption, setShowRestoreOption] = useState(false)
 
   // Prologue puzzle: binary 11001010 = 202, + room number 17 = 20217
   const correctCode = '20217'
 
   useEffect(() => {
-    // Fade in effect for the awakening scene
-    const timer = setTimeout(() => {
-      setShowContent(true)
-    }, 1000)
+    // Check if player has existing progress
+    if (gameState.teamName && gameState.roomsCompleted.length > 0) {
+      setShowRestoreOption(true)
+      setTeamName(gameState.teamName)
+    } else {
+      // Show normal intro sequence
+      const timer = setTimeout(() => {
+        setShowContent(true)
+      }, 1000)
 
-    // Show name input after initial content
-    const nameTimer = setTimeout(() => {
-      setShowNameInput(true)
-    }, 2500)
+      const nameTimer = setTimeout(() => {
+        setShowNameInput(true)
+      }, 2500)
 
-    return () => {
-      clearTimeout(timer)
-      clearTimeout(nameTimer)
+      return () => {
+        clearTimeout(timer)
+        clearTimeout(nameTimer)
+      }
     }
-  }, [])
+  }, [gameState])
+
+  const handleRestoreProgress = () => {
+    const route = getProgressRoute()
+    navigate(route)
+  }
+
+  const handleStartNew = () => {
+    // Clear existing progress
+    localStorage.removeItem('mnemosyne-progress')
+    updateGameState({
+      teamName: '',
+      room1Code: '',
+      room2Phrase: '',
+      room3Word: '',
+      room4Answer: '',
+      startTime: null,
+      endTime: null,
+      roomsCompleted: [],
+      currentRoom: 0
+    })
+    
+    // Start fresh intro sequence
+    setShowRestoreOption(false)
+    setTeamName('')
+    setTimeout(() => {
+      setShowContent(true)
+      setTimeout(() => setShowNameInput(true), 1500)
+    }, 500)
+  }
 
   const handleNameSubmit = () => {
     const cleanTeamName = teamName.trim()
@@ -99,6 +134,73 @@ const Intro = () => {
         color: '#e8e8e8'
       }}
     >
+      {/* Progress Restoration Option */}
+      {showRestoreOption && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: 'rgba(0, 0, 0, 0.9)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 1000
+        }}>
+          <div style={{
+            background: 'rgba(0, 20, 40, 0.95)',
+            padding: '3rem',
+            borderRadius: '20px',
+            border: '2px solid #00ccff',
+            textAlign: 'center',
+            maxWidth: '500px',
+            boxShadow: '0 0 30px rgba(0, 204, 255, 0.3)'
+          }}>
+            <h2 style={{ color: '#00ccff', marginBottom: '1.5rem' }}>
+              Welcome Back, {teamName}
+            </h2>
+            <p style={{ marginBottom: '2rem', lineHeight: '1.6' }}>
+              We found your previous progress. You were on Room {gameState.currentRoom + 1}.
+              Would you like to continue where you left off or start a new session?
+            </p>
+            <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
+              <button
+                onClick={handleRestoreProgress}
+                style={{
+                  background: 'linear-gradient(45deg, #00ccff, #0088ff)',
+                  color: '#000',
+                  border: 'none',
+                  padding: '1rem 2rem',
+                  borderRadius: '8px',
+                  fontSize: '1.1rem',
+                  fontWeight: 'bold',
+                  cursor: 'pointer'
+                }}
+              >
+                Continue Progress
+              </button>
+              <button
+                onClick={handleStartNew}
+                style={{
+                  background: 'linear-gradient(45deg, #666, #888)',
+                  color: '#fff',
+                  border: 'none',
+                  padding: '1rem 2rem',
+                  borderRadius: '8px',
+                  fontSize: '1.1rem',
+                  fontWeight: 'bold',
+                  cursor: 'pointer'
+                }}
+              >
+                Start New Game
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Rest of existing content... */}
       <div className="room-header">
         <h1 className="room-title" style={{ 
           color: '#00ccff', 
