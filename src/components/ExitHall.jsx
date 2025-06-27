@@ -16,6 +16,8 @@ const ExitHall = () => {
   const [endingScene, setEndingScene] = useState(null)
   const [flickers, setFlickers] = useState({})
   const [error, setError] = useState('')
+  const [showRiddle, setShowRiddle] = useState(false)
+  const [riddleAnswer, setRiddleAnswer] = useState('')
 
   const voiceEchoes = [
     "Erase it.",
@@ -25,6 +27,7 @@ const ExitHall = () => {
   ]
 
   const correctCode = "5843" // Final access code for the decision terminal
+  const correctAnswer = "forgetting" // Answer to the riddle
 
   useEffect(() => {
     // Redirect to team name entry if no team name is set
@@ -203,6 +206,161 @@ const ExitHall = () => {
                 </div>
               ))}
             </div>
+          </div>
+        )}
+
+        {/* Keypad Interface */}
+        {showKeypad && !showDecision && (
+          <div style={{
+            background: 'rgba(255, 255, 136, 0.2)',
+            border: '2px solid #ffff88',
+            borderRadius: '15px',
+            padding: '2rem',
+            marginBottom: '2rem',
+            animation: 'fadeIn 1s ease-in',
+            textAlign: 'center'
+          }}>
+            <h3 style={{ color: '#ffff88', marginBottom: '1.5rem', fontSize: '1.4rem' }}>
+              FINAL ACCESS TERMINAL
+            </h3>
+            
+            <div style={{
+              background: 'rgba(0, 0, 0, 0.6)',
+              padding: '1.5rem',
+              borderRadius: '10px',
+              border: '1px solid rgba(255, 255, 136, 0.5)',
+              marginBottom: '2rem'
+            }}>
+              <div style={{ color: '#ffff88', marginBottom: '1rem', fontWeight: 'bold' }}>
+                ENTER FINAL ACCESS CODE:
+              </div>
+              <div style={{ fontSize: '1.1rem', color: '#ffffcc' }}>
+                The console awaits your decision...
+              </div>
+            </div>
+
+            {/* Code Display */}
+            <div style={{
+              display: 'flex',
+              justifyContent: 'center',
+              gap: '10px',
+              marginBottom: '2rem'
+            }}>
+              {[0, 1, 2, 3].map((index) => (
+                <div
+                  key={index}
+                  style={{
+                    width: '60px',
+                    height: '60px',
+                    background: 'rgba(0, 0, 0, 0.6)',
+                    border: `2px solid ${enteredCode[index] ? '#ffff88' : 'rgba(255, 255, 136, 0.5)'}`,
+                    borderRadius: '8px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '1.8rem',
+                    fontWeight: 'bold',
+                    color: '#ffff88',
+                    fontFamily: 'Courier New, monospace',
+                    boxShadow: enteredCode[index] ? '0 0 10px rgba(255, 255, 136, 0.3)' : 'none',
+                    transition: 'all 0.3s ease'
+                  }}
+                >
+                  {enteredCode[index] || ''}
+                </div>
+              ))}
+            </div>
+
+            {/* Keypad */}
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(3, 1fr)',
+              gap: '15px',
+              maxWidth: '300px',
+              margin: '0 auto',
+              marginBottom: '2rem'
+            }}>
+              {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
+                <button
+                  key={num}
+                  onClick={() => handleKeypadPress(num.toString())}
+                  disabled={enteredCode.length >= 4}
+                  style={{
+                    width: '80px',
+                    height: '80px',
+                    background: 'linear-gradient(145deg, rgba(255, 255, 136, 0.3), rgba(255, 255, 136, 0.2))',
+                    border: '2px solid rgba(255, 255, 136, 0.6)',
+                    borderRadius: '12px',
+                    color: '#ffff88',
+                    fontSize: '1.8rem',
+                    fontWeight: 'bold',
+                    fontFamily: 'Courier New, monospace',
+                    cursor: enteredCode.length < 4 ? 'pointer' : 'not-allowed',
+                    transition: 'all 0.2s ease',
+                    opacity: enteredCode.length >= 4 ? 0.5 : 1
+                  }}
+                >
+                  {num}
+                </button>
+              ))}
+              
+              <button
+                onClick={handleClear}
+                style={{
+                  width: '80px',
+                  height: '80px',
+                  background: 'linear-gradient(145deg, rgba(255, 68, 68, 0.4), rgba(255, 68, 68, 0.3))',
+                  border: '2px solid rgba(255, 68, 68, 0.6)',
+                  borderRadius: '12px',
+                  color: '#ff6666',
+                  fontSize: '1rem',
+                  fontWeight: 'bold',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease'
+                }}
+              >
+                CLR
+              </button>
+              
+              <button
+                onClick={() => handleKeypadPress('0')}
+                disabled={enteredCode.length >= 4}
+                style={{
+                  width: '80px',
+                  height: '80px',
+                  background: 'linear-gradient(145deg, rgba(255, 255, 136, 0.3), rgba(255, 255, 136, 0.2))',
+                  border: '2px solid rgba(255, 255, 136, 0.6)',
+                  borderRadius: '12px',
+                  color: '#ffff88',
+                  fontSize: '1.8rem',
+                  fontWeight: 'bold',
+                  fontFamily: 'Courier New, monospace',
+                  cursor: enteredCode.length < 4 ? 'pointer' : 'not-allowed',
+                  transition: 'all 0.2s ease',
+                  opacity: enteredCode.length >= 4 ? 0.5 : 1
+                }}
+              >
+                0
+              </button>
+              
+              <div></div>
+            </div>
+
+            {/* Error Display */}
+            {error && (
+              <div style={{
+                color: '#ff6666',
+                background: 'rgba(255, 68, 68, 0.1)',
+                border: '1px solid rgba(255, 68, 68, 0.3)',
+                padding: '1rem',
+                borderRadius: '8px',
+                marginTop: '1rem',
+                fontSize: '0.9rem',
+                animation: 'pulse 1s infinite'
+              }}>
+                {error}
+              </div>
+            )}
           </div>
         )}
 
