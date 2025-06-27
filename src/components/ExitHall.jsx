@@ -404,22 +404,6 @@ const ExitHall = () => {
                 </div>
               )}
             </div>
-
-            <div style={{ textAlign: 'center' }}>
-              <button 
-                className="btn" 
-                onClick={restartGame}
-                style={{ 
-                  background: 'linear-gradient(45deg, #ffff88, #cccc77)',
-                  color: '#000',
-                  fontSize: '1.2rem',
-                  padding: '1rem 2rem',
-                  fontWeight: 'bold'
-                }}
-              >
-                🔄 Start New Game
-              </button>
-            </div>
           </div>
         )}
       </div>
