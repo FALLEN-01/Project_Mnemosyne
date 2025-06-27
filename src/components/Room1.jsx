@@ -287,12 +287,12 @@ const Room1 = () => {
                   key={index}
                   onClick={() => handleGridClick(index)}
                   style={{
-                    background: currentStep > 0 && correctSequence.slice(0, currentStep).includes(index)
+                    background: clickedBlocks.includes(index)
                       ? 'linear-gradient(145deg, rgba(102, 102, 255, 0.8), rgba(68, 68, 204, 0.6))'
                       : 'linear-gradient(145deg, rgba(20, 30, 60, 0.9), rgba(10, 20, 40, 0.9))',
                     border: '1px solid rgba(102, 102, 255, 0.3)',
                     borderRadius: '10px',
-                    color: currentStep > 0 && correctSequence.slice(0, currentStep).includes(index) ? '#ffffff' : '#6666ff',
+                    color: clickedBlocks.includes(index) ? '#ffffff' : '#6666ff',
                     fontSize: '1rem',
                     fontWeight: 'bold',
                     cursor: 'pointer',
@@ -301,37 +301,37 @@ const Room1 = () => {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    boxShadow: currentStep > 0 && correctSequence.slice(0, currentStep).includes(index)
+                    boxShadow: clickedBlocks.includes(index)
                       ? 'inset 0 2px 6px rgba(0, 0, 0, 0.7), 0 0 15px rgba(102, 102, 255, 0.4)'
                       : 'inset 0 1px 3px rgba(0, 0, 0, 0.5), 0 2px 4px rgba(0, 0, 0, 0.3)',
-                    textShadow: currentStep > 0 && correctSequence.slice(0, currentStep).includes(index)
+                    textShadow: clickedBlocks.includes(index)
                       ? '0 0 8px rgba(255, 255, 255, 0.8)'
                       : '0 0 8px rgba(102, 102, 255, 0.6)',
                     position: 'relative',
                     overflow: 'hidden'
                   }}
                   onMouseEnter={(e) => {
-                    if (!correctSequence.slice(0, currentStep).includes(index)) {
+                    if (!clickedBlocks.includes(index)) {
                       e.target.style.background = 'linear-gradient(145deg, rgba(102, 102, 255, 0.3), rgba(68, 68, 204, 0.2))'
                       e.target.style.boxShadow = 'inset 0 1px 3px rgba(102, 102, 255, 0.3), 0 0 12px rgba(102, 102, 255, 0.4)'
                       e.target.style.transform = 'translateY(-2px)'
                     }
                   }}
                   onMouseLeave={(e) => {
-                    if (!correctSequence.slice(0, currentStep).includes(index)) {
+                    if (!clickedBlocks.includes(index)) {
                       e.target.style.background = 'linear-gradient(145deg, rgba(20, 30, 60, 0.9), rgba(10, 20, 40, 0.9))'
                       e.target.style.boxShadow = 'inset 0 1px 3px rgba(0, 0, 0, 0.5), 0 2px 4px rgba(0, 0, 0, 0.3)'
                       e.target.style.transform = 'translateY(0)'
                     }
                   }}
                   onMouseDown={(e) => {
-                    if (!correctSequence.slice(0, currentStep).includes(index)) {
+                    if (!clickedBlocks.includes(index)) {
                       e.target.style.transform = 'translateY(2px)'
                       e.target.style.boxShadow = 'inset 0 3px 6px rgba(0, 0, 0, 0.7)'
                     }
                   }}
                   onMouseUp={(e) => {
-                    if (!correctSequence.slice(0, currentStep).includes(index)) {
+                    if (!clickedBlocks.includes(index)) {
                       e.target.style.transform = 'translateY(-2px)'
                     }
                   }}

@@ -205,8 +205,14 @@ const Room2 = () => {
             By aligning molecular shapes and symbols, build the emergency access code.
           </p>
           
-          {/* QR-Coded Vials */}
+          {/* QR-Coded Vials - Side by Side Layout */}
           <div className="vial-grid" style={{ 
+            display: 'flex',
+            justifyContent: 'center',
+            gap: 'clamp(1rem, 3vw, 2rem)',
+            flexWrap: 'wrap',
+            width: '100%',
+            maxWidth: '900px',
             marginBottom: '2rem'
           }}>
             {/* Vial 1 */}
@@ -220,7 +226,9 @@ const Room2 = () => {
               transform: showContent ? 'translateY(0)' : 'translateY(20px)',
               transition: 'all 0.8s ease-in-out',
               transitionDelay: '0.3s',
-              minWidth: '200px'
+              flex: '1',
+              minWidth: '250px',
+              maxWidth: '280px'
             }}>
               <div style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', marginBottom: '1rem' }}>🧪</div>
               <h4 style={{ color: '#00ffff', marginBottom: '0.5rem' }}>VIAL ALPHA</h4>
@@ -254,7 +262,9 @@ const Room2 = () => {
               transform: showContent ? 'translateY(0)' : 'translateY(20px)',
               transition: 'all 0.8s ease-in-out',
               transitionDelay: '0.6s',
-              minWidth: '200px'
+              flex: '1',
+              minWidth: '250px',
+              maxWidth: '280px'
             }}>
               <div style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', marginBottom: '1rem' }}>🧪</div>
               <h4 style={{ color: '#ff6666', marginBottom: '0.5rem' }}>VIAL BETA</h4>
@@ -288,7 +298,9 @@ const Room2 = () => {
               transform: showContent ? 'translateY(0)' : 'translateY(20px)',
               transition: 'all 0.8s ease-in-out',
               transitionDelay: '0.9s',
-              minWidth: '200px'
+              flex: '1',
+              minWidth: '250px',
+              maxWidth: '280px'
             }}>
               <div style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', marginBottom: '1rem' }}>🧪</div>
               <h4 style={{ color: '#66ff66', marginBottom: '0.5rem' }}>VIAL GAMMA</h4>
