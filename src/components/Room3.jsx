@@ -124,7 +124,7 @@ const Room3 = () => {
         }}>
           ROOM 3 - THE ARCHIVE
         </h1>
-        <p style={{ color: '#cc7700', fontSize: '1.1rem' }}>
+        <p className="room-subtitle" style={{ color: '#cc7700' }}>
           🗄️ MEMORY RECONSTRUCTION CHAMBER
         </p>
       </div>
@@ -137,7 +137,7 @@ const Room3 = () => {
           border: '2px solid rgba(255, 153, 0, 0.3)',
           marginBottom: '2rem'
         }}>
-          <p style={{ marginBottom: '1.5rem', fontSize: '1.1rem', lineHeight: '1.6' }}>
+          <p style={{ marginBottom: '1.5rem', lineHeight: '1.6' }}>
             Screens flicker with looping video logs of yourself. You speak, but your past self ignores you.
             The air hums with digital echoes and fragmented memories.
           </p>
@@ -276,16 +276,24 @@ const Room3 = () => {
             ))}
           </div>
 
-          <div style={{ textAlign: 'center', marginBottom: '1rem' }}>
+          <div style={{ 
+            textAlign: 'center', 
+            marginBottom: '1rem',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: '1rem',
+            flexWrap: 'wrap'
+          }}>
             <button 
               className="btn" 
               onClick={checkSequence}
               disabled={videoSegments.includes('')}
               style={{ 
-                marginRight: '1rem',
                 background: videoSegments.includes('') 
                   ? '#666' 
-                  : 'linear-gradient(45deg, #ff9900, #cc7700)'
+                  : 'linear-gradient(45deg, #ff9900, #cc7700)',
+                minWidth: '180px'
               }}
             >
               Reconstruct Memory
@@ -296,7 +304,8 @@ const Room3 = () => {
               onClick={clearSequence}
               style={{ 
                 background: 'linear-gradient(45deg, #cc0000, #990000)',
-                color: '#fff'
+                color: '#fff',
+                minWidth: '140px'
               }}
             >
               Clear Timeline
@@ -387,7 +396,6 @@ const Room3 = () => {
                 : '2px solid #ff4444',
               borderRadius: '15px',
               padding: '2rem',
-              maxWidth: '500px',
               margin: '2rem',
               animation: 'fadeIn 1s ease-in'
             }}>

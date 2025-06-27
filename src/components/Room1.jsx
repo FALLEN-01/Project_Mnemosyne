@@ -17,7 +17,6 @@ import CyberpunkTerminal from './CyberpunkTerminal'
 const Room1 = () => {
   const navigate = useNavigate()
   const { gameState, updateGameState, completeRoom } = useGameState()
-  const [code, setCode] = useState(['', '', '', '', '', '', '', '', ''])
   const [error, setError] = useState('')
   const [showMemory, setShowMemory] = useState(false)
   const [showContent, setShowContent] = useState(false)
@@ -48,20 +47,6 @@ const Room1 = () => {
 
     return () => clearTimeout(timer)
   }, [gameState.teamName, navigate])
-
-  const handleCodeChange = (index, value) => {
-    if (value.length <= 1 && /^\d*$/.test(value)) {
-      const newCode = [...code]
-      newCode[index] = value
-      setCode(newCode)
-      
-      // Auto-focus next input
-      if (value && index < 8) {
-        const nextInput = document.getElementById(`code-${index + 1}`)
-        if (nextInput) nextInput.focus()
-      }
-    }
-  }
 
   const handleGridClick = (index) => {
     // Add this block to clicked blocks if not already clicked
@@ -101,19 +86,6 @@ const Room1 = () => {
     }, 3000)
   }
 
-  const handleSubmit = () => {
-    // This is now handled by handleGridClick
-    return
-  }
-
-  const handleKeyPress = (e, index) => {
-    if (e.key === 'Enter') {
-      handleSubmit()
-    } else if (e.key === 'Backspace' && !code[index] && index > 0) {
-      const prevInput = document.getElementById(`code-${index - 1}`)
-      if (prevInput) prevInput.focus()
-    }
-  }
   if (showMemory) {
     return (
       <div className="room-container">
@@ -126,11 +98,11 @@ const Room1 = () => {
             border: '2px solid rgba(68, 255, 68, 0.3)',
             marginBottom: '1.5rem'
           }}>
-            <h3 style={{ color: '#00ffff', marginBottom: '1rem', fontSize: '1rem' }}>🎧 LOG ENTRY 017 RECOVERED</h3>
-            <p style={{ fontSize: '1rem', fontStyle: 'italic', marginBottom: '1.5rem', lineHeight: '1.6' }}>
+            <h3 style={{ color: '#00ffff', marginBottom: '1rem' }}>🎧 LOG ENTRY 017 RECOVERED</h3>
+            <p style={{ fontStyle: 'italic', marginBottom: '1.5rem', lineHeight: '1.6' }}>
               "Subject is beginning re-integration. Neural reconstruction unstable. Memory echoes predicted."
             </p>
-            <p style={{ fontSize: '1rem', marginBottom: '1.5rem', lineHeight: '1.6' }}>
+            <p style={{ marginBottom: '1.5rem', lineHeight: '1.6' }}>
               The movement pattern triggers something familiar. You've walked this path before... but when? 
               The surveillance footage shows your own figure, but the memories feel distant, fragmented.
             </p>
@@ -152,10 +124,10 @@ const Room1 = () => {
       }}
     >
       <div className="room-header">
-        <h1 className="room-title" style={{ color: '#6666ff', fontSize: '3rem' }}>
+        <h1 className="room-title" style={{ color: '#6666ff' }}>
           ROOM 1 - OBSERVATION HALL
         </h1>
-        <p style={{ fontSize: '1.2rem', color: '#00ffff', marginBottom: '1rem' }}>
+        <p className="room-subtitle" style={{ color: '#00ffff', marginBottom: '1rem' }}>
           SURVEILLANCE SYSTEM ACTIVE - NEURAL RECONSTRUCTION UNSTABLE
         </p>
       </div>
@@ -166,7 +138,6 @@ const Room1 = () => {
         alignItems: 'center',
         textAlign: 'center',
         width: '100%',
-        maxWidth: '800px',
         margin: '0 auto'
       }}>
         <div style={{ 
@@ -175,9 +146,10 @@ const Room1 = () => {
           borderRadius: '15px',
           border: '2px solid rgba(102, 102, 255, 0.3)',
           marginBottom: '2rem',
-          maxWidth: '700px'
+          width: '100%',
+          maxWidth: '90%'
         }}>
-          <p style={{ marginBottom: '1.5rem', fontSize: '1.1rem', lineHeight: '1.6' }}>
+          <p style={{ marginBottom: '1.5rem', lineHeight: '1.6' }}>
             You enter a corridor of half-lit surveillance pods — shattered screens, bloodied clipboards, 
             a chair knocked over as if someone left in a panic. Each room in the facility holds a piece of you — 
             not just clues or codes, but memories you've locked away.
@@ -203,7 +175,7 @@ const Room1 = () => {
           alignItems: 'center',
           width: '100%'
         }}>
-          <p style={{ marginBottom: '2rem', fontSize: '1rem', textAlign: 'center', maxWidth: '600px' }}>
+          <p style={{ marginBottom: '2rem', fontSize: '1rem', textAlign: 'center', width: '100%' }}>
             The surveillance footage shows a movement path. Study the sequence carefully and retrace the path on the floor panel below.
           </p>
           
@@ -214,7 +186,7 @@ const Room1 = () => {
             padding: '2rem',
             border: '2px solid rgba(102, 102, 255, 0.4)',
             marginBottom: '2rem',
-            maxWidth: '500px',
+            margin: '0 auto',
             width: '100%'
           }}>
             <h4 style={{ color: '#6666ff', marginBottom: '1rem', textAlign: 'center' }}>
@@ -274,63 +246,85 @@ const Room1 = () => {
             padding: '1.5rem', 
             borderRadius: '10px',
             border: '1px solid rgba(102, 102, 255, 0.3)',
-            maxWidth: '600px',
+            width: '100%',
+            maxWidth: '90%',
             textAlign: 'center',
             marginBottom: '2rem'
           }}>
             <p style={{ marginBottom: '1rem', fontSize: '1rem' }}>
-              A floor panel shows a 3x3 grid keypad. You must retrace the movement path via keypad taps.
+              A floor panel shows a 3x3 grid of blocks. You must retrace the movement path by stepping on the blocks.
             </p>
             <p style={{ fontSize: '0.9rem', color: '#ffff88' }}>
-              Follow the exact sequence shown in the surveillance footage. Click the grid positions in order.
+              Follow the exact sequence shown in the surveillance footage. Click the floor blocks in order.
             </p>
             <p style={{ fontSize: '0.8rem', color: '#ff4444', marginTop: '1rem' }}>
               Progress: {currentStep}/9 steps completed
             </p>
           </div>
 
-          {/* 3x3 Keypad Grid */}
+          {/* Movement Path Grid - Floor Blocks */}
           <div style={{ 
             display: 'grid',
             gridTemplateColumns: 'repeat(3, 1fr)',
-            gap: '10px',
-            maxWidth: '300px',
+            gap: 'clamp(2px, 0.5vw, 4px)',
             width: '100%',
-            margin: '0 auto'
+            maxWidth: 'min(280px, 80vw)',
+            margin: '0 auto',
+            justifyItems: 'center',
+            background: 'rgba(0, 0, 0, 0.3)',
+            padding: 'clamp(8px, 2vw, 12px)',
+            borderRadius: '12px',
+            border: '2px solid rgba(102, 102, 255, 0.3)'
           }}>
             {Array.from({ length: 9 }, (_, index) => (
               <button
                 key={index}
                 onClick={() => handleGridClick(index)}
                 style={{
-                  width: '80px',
-                  height: '80px',
+                  width: 'clamp(55px, 10vw, 75px)',
+                  height: 'clamp(55px, 10vw, 75px)',
                   background: currentStep > 0 && correctSequence.slice(0, currentStep).includes(index)
                     ? 'linear-gradient(45deg, #6666ff, #4444cc)'
-                    : 'rgba(102, 102, 255, 0.2)',
-                  border: '2px solid rgba(102, 102, 255, 0.5)',
-                  borderRadius: '8px',
+                    : 'linear-gradient(145deg, rgba(102, 102, 255, 0.3), rgba(102, 102, 255, 0.1))',
+                  border: '1px solid rgba(102, 102, 255, 0.6)',
+                  borderRadius: '6px',
                   color: '#ffffff',
-                  fontSize: '1.2rem',
+                  fontSize: 'clamp(0.6rem, 1.5vw, 0.8rem)',
                   fontWeight: 'bold',
                   cursor: 'pointer',
-                  transition: 'all 0.2s ease',
-                  fontFamily: 'Courier New, monospace'
+                  transition: 'all 0.15s ease',
+                  fontFamily: 'Courier New, monospace',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  boxShadow: currentStep > 0 && correctSequence.slice(0, currentStep).includes(index)
+                    ? 'inset 0 2px 4px rgba(0, 0, 0, 0.3)'
+                    : '0 2px 4px rgba(0, 0, 0, 0.2), inset 0 1px 2px rgba(255, 255, 255, 0.1)'
                 }}
                 onMouseEnter={(e) => {
-                  e.target.style.background = 'rgba(102, 102, 255, 0.4)'
+                  if (!correctSequence.slice(0, currentStep).includes(index)) {
+                    e.target.style.background = 'linear-gradient(145deg, rgba(102, 102, 255, 0.5), rgba(102, 102, 255, 0.3))'
+                    e.target.style.transform = 'translateY(-1px)'
+                  }
                 }}
                 onMouseLeave={(e) => {
                   if (!correctSequence.slice(0, currentStep).includes(index)) {
-                    e.target.style.background = 'rgba(102, 102, 255, 0.2)'
+                    e.target.style.background = 'linear-gradient(145deg, rgba(102, 102, 255, 0.3), rgba(102, 102, 255, 0.1))'
+                    e.target.style.transform = 'translateY(0)'
                   }
                 }}
+                onMouseDown={(e) => {
+                  e.target.style.transform = 'translateY(1px)'
+                }}
+                onMouseUp={(e) => {
+                  e.target.style.transform = correctSequence.slice(0, currentStep).includes(index) ? 'translateY(0)' : 'translateY(-1px)'
+                }}
               >
-                {index === 4 ? 'C' : 
-                 index === 0 ? 'TL' : 
+                {index === 0 ? 'TL' : 
                  index === 1 ? 'TM' : 
                  index === 2 ? 'TR' :
                  index === 3 ? 'ML' :
+                 index === 4 ? 'C' :
                  index === 5 ? 'MR' :
                  index === 6 ? 'BL' :
                  index === 7 ? 'BM' : 'BR'}
@@ -338,7 +332,9 @@ const Room1 = () => {
             ))}
           </div>
         </div>
-      </div>      {error && (
+      </div>
+
+      {error && (
         <div style={{
           color: '#ff4444',
           background: 'rgba(255, 68, 68, 0.1)',

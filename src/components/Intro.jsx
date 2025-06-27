@@ -133,13 +133,16 @@ const Intro = () => {
             A faint humming surrounds you — the kind that feels more like a memory than a sound. You are alone.
           </p>
           
-          <div className="terminal" style={{ 
+          <div style={{ 
             background: '#000033',
             color: '#00ccff',
             border: '2px solid #0066cc',
-            margin: '1.5rem 0',
+            margin: '1.5rem auto',
             padding: '1.5rem',
-            fontFamily: 'Courier New, monospace'
+            fontFamily: 'Courier New, monospace',
+            maxWidth: '400px',
+            textAlign: 'center',
+            borderRadius: '8px'
           }}>
             <div style={{ color: '#ff4444', fontWeight: 'bold', marginBottom: '0.5rem' }}>
               TERMINAL DISPLAY:
@@ -283,33 +286,104 @@ const Intro = () => {
             </div>
 
             {/* Interactive Keypad */}
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(3, 1fr)',
-              gap: '15px',
-              maxWidth: '300px',
-              margin: '0 auto',
-              marginBottom: '2rem'
-            }}>
-              {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
+            <div className="keypad-container">
+              <div className="keypad-grid">
+                {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
+                  <button
+                    key={num}
+                    onClick={() => handleKeypadPress(num.toString())}
+                    disabled={code.length >= 5}
+                    className="keypad-button"
+                    style={{
+                      background: 'linear-gradient(145deg, rgba(0, 204, 255, 0.2), rgba(0, 204, 255, 0.1))',
+                      border: '1px solid rgba(0, 204, 255, 0.6)',
+                      color: '#00ccff',
+                      opacity: code.length >= 5 ? 0.5 : 1,
+                      cursor: code.length < 5 ? 'pointer' : 'not-allowed'
+                    }}
+                    onMouseDown={(e) => {
+                      if (code.length < 5) {
+                        e.target.style.transform = 'scale(0.95)'
+                        e.target.style.boxShadow = 'inset 0 2px 4px rgba(0, 0, 0, 0.3)'
+                      }
+                    }}
+                    onMouseUp={(e) => {
+                      if (code.length < 5) {
+                        e.target.style.transform = 'scale(1)'
+                        e.target.style.boxShadow = '0 0 15px rgba(0, 204, 255, 0.4)'
+                      }
+                    }}
+                    onMouseEnter={(e) => {
+                      if (code.length < 5) {
+                        e.target.style.background = 'linear-gradient(145deg, rgba(0, 204, 255, 0.4), rgba(0, 204, 255, 0.2))'
+                        e.target.style.boxShadow = '0 0 15px rgba(0, 204, 255, 0.4)'
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (code.length < 5) {
+                        e.target.style.background = 'linear-gradient(145deg, rgba(0, 204, 255, 0.2), rgba(0, 204, 255, 0.1))'
+                        e.target.style.boxShadow = '0 2px 4px rgba(0, 0, 0, 0.2)'
+                        e.target.style.transform = 'scale(1)'
+                      }
+                    }}
+                  >
+                    {num}
+                  </button>
+                ))}
+                
+                {/* Clear and Zero buttons */}
                 <button
-                  key={num}
-                  onClick={() => handleKeypadPress(num.toString())}
-                  disabled={code.length >= 5}
+                  onClick={handleClear}
+                  className="keypad-button keypad-clear"
                   style={{
-                    width: '80px',
-                    height: '80px',
+                    background: 'linear-gradient(145deg, rgba(255, 68, 68, 0.3), rgba(255, 68, 68, 0.2))',
+                    border: '1px solid rgba(255, 68, 68, 0.6)',
+                    color: '#ff4444',
+                    fontSize: '0.9rem'
+                  }}
+                  onMouseDown={(e) => {
+                    e.target.style.transform = 'scale(0.95)'
+                    e.target.style.boxShadow = 'inset 0 2px 4px rgba(0, 0, 0, 0.3)'
+                  }}
+                  onMouseUp={(e) => {
+                    e.target.style.transform = 'scale(1)'
+                    e.target.style.boxShadow = '0 0 15px rgba(255, 68, 68, 0.4)'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.background = 'linear-gradient(145deg, rgba(255, 68, 68, 0.5), rgba(255, 68, 68, 0.3))'
+                    e.target.style.boxShadow = '0 0 15px rgba(255, 68, 68, 0.4)'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.background = 'linear-gradient(145deg, rgba(255, 68, 68, 0.3), rgba(255, 68, 68, 0.2))'
+                    e.target.style.boxShadow = '0 2px 4px rgba(0, 0, 0, 0.2)'
+                    e.target.style.transform = 'scale(1)'
+                  }}
+                >
+                  CLR
+                </button>
+                
+                <button
+                  onClick={() => handleKeypadPress('0')}
+                  disabled={code.length >= 5}
+                  className="keypad-button"
+                  style={{
                     background: 'linear-gradient(145deg, rgba(0, 204, 255, 0.2), rgba(0, 204, 255, 0.1))',
-                    border: '2px solid rgba(0, 204, 255, 0.6)',
-                    borderRadius: '12px',
+                    border: '1px solid rgba(0, 204, 255, 0.6)',
                     color: '#00ccff',
-                    fontSize: '1.8rem',
-                    fontWeight: 'bold',
-                    fontFamily: 'Courier New, monospace',
-                    cursor: code.length < 5 ? 'pointer' : 'not-allowed',
-                    transition: 'all 0.2s ease',
                     opacity: code.length >= 5 ? 0.5 : 1,
-                    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.3)'
+                    cursor: code.length < 5 ? 'pointer' : 'not-allowed'
+                  }}
+                  onMouseDown={(e) => {
+                    if (code.length < 5) {
+                      e.target.style.transform = 'scale(0.95)'
+                      e.target.style.boxShadow = 'inset 0 2px 4px rgba(0, 0, 0, 0.3)'
+                    }
+                  }}
+                  onMouseUp={(e) => {
+                    if (code.length < 5) {
+                      e.target.style.transform = 'scale(1)'
+                      e.target.style.boxShadow = '0 0 15px rgba(0, 204, 255, 0.4)'
+                    }
                   }}
                   onMouseEnter={(e) => {
                     if (code.length < 5) {
@@ -320,77 +394,16 @@ const Intro = () => {
                   onMouseLeave={(e) => {
                     if (code.length < 5) {
                       e.target.style.background = 'linear-gradient(145deg, rgba(0, 204, 255, 0.2), rgba(0, 204, 255, 0.1))'
-                      e.target.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.3)'
+                      e.target.style.boxShadow = '0 2px 4px rgba(0, 0, 0, 0.2)'
+                      e.target.style.transform = 'scale(1)'
                     }
                   }}
                 >
-                  {num}
+                  0
                 </button>
-              ))}
-              
-              {/* Clear and Zero buttons */}
-              <button
-                onClick={handleClear}
-                style={{
-                  width: '80px',
-                  height: '80px',
-                  background: 'linear-gradient(145deg, rgba(255, 68, 68, 0.3), rgba(255, 68, 68, 0.2))',
-                  border: '2px solid rgba(255, 68, 68, 0.6)',
-                  borderRadius: '12px',
-                  color: '#ff4444',
-                  fontSize: '1rem',
-                  fontWeight: 'bold',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s ease',
-                  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.3)'
-                }}
-                onMouseEnter={(e) => {
-                  e.target.style.background = 'linear-gradient(145deg, rgba(255, 68, 68, 0.5), rgba(255, 68, 68, 0.3))'
-                  e.target.style.boxShadow = '0 0 15px rgba(255, 68, 68, 0.4)'
-                }}
-                onMouseLeave={(e) => {
-                  e.target.style.background = 'linear-gradient(145deg, rgba(255, 68, 68, 0.3), rgba(255, 68, 68, 0.2))'
-                  e.target.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.3)'
-                }}
-              >
-                CLR
-              </button>
-              
-              <button
-                onClick={() => handleKeypadPress('0')}
-                disabled={code.length >= 5}
-                style={{
-                  width: '80px',
-                  height: '80px',
-                  background: 'linear-gradient(145deg, rgba(0, 204, 255, 0.2), rgba(0, 204, 255, 0.1))',
-                  border: '2px solid rgba(0, 204, 255, 0.6)',
-                  borderRadius: '12px',
-                  color: '#00ccff',
-                  fontSize: '1.8rem',
-                  fontWeight: 'bold',
-                  fontFamily: 'Courier New, monospace',
-                  cursor: code.length < 5 ? 'pointer' : 'not-allowed',
-                  transition: 'all 0.2s ease',
-                  opacity: code.length >= 5 ? 0.5 : 1,
-                  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.3)'
-                }}
-                onMouseEnter={(e) => {
-                  if (code.length < 5) {
-                    e.target.style.background = 'linear-gradient(145deg, rgba(0, 204, 255, 0.4), rgba(0, 204, 255, 0.2))'
-                    e.target.style.boxShadow = '0 0 15px rgba(0, 204, 255, 0.4)'
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  if (code.length < 5) {
-                    e.target.style.background = 'linear-gradient(145deg, rgba(0, 204, 255, 0.2), rgba(0, 204, 255, 0.1))'
-                    e.target.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.3)'
-                  }
-                }}
-              >
-                0
-              </button>
-              
-              <div></div> {/* Empty space for grid alignment */}
+                
+                <div></div> {/* Empty space for grid alignment */}
+              </div>
             </div>
 
             {/* Error Display */}
@@ -429,12 +442,17 @@ const Intro = () => {
         )}
       </div>
 
-      <div className="terminal" style={{ 
+      <div style={{ 
         marginTop: '2rem', 
         maxWidth: '500px',
+        margin: '2rem auto 0 auto',
         background: '#000033',
         color: '#00ccff',
-        border: '2px solid #0066cc'
+        border: '2px solid #0066cc',
+        padding: '1.5rem',
+        fontFamily: 'Courier New, monospace',
+        borderRadius: '8px',
+        textAlign: 'center'
       }}>
         <div style={{ color: '#66aaff', fontWeight: 'bold', marginBottom: '0.5rem' }}>
           SYSTEM STATUS:

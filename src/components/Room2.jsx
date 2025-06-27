@@ -147,22 +147,22 @@ const Room2 = () => {
       }}
     >
       <div className="room-header">
-        <h1 className="room-title" style={{ color: '#00cccc', fontSize: '3rem' }}>
+        <h1 className="room-title" style={{ color: '#00cccc' }}>
           ROOM 2 - CHEMICAL CONTAINMENT
         </h1>
-        <p style={{ fontSize: '1.2rem', color: '#ff6666', marginBottom: '1rem' }}>
+        <p className="room-subtitle" style={{ color: '#ff6666', marginBottom: '1rem' }}>
           BIOHAZARD LEVEL 4 - IDENTITY COLLAPSE PROTOCOL ACTIVE
         </p>
       </div>
 
-      <div className="room-description" style={{ 
+      <div className="room-description room-puzzle-container" style={{ 
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         textAlign: 'center',
         width: '100%',
-        maxWidth: '800px',
-        margin: '0 auto'
+        margin: '0 auto',
+        padding: '0 1rem'
       }}>
         <div style={{ 
           background: 'rgba(0, 204, 204, 0.1)', 
@@ -170,9 +170,10 @@ const Room2 = () => {
           borderRadius: '15px',
           border: '2px solid rgba(0, 204, 204, 0.3)',
           marginBottom: '2rem',
-          maxWidth: '700px'
+          maxWidth: '100%',
+          width: '100%'
         }}>
-          <p style={{ marginBottom: '1.5rem', fontSize: '1.1rem', lineHeight: '1.6' }}>
+          <p style={{ marginBottom: '1.5rem', lineHeight: '1.6' }}>
             You pass into a colder chamber. Glass canisters line the wall — one shattered. 
             The fluid trails across the floor, glowing faintly with an unnatural cyan light.
           </p>
@@ -189,7 +190,7 @@ const Room2 = () => {
           </div>
         </div>
         
-        <h2 style={{ color: '#00cccc', marginBottom: '1.5rem', fontSize: '1.6rem' }}>
+        <h2 style={{ color: '#00cccc', marginBottom: '1.5rem' }}>
           QR-CODED VIAL ANALYSIS
         </h2>
         <div style={{ 
@@ -199,42 +200,39 @@ const Room2 = () => {
           alignItems: 'center',
           width: '100%'
         }}>
-          <p style={{ marginBottom: '2rem', fontSize: '1rem', textAlign: 'center', maxWidth: '600px' }}>
+          <p style={{ marginBottom: '2rem', textAlign: 'center', width: '100%' }}>
             You find 3 QR-coded vials. A digital panel asks for molecular matching. 
             By aligning molecular shapes and symbols, build the emergency access code.
           </p>
           
           {/* QR-Coded Vials */}
-          <div style={{ 
-            display: 'grid',
-            gridTemplateColumns: 'repeat(3, 1fr)',
-            gap: '2rem',
-            width: '100%',
-            maxWidth: '600px',
+          <div className="vial-grid" style={{ 
             marginBottom: '2rem'
           }}>
             {/* Vial 1 */}
             <div style={{ 
               background: 'rgba(0, 255, 255, 0.1)',
               borderRadius: '15px',
-              padding: '1.5rem',
+              padding: 'clamp(1rem, 2vw, 1.5rem)',
               border: '2px solid rgba(0, 255, 255, 0.4)',
               textAlign: 'center',
               opacity: showContent ? 1 : 0,
               transform: showContent ? 'translateY(0)' : 'translateY(20px)',
               transition: 'all 0.8s ease-in-out',
-              transitionDelay: '0.3s'
+              transitionDelay: '0.3s',
+              minWidth: '200px'
             }}>
-              <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🧪</div>
+              <div style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', marginBottom: '1rem' }}>🧪</div>
               <h4 style={{ color: '#00ffff', marginBottom: '0.5rem' }}>VIAL ALPHA</h4>
               <div style={{ 
                 background: 'rgba(255, 255, 255, 0.9)',
-                padding: '0.5rem',
+                padding: 'clamp(0.3rem, 1vw, 0.5rem)',
                 borderRadius: '5px',
                 marginBottom: '0.5rem',
                 fontFamily: 'Courier New, monospace',
-                fontSize: '0.7rem',
-                color: '#000'
+                fontSize: 'clamp(0.5rem, 1.5vw, 0.7rem)',
+                color: '#000',
+                lineHeight: '1.2'
               }}>
                 ████████<br/>
                 █    █ █<br/>
@@ -249,24 +247,26 @@ const Room2 = () => {
             <div style={{ 
               background: 'rgba(255, 102, 102, 0.1)',
               borderRadius: '15px',
-              padding: '1.5rem',
+              padding: 'clamp(1rem, 2vw, 1.5rem)',
               border: '2px solid rgba(255, 102, 102, 0.4)',
               textAlign: 'center',
               opacity: showContent ? 1 : 0,
               transform: showContent ? 'translateY(0)' : 'translateY(20px)',
               transition: 'all 0.8s ease-in-out',
-              transitionDelay: '0.6s'
+              transitionDelay: '0.6s',
+              minWidth: '200px'
             }}>
-              <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🧪</div>
+              <div style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', marginBottom: '1rem' }}>🧪</div>
               <h4 style={{ color: '#ff6666', marginBottom: '0.5rem' }}>VIAL BETA</h4>
               <div style={{ 
                 background: 'rgba(255, 255, 255, 0.9)',
-                padding: '0.5rem',
+                padding: 'clamp(0.3rem, 1vw, 0.5rem)',
                 borderRadius: '5px',
                 marginBottom: '0.5rem',
                 fontFamily: 'Courier New, monospace',
-                fontSize: '0.7rem',
-                color: '#000'
+                fontSize: 'clamp(0.5rem, 1.5vw, 0.7rem)',
+                color: '#000',
+                lineHeight: '1.2'
               }}>
                 ████████<br/>
                 █ ██   █<br/>
@@ -281,24 +281,26 @@ const Room2 = () => {
             <div style={{ 
               background: 'rgba(102, 255, 102, 0.1)',
               borderRadius: '15px',
-              padding: '1.5rem',
+              padding: 'clamp(1rem, 2vw, 1.5rem)',
               border: '2px solid rgba(102, 255, 102, 0.4)',
               textAlign: 'center',
               opacity: showContent ? 1 : 0,
               transform: showContent ? 'translateY(0)' : 'translateY(20px)',
               transition: 'all 0.8s ease-in-out',
-              transitionDelay: '0.9s'
+              transitionDelay: '0.9s',
+              minWidth: '200px'
             }}>
-              <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🧪</div>
+              <div style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', marginBottom: '1rem' }}>🧪</div>
               <h4 style={{ color: '#66ff66', marginBottom: '0.5rem' }}>VIAL GAMMA</h4>
               <div style={{ 
                 background: 'rgba(255, 255, 255, 0.9)',
-                padding: '0.5rem',
+                padding: 'clamp(0.3rem, 1vw, 0.5rem)',
                 borderRadius: '5px',
                 marginBottom: '0.5rem',
                 fontFamily: 'Courier New, monospace',
-                fontSize: '0.7rem',
-                color: '#000'
+                fontSize: 'clamp(0.5rem, 1.5vw, 0.7rem)',
+                color: '#000',
+                lineHeight: '1.2'
               }}>
                 ████████<br/>
                 █  ██  █<br/>
@@ -324,7 +326,8 @@ const Room2 = () => {
             padding: '1.5rem', 
             borderRadius: '10px',
             border: '1px solid rgba(0, 204, 204, 0.3)',
-            maxWidth: '600px',
+            maxWidth: '100%',
+            width: '100%',
             textAlign: 'center',
             marginBottom: '2rem'
           }}>
@@ -337,10 +340,7 @@ const Room2 = () => {
           </div>
 
           {/* 6-character code input */}
-          <div style={{ 
-            display: 'flex',
-            justifyContent: 'center',
-            gap: '10px',
+          <div className="code-input-container" style={{ 
             marginBottom: '2rem'
           }}>
             {code.map((char, index) => (
@@ -352,15 +352,15 @@ const Room2 = () => {
                 onChange={(e) => handleCodeChange(index, e.target.value)}
                 maxLength={1}
                 style={{
-                  width: '60px',
-                  height: '60px',
+                  width: 'clamp(40px, 8vw, 60px)',
+                  height: 'clamp(40px, 8vw, 60px)',
                   background: 'rgba(0, 204, 204, 0.2)',
                   border: '2px solid rgba(0, 204, 204, 0.5)',
                   color: '#00cccc',
                   textAlign: 'center',
                   borderRadius: '8px',
                   fontFamily: 'Courier New, monospace',
-                  fontSize: '1.5rem',
+                  fontSize: 'clamp(1rem, 3vw, 1.5rem)',
                   fontWeight: 'bold',
                   outline: 'none'
                 }}
@@ -383,8 +383,8 @@ const Room2 = () => {
             }}>
               <h4 style={{ color: '#00cccc', marginBottom: '1rem' }}>🔬 RETINAL SCAN REQUIRED</h4>
               <div style={{
-                width: '150px',
-                height: '150px',
+                width: 'clamp(100px, 20vw, 150px)',
+                height: 'clamp(100px, 20vw, 150px)',
                 borderRadius: '50%',
                 border: '3px solid #00cccc',
                 margin: '1rem auto',
@@ -394,7 +394,7 @@ const Room2 = () => {
                 background: 'radial-gradient(circle, rgba(0,204,204,0.1) 0%, transparent 70%)',
                 animation: 'pulse 2s infinite'
               }}>
-                <div style={{ fontSize: '3rem' }}>👁️</div>
+                <div style={{ fontSize: 'clamp(2rem, 5vw, 3rem)' }}>👁️</div>
               </div>
               <p style={{ marginBottom: '1.5rem', color: '#cccccc' }}>
                 Access code verified. Initiating biometric confirmation...
@@ -473,7 +473,6 @@ const Room2 = () => {
               : '2px solid #ff4444',
             borderRadius: '15px',
             padding: '2rem',
-            maxWidth: '500px',
             margin: '2rem',
             animation: 'fadeIn 1s ease-in'
           }}>

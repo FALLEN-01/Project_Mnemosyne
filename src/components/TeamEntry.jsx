@@ -51,8 +51,8 @@ const TeamEntry = () => {
     }}>
       <div style={{
         textAlign: 'center',
-        maxWidth: '600px',
-        width: '100%'
+        width: '100%',
+        maxWidth: '90%'
       }}>
         {/* Welcome Header */}
         <div style={{
@@ -60,7 +60,7 @@ const TeamEntry = () => {
           animation: 'fadeIn 1s ease-in'
         }}>
           <h1 style={{
-            fontSize: '3.5rem',
+            fontSize: 'clamp(2.5rem, 5vw, 3.5rem)',
             fontWeight: 'bold',
             marginBottom: '1rem',
             background: 'linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4)',
@@ -74,7 +74,7 @@ const TeamEntry = () => {
           </h1>
           
           <h2 style={{
-            fontSize: '2rem',
+            fontSize: 'clamp(1.5rem, 3vw, 2rem)',
             color: '#cccccc',
             marginBottom: '1.5rem',
             fontWeight: '300'
@@ -91,14 +91,14 @@ const TeamEntry = () => {
           }}>
             <h3 style={{
               color: '#ffdd44',
-              fontSize: '1.5rem',
+              fontSize: 'clamp(1.2rem, 2.5vw, 1.5rem)',
               marginBottom: '1rem',
               fontWeight: 'bold'
             }}>
               🧠 PROJECT MNEMOSYNE
             </h3>
             <p style={{
-              fontSize: '1.1rem',
+              fontSize: 'clamp(0.9rem, 2vw, 1.1rem)',
               lineHeight: '1.6',
               color: '#cccccc',
               marginBottom: '1rem'
@@ -107,7 +107,7 @@ const TeamEntry = () => {
               Navigate through four challenging rooms, solve puzzles, and uncover the truth about your identity.
             </p>
             <p style={{
-              fontSize: '1rem',
+              fontSize: 'clamp(0.8rem, 1.8vw, 1rem)',
               color: '#aaaaaa',
               fontStyle: 'italic'
             }}>
@@ -126,7 +126,7 @@ const TeamEntry = () => {
         }}>
           <h3 style={{
             color: '#ffffff',
-            fontSize: '1.3rem',
+            fontSize: 'clamp(1rem, 2.2vw, 1.3rem)',
             marginBottom: '1.5rem',
             fontWeight: 'bold'
           }}>
@@ -145,7 +145,7 @@ const TeamEntry = () => {
               style={{
                 width: '100%',
                 padding: '1.2rem 1.5rem',
-                fontSize: '1.2rem',
+                fontSize: 'clamp(1rem, 2vw, 1.2rem)',
                 border: '2px solid rgba(255, 255, 255, 0.3)',
                 borderRadius: '10px',
                 background: 'rgba(0, 0, 0, 0.5)',

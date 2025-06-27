@@ -95,10 +95,10 @@ const ExitHall = () => {
         }}>
           FINAL ROOM - ITOR CHAMBER
         </h1>
-        <p style={{ color: '#cccc66', fontSize: '1.1rem' }}>
+        <p className="room-subtitle" style={{ color: '#cccc66' }}>
           🔘 A clean, round room. In the center: a console. One glowing button.
         </p>
-        <p style={{ color: '#cccc77', fontSize: '1.1rem' }}>
+        <p className="room-subtitle" style={{ color: '#cccc77' }}>
           ⚖️ DECISION NEXUS
         </p>
       </div>
@@ -111,7 +111,7 @@ const ExitHall = () => {
           border: '2px solid rgba(255, 255, 136, 0.3)',
           marginBottom: '2rem'
         }}>
-          <p style={{ marginBottom: '1.5rem', fontSize: '1.1rem', lineHeight: '1.6' }}>
+          <p style={{ marginBottom: '1.5rem', lineHeight: '1.6' }}>
             A clean, round room. In the center: a console. One glowing button.
             You've reached the Itor Chamber — where the final choice awaits.
           </p>
@@ -142,7 +142,7 @@ const ExitHall = () => {
               �️ VOICE FRAGMENTS
             </h3>
             
-            <div style={{ textAlign: 'center', fontSize: '1.2rem', minHeight: '60px' }}>
+            <div style={{ textAlign: 'center', minHeight: '60px' }}>
               {voiceEchoes.slice(0, voiceFragments + 1).map((echo, index) => (
                 <div 
                   key={index}
@@ -183,7 +183,6 @@ const ExitHall = () => {
               marginBottom: '1.5rem'
             }}>
               <p style={{ 
-                fontSize: '1.2rem', 
                 lineHeight: '1.6',
                 textAlign: 'center',
                 fontStyle: 'italic'
@@ -259,7 +258,6 @@ const ExitHall = () => {
                 The decision interface appears before you.
               </p>
               <p style={{ 
-                fontSize: '1.1rem', 
                 color: '#ffffcc'
               }}>
                 Will you restore your original identity, or let the purge complete?
@@ -278,9 +276,9 @@ const ExitHall = () => {
                 style={{ 
                   background: 'linear-gradient(45deg, #ffff88, #cccc77)',
                   color: '#000',
-                  fontSize: '1.3rem',
-                  padding: '1.5rem 2rem',
-                  minWidth: '150px',
+                  fontSize: 'clamp(1rem, 2vw, 1.3rem)',
+                  padding: 'clamp(1rem, 2vw, 1.5rem) clamp(1.5rem, 3vw, 2rem)',
+                  minWidth: 'clamp(120px, 25vw, 150px)',
                   fontWeight: 'bold'
                 }}
               >
@@ -293,9 +291,9 @@ const ExitHall = () => {
                 style={{ 
                   background: 'linear-gradient(45deg, #666666, #999999)',
                   color: '#fff',
-                  fontSize: '1.3rem',
-                  padding: '1.5rem 2rem',
-                  minWidth: '150px',
+                  fontSize: 'clamp(1rem, 2vw, 1.3rem)',
+                  padding: 'clamp(1rem, 2vw, 1.5rem) clamp(1.5rem, 3vw, 2rem)',
+                  minWidth: 'clamp(120px, 25vw, 150px)',
                   fontWeight: 'bold'
                 }}
               >
@@ -326,7 +324,6 @@ const ExitHall = () => {
               border: '1px solid rgba(255, 255, 136, 0.5)',
               marginBottom: '2rem',
               textAlign: 'center',
-              fontSize: '1.1rem',
               lineHeight: '1.8'
             }}>
               {finalChoice === 'remember' ? (

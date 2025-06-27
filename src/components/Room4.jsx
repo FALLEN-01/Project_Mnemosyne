@@ -145,20 +145,25 @@ const Room4 = () => {
         }}>
           ROOM 4 - NEURAL SYNC CORE
         </h1>
-        <p style={{ color: '#9966cc', fontSize: '1.1rem' }}>
+        <p className="room-subtitle" style={{ color: '#9966cc' }}>
           🧠 MNEMOSYNE CORE INTERFACE
         </p>
       </div>
 
-      <div className="room-description">
+      <div className="room-description room-puzzle-container" style={{
+        margin: '0 auto',
+        padding: '0 1rem',
+        width: '100%'
+      }}>
         <div style={{ 
           background: 'rgba(187, 136, 255, 0.1)', 
           padding: '2rem', 
           borderRadius: '15px',
           border: '2px solid rgba(187, 136, 255, 0.3)',
-          marginBottom: '2rem'
+          marginBottom: '2rem',
+          width: '100%'
         }}>
-          <p style={{ marginBottom: '1.5rem', fontSize: '1.1rem', lineHeight: '1.6' }}>
+          <p style={{ marginBottom: '1.5rem', lineHeight: '1.6' }}>
             The floor is transparent — below, a pulsating brain model spins slowly. 
             You're inside the Mnemosyne Core. Neural pathways flicker with electric life.
           </p>
@@ -182,15 +187,19 @@ const Room4 = () => {
             Neural Pathway Configuration
           </h3>
           
-          <div style={{
+          <div className="neural-network-container" style={{
             position: 'relative',
-            height: '500px',
+            height: 'clamp(300px, 50vh, 500px)',
             background: 'rgba(0, 0, 0, 0.4)',
             border: '2px solid rgba(187, 136, 255, 0.5)',
             borderRadius: '15px',
             margin: '0 auto',
-            maxWidth: '600px',
-            overflow: 'hidden'
+            width: '100%',
+            maxWidth: 'min(600px, 90vw)',
+            overflow: 'hidden',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
           }}>
             {/* Neural Network Background */}
             <svg 
@@ -203,6 +212,7 @@ const Room4 = () => {
                 zIndex: 1
               }}
               viewBox="0 0 600 500"
+              preserveAspectRatio="xMidYMid meet"
             >
               {/* Connection lines */}
               <line x1="150" y1="100" x2="300" y2="250" stroke="rgba(187, 136, 255, 0.3)" strokeWidth="2" />
@@ -229,10 +239,10 @@ const Room4 = () => {
                 key={node.id}
                 style={{
                   position: 'absolute',
-                  left: `${node.x - 40}px`,
-                  top: `${node.y - 40}px`,
-                  width: '80px',
-                  height: '80px',
+                  left: `calc(${(node.x / 600) * 100}% - clamp(30px, 6vw, 40px))`,
+                  top: `calc(${(node.y / 500) * 100}% - clamp(30px, 6vw, 40px))`,
+                  width: 'clamp(60px, 12vw, 80px)',
+                  height: 'clamp(60px, 12vw, 80px)',
                   background: `radial-gradient(circle, rgba(187, 136, 255, ${node.pulseFlow / 100}) 0%, rgba(0, 0, 0, 0.8) 70%)`,
                   border: '3px solid #bb88ff',
                   borderRadius: '50%',
@@ -250,7 +260,7 @@ const Room4 = () => {
                 <div style={{
                   color: '#bb88ff',
                   fontWeight: 'bold',
-                  fontSize: '1rem',
+                  fontSize: 'clamp(0.8rem, 2vw, 1rem)',
                   transform: `rotate(-${node.rotation}deg)` // Keep text upright
                 }}>
                   {node.id}
@@ -260,7 +270,7 @@ const Room4 = () => {
                 <div style={{
                   position: 'absolute',
                   top: '5px',
-                  width: '10px',
+                  width: 'clamp(8px, 2vw, 10px)',
                   height: '2px',
                   background: '#ffaa88',
                   borderRadius: '1px'
@@ -269,21 +279,24 @@ const Room4 = () => {
             ))}
           </div>
 
-          <div style={{ textAlign: 'center', marginTop: '1rem' }}>
-            <button 
-              className="btn" 
-              onClick={startPulseFlow}
-              disabled={pulseActive || showHologram}
-              style={{ 
-                background: pulseActive 
-                  ? '#666' 
-                  : 'linear-gradient(45deg, #bb88ff, #9966cc)',
-                marginRight: '1rem'
-              }}
-            >
-              {pulseActive ? 'Pulse Flow Active' : 'Initiate Neural Sync'}
-            </button>
-          </div>
+          {/* Only show button if sequence is not correct */}
+          {JSON.stringify(neuralNodes.map(node => node.rotation)) !== JSON.stringify(correctRotations) && (
+            <div style={{ textAlign: 'center', marginTop: '1rem' }}>
+              <button 
+                className="btn" 
+                onClick={startPulseFlow}
+                disabled={pulseActive || showHologram}
+                style={{ 
+                  background: pulseActive 
+                    ? '#666' 
+                    : 'linear-gradient(45deg, #bb88ff, #9966cc)',
+                  marginRight: '1rem'
+                }}
+              >
+                {pulseActive ? 'Pulse Flow Active' : 'Initiate Neural Sync'}
+              </button>
+            </div>
+          )}
 
           {showHint && !showHologram && (
             <div style={{
@@ -385,7 +398,6 @@ const Room4 = () => {
                 : '2px solid #ff4444',
               borderRadius: '15px',
               padding: '2rem',
-              maxWidth: '500px',
               margin: '2rem',
               animation: 'fadeIn 1s ease-in'
             }}>
