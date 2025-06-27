@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useGameState } from '../App'
+import CyberpunkTerminal from './CyberpunkTerminal'
 
 // === VISUAL & SOUND NOTES ===
 // Core: Violet/Neon | Live UI, hologram pulses | Pulse beeps
@@ -23,6 +24,7 @@ const Room4 = () => {
   const [showHint, setShowHint] = useState(false)
   const [showStatusModal, setShowStatusModal] = useState(false)
   const [statusModalType, setStatusModalType] = useState('') // 'success' or 'error'
+  const [showTerminal, setShowTerminal] = useState(false)
 
   // Correct rotations for neural alignment (example pattern)
   const correctRotations = [45, 135, 270, 90, 315]
@@ -122,6 +124,10 @@ const Room4 = () => {
   }
 
   const proceedToFinalRoom = async () => {
+    setShowTerminal(true)
+  }
+
+  const handleTerminalComplete = async () => {
     try {
       // Complete room and update game state
       completeRoom(4)
@@ -130,6 +136,7 @@ const Room4 = () => {
         room4_confessionViewed: true 
       })
       
+      setShowTerminal(false)
       // Small delay to ensure state is updated
       setTimeout(() => {
         navigate('/exit-hall')
@@ -510,6 +517,18 @@ const Room4 = () => {
             </div>
           </div>
         )}
+
+        {/* Cyberpunk Terminal Popup */}
+        <CyberpunkTerminal
+          isOpen={showTerminal}
+          onComplete={handleTerminalComplete}
+          title="NEURAL CONFESSION COMPLETE"
+          commands={[
+            "Neural alignment successful...",
+            "Consciousness integrated...",
+            "Accessing exit protocols..."
+          ]}
+        />
       </div>
     </div>
   )

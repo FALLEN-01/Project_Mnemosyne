@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useGameState } from '../App'
+import CyberpunkTerminal from './CyberpunkTerminal'
 
 // DEVELOPER NOTES - VISUAL & SOUND (Observation Hall):
 // - Blue/Grey color palette - cold surveillance room aesthetic
@@ -23,6 +24,7 @@ const Room1 = () => {
   const [currentStep, setCurrentStep] = useState(0)
   const [showStatusModal, setShowStatusModal] = useState(false)
   const [statusModalType, setStatusModalType] = useState('') // 'success' or 'error'
+  const [showTerminal, setShowTerminal] = useState(false)
 
   // Movement path puzzle: 3x3 grid sequence
   const correctSequence = [4, 1, 2, 5, 8, 7, 6, 3, 0] // Center -> Top-left -> Top-middle -> Middle-right -> Bottom-right -> Bottom-middle -> Bottom-left -> Top-right -> Middle-left
@@ -65,21 +67,10 @@ const Room1 = () => {
       if (index === correctSequence[currentStep]) {
         setCurrentStep(currentStep + 1)
         if (currentStep + 1 === correctSequence.length) {
-          // Puzzle completed - show success modal
+          // Puzzle completed - show terminal
           updateGameState({ room1Sequence: correctSequence })
           completeRoom(1)
-          setStatusModalType('success')
-          setShowStatusModal(true)
-          
-          setTimeout(() => {
-            setShowStatusModal(false)
-            setTimeout(() => {
-              setShowMemory(true)
-              setTimeout(() => {
-                navigate('/room2')
-              }, 3000)
-            }, 500)
-          }, 3000)
+          setShowTerminal(true)
         }
       } else {
         // Wrong path - show error modal
@@ -93,6 +84,14 @@ const Room1 = () => {
         }, 2000)
       }
     }
+  }
+
+  const handleTerminalComplete = () => {
+    setShowTerminal(false)
+    setShowMemory(true)
+    setTimeout(() => {
+      navigate('/room2')
+    }, 3000)
   }
 
   const handleSubmit = () => {
@@ -435,6 +434,18 @@ const Room1 = () => {
           </div>
         </div>
       )}
+
+      {/* Cyberpunk Terminal Popup */}
+      <CyberpunkTerminal
+        isOpen={showTerminal}
+        onComplete={handleTerminalComplete}
+        title="SURVEILLANCE PATTERN DECODED"
+        commands={[
+          "Movement sequence verified...",
+          "Neural pathways unlocked...",
+          "Entering Chemical Lab..."
+        ]}
+      />
     </div>
   )
 }

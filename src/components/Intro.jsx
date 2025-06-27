@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useGameState } from '../App'
+import CyberpunkTerminal from './CyberpunkTerminal'
 
 const Intro = () => {
   const navigate = useNavigate()
@@ -11,6 +12,7 @@ const Intro = () => {
   const [error, setError] = useState('')
   const [flickers, setFlickers] = useState({})
   const [showCorrupted, setShowCorrupted] = useState(true)
+  const [showTerminal, setShowTerminal] = useState(false)
 
   // Prologue puzzle: binary 11001010 = 202, + room number 17 = 20217
   const correctCode = '20217'
@@ -67,12 +69,7 @@ const Intro = () => {
       if (newCode.length === 5) {
         setTimeout(() => {
           if (newCode === correctCode) {
-            updateGameState({ 
-              introCompleted: true
-            })
-            setTimeout(() => {
-              navigate('/room1')
-            }, 1500)
+            setShowTerminal(true)
           } else {
             setError('Invalid access code. Memory fragments flicker...')
             setTimeout(() => {
@@ -88,6 +85,14 @@ const Intro = () => {
   const handleClear = () => {
     setCode('')
     setError('')
+  }
+
+  const handleTerminalComplete = () => {
+    updateGameState({ 
+      introCompleted: true
+    })
+    setShowTerminal(false)
+    navigate('/room1')
   }
 
   return (
@@ -441,6 +446,18 @@ const Intro = () => {
           ACCESS CODE... {code.length === 5 && code === correctCode ? 'ACCEPTED' : 'REQUIRED'}<br />
         </div>
       </div>
+
+      {/* Cyberpunk Terminal Popup */}
+      <CyberpunkTerminal
+        isOpen={showTerminal}
+        onComplete={handleTerminalComplete}
+        title="NEURAL PATHWAY ACTIVATED"
+        commands={[
+          "Access code verified...",
+          "Memory sectors unlocked...",
+          "Entering Observation Hall..."
+        ]}
+      />
     </div>
   )
 }

@@ -1,12 +1,14 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useGameState } from '../App'
+import CyberpunkTerminal from './CyberpunkTerminal'
 
 const TeamEntry = () => {
   const navigate = useNavigate()
   const { updateGameState } = useGameState()
   const [teamName, setTeamName] = useState('')
   const [error, setError] = useState('')
+  const [showTerminal, setShowTerminal] = useState(false)
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -21,12 +23,18 @@ const TeamEntry = () => {
       return
     }
 
+    // Show terminal popup before navigation
+    setShowTerminal(true)
+  }
+
+  const handleTerminalComplete = () => {
     // Update game state with team name and navigate to intro
     updateGameState({ 
       teamName: teamName.trim(),
       startTime: new Date()
     })
     
+    setShowTerminal(false)
     navigate('/intro')
   }
 
@@ -233,6 +241,18 @@ const TeamEntry = () => {
           <p>🧩 Pay attention to details - every clue matters</p>
         </div>
       </div>
+
+      {/* Cyberpunk Terminal Popup */}
+      <CyberpunkTerminal
+        isOpen={showTerminal}
+        onComplete={handleTerminalComplete}
+        title="NEURAL INTERFACE ACTIVATION"
+        commands={[
+          `Team registered: ${teamName.trim()}`,
+          "Neural link established...",
+          "Accessing memory core..."
+        ]}
+      />
 
       {/* CSS for gradient animation */}
       <style jsx>{`

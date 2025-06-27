@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useGameState } from '../App'
+import CyberpunkTerminal from './CyberpunkTerminal'
 
 // DEVELOPER NOTES - VISUAL & SOUND (Chemical Containment):
 // - Cyan/Red color palette - cold chemical lab with danger warnings
@@ -23,6 +24,7 @@ const Room2 = () => {
   const [showRetinalScan, setShowRetinalScan] = useState(false)
   const [showStatusModal, setShowStatusModal] = useState(false)
   const [statusModalType, setStatusModalType] = useState('') // 'success' or 'error'
+  const [showTerminal, setShowTerminal] = useState(false)
 
   // Chemical containment puzzle: 7R4UM4
   const correctCode = '7R4UM4'
@@ -57,7 +59,7 @@ const Room2 = () => {
       // Check if complete and correct
       const fullCode = newCode.join('')
       if (fullCode.length === 6 && fullCode === correctCode) {
-        setShowRetinalScan(true)
+        setShowTerminal(true)
       }
     }
   }
@@ -70,6 +72,11 @@ const Room2 = () => {
     setTimeout(() => {
       navigate('/room3')
     }, 3000)
+  }
+
+  const handleTerminalComplete = () => {
+    setShowTerminal(false)
+    setShowRetinalScan(true)
   }
 
   const handleSubmit = () => {
@@ -525,6 +532,18 @@ const Room2 = () => {
           </div>
         </div>
       )}
+
+      {/* Cyberpunk Terminal Popup */}
+      <CyberpunkTerminal
+        isOpen={showTerminal}
+        onComplete={handleTerminalComplete}
+        title="CHEMICAL SEQUENCE ANALYZED"
+        commands={[
+          "Molecular structure verified...",
+          "Activating retinal scanner...",
+          "Accessing archive level..."
+        ]}
+      />
     </div>
   )
 }

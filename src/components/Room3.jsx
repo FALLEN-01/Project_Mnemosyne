@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useGameState } from '../App'
+import CyberpunkTerminal from './CyberpunkTerminal'
 
 // === VISUAL & SOUND NOTES ===
 // Archive: Orange/Shadow | VHS glitch, echo FX | Voice loops
@@ -14,6 +15,7 @@ const Room3 = () => {
   const [playingSegment, setPlayingSegment] = useState(null)
   const [showStatusModal, setShowStatusModal] = useState(false)
   const [statusModalType, setStatusModalType] = useState('') // 'success' or 'error'
+  const [showTerminal, setShowTerminal] = useState(false)
 
   // Six memory video segments (A-F) that need to be sequenced correctly
   const memorySegments = {
@@ -60,6 +62,16 @@ const Room3 = () => {
     }
   }, [gameState.teamName, navigate])
 
+  const handleTerminalComplete = () => {
+    setShowTerminal(false)
+    setShowReveal(true)
+    setTimeout(() => {
+      completeRoom('room3')
+      updateGameState({ room3_memorySequence: videoSegments })
+      navigate('/room4')
+    }, 4000)
+  }
+
   const handleSegmentSelect = (position, segment) => {
     const newSegments = [...videoSegments]
     newSegments[position] = segment
@@ -78,21 +90,8 @@ const Room3 = () => {
     }
 
     if (JSON.stringify(videoSegments) === JSON.stringify(correctSequence)) {
-      // Success - show modal first
-      setStatusModalType('success')
-      setShowStatusModal(true)
-      
-      setTimeout(() => {
-        setShowStatusModal(false)
-        setTimeout(() => {
-          setShowReveal(true)
-          setTimeout(() => {
-            completeRoom('room3')
-            updateGameState({ room3_memorySequence: videoSegments })
-            navigate('/room4')
-          }, 4000)
-        }, 500)
-      }, 3000)
+      // Success - show terminal
+      setShowTerminal(true)
     } else {
       // Error - show modal
       setStatusModalType('error')
@@ -446,6 +445,18 @@ const Room3 = () => {
             </div>
           </div>
         )}
+
+        {/* Cyberpunk Terminal Popup */}
+        <CyberpunkTerminal
+          isOpen={showTerminal}
+          onComplete={handleTerminalComplete}
+          title="MEMORY SEQUENCE RECONSTRUCTED"
+          commands={[
+            "Video segments synchronized...",
+            "Memory fragments realigned...",
+            "Loading Control Center..."
+          ]}
+        />
       </div>
     </div>
   )
