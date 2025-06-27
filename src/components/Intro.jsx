@@ -6,9 +6,11 @@ const Intro = () => {
   const navigate = useNavigate()
   const { gameState, updateGameState, getProgressRoute } = useGameState()
   const [showContent, setShowContent] = useState(false)
-  const [code, setCode] = useState(['', '', '', '', ''])
+  const [code, setCode] = useState('')
   const [showKeypad, setShowKeypad] = useState(false)
   const [error, setError] = useState('')
+  const [flickers, setFlickers] = useState({})
+  const [showCorrupted, setShowCorrupted] = useState(true)
 
   // Prologue puzzle: binary 11001010 = 202, + room number 17 = 20217
   const correctCode = '20217'
@@ -25,7 +27,7 @@ const Intro = () => {
       setShowContent(true)
       setTimeout(() => {
         setShowKeypad(true)
-      }, 3000)
+      }, 2000)
     }, 1000)
 
     return () => {
@@ -33,39 +35,59 @@ const Intro = () => {
     }
   }, [gameState.teamName, navigate])
 
-  const handleCodeChange = (index, value) => {
-    if (value.length <= 1 && /^\d*$/.test(value)) {
-      const newCode = [...code]
-      newCode[index] = value
-      setCode(newCode)
-      
-      // Auto-focus next input
-      if (value && index < 4) {
-        const nextInput = document.getElementById(`code-${index + 1}`)
-        if (nextInput) nextInput.focus()
-      }
-      
-      // Check if complete and correct
-      if (newCode.every(digit => digit !== '')) {
-        const enteredCode = newCode.join('')
-        if (enteredCode === correctCode) {
-          updateGameState({ 
-            introCompleted: true
-          })
-          setTimeout(() => {
-            navigate('/room1')
-          }, 1500)
-        } else {
-          setError('Invalid access code. Memory fragments flicker...')
-          setTimeout(() => {
-            setError('')
-            setCode(['', '', '', '', ''])
-            const firstInput = document.getElementById('code-0')
-            if (firstInput) firstInput.focus()
-          }, 2000)
-        }
+  // Flickering effect for terminal displays
+  useEffect(() => {
+    if (showKeypad) {
+      // Cycle between normal and corrupted every 3 seconds
+      const cycleInterval = setInterval(() => {
+        setShowCorrupted(prev => !prev)
+      }, 3000)
+
+      const flickerInterval = setInterval(() => {
+        setFlickers(prev => ({
+          ...prev,
+          terminal: Math.random() > 0.95,
+          status: Math.random() > 0.85,
+          hint: Math.random() > 0.8
+        }))
+      }, 400) // Slowed down from 150ms to 400ms
+
+      return () => {
+        clearInterval(cycleInterval)
+        clearInterval(flickerInterval)
       }
     }
+  }, [showKeypad])
+
+  const handleKeypadPress = (digit) => {
+    if (code.length < 5) {
+      const newCode = code + digit
+      setCode(newCode)
+      
+      if (newCode.length === 5) {
+        setTimeout(() => {
+          if (newCode === correctCode) {
+            updateGameState({ 
+              introCompleted: true
+            })
+            setTimeout(() => {
+              navigate('/room1')
+            }, 1500)
+          } else {
+            setError('Invalid access code. Memory fragments flicker...')
+            setTimeout(() => {
+              setError('')
+              setCode('')
+            }, 2000)
+          }
+        }, 500)
+      }
+    }
+  }
+
+  const handleClear = () => {
+    setCode('')
+    setError('')
   }
 
   return (
@@ -126,6 +148,7 @@ const Intro = () => {
 
           <p style={{ marginBottom: '1.5rem', fontSize: '1rem', lineHeight: '1.6' }}>
             You try to remember who you are. Nothing. No name. No time. Only instincts.
+            A small plaque near the door catches your eye: "ROOM 17 - SUBJECT RECOVERY BAY".
           </p>
 
           <div style={{ 
@@ -144,7 +167,7 @@ const Intro = () => {
           </div>
         </div>
 
-        {/* Binary Keypad Puzzle */}
+        {/* Interactive Keypad Puzzle */}
         {showKeypad && (
           <div style={{ 
             background: 'rgba(0, 20, 40, 0.8)', 
@@ -159,67 +182,213 @@ const Intro = () => {
               Access Keypad Activated
             </h3>
             
-            <div style={{ 
-              background: 'rgba(0, 204, 255, 0.1)', 
-              padding: '1.5rem', 
+            {/* Flickering Terminal Display */}
+            <div style={{
+              background: 'rgba(0, 20, 40, 0.9)',
+              border: '2px solid #0066cc',
               borderRadius: '10px',
-              border: '1px solid rgba(0, 204, 255, 0.3)',
-              marginBottom: '1.5rem'
+              padding: '1.5rem',
+              marginBottom: '2rem',
+              fontFamily: 'Courier New, monospace',
+              opacity: flickers.terminal ? 0.3 : 1,
+              transition: 'opacity 0.3s ease' // Slowed down transition
             }}>
-              <p style={{ color: '#e8e8e8', marginBottom: '1rem', fontSize: '1rem' }}>
-                A keypad appears with no label. The flickering screen next to it plays faint static patterns.
-              </p>
               <div style={{ 
-                fontFamily: 'Courier New, monospace',
-                fontSize: '1.1rem',
-                color: '#66aaff',
-                marginBottom: '1rem'
+                color: '#00ccff', 
+                fontWeight: 'bold', 
+                marginBottom: '1rem',
+                opacity: flickers.status ? 0.5 : 1
               }}>
-                BINARY PATTERN DETECTED: 11001010 = 202<br />
-                CLIPBOARD NOTATION: "Room 17"<br />
-                <span style={{ color: '#ffaa00' }}>COMBINE SEQUENCES TO PROCEED</span>
+                BINARY STREAM ACTIVE:
+              </div>
+              <div style={{ 
+                lineHeight: '1.2', 
+                color: '#66aaff',
+                fontFamily: 'Courier New, monospace',
+                fontSize: '0.9rem'
+              }}>
+                {showCorrupted ? (
+                  <div style={{ color: '#ff4444' }}>
+                    01001000 11100011 10110100 01010111<br />
+                    ERROR... ERROR... ERROR... ERROR...<br />
+                    CORRUPTED... CORRUPTED... CORRUPTED<br />
+                    MEMORY FRAGMENTS LOST
+                  </div>
+                ) : (
+                  <div>
+                    00110010 00110000 00110010 00110001<br />
+                    00110111 01001000 01100101 01101100<br />
+                    01110000 01001101 01100101 01101101<br />
+                    BINARY STREAM ANALYSIS COMPLETE
+                  </div>
+                )}
+              </div>
+              
+              {/* Status Indicator */}
+              <div style={{
+                marginTop: '1rem',
+                padding: '0.5rem',
+                background: 'rgba(0, 204, 255, 0.1)',
+                border: '1px solid rgba(0, 204, 255, 0.3)',
+                borderRadius: '5px',
+                opacity: flickers.hint ? 0.2 : 1,
+                transition: 'opacity 0.2s'
+              }}>
+                <div style={{ fontSize: '0.9rem', color: '#66aaff' }}>
+                  ACCESS STATUS: {code.length === 5 && code === correctCode ? 'GRANTED' : 'PENDING'}<br />
+                  MEMORY CORE: {flickers.hint ? 'UNSTABLE' : 'SYNCING'}<br />
+                  <span style={{ color: code.length === 5 && code === correctCode ? '#00ff88' : '#ffaa00' }}>
+                    {code.length === 5 && code === correctCode ? 'ACCESS GRANTED' : 'AWAITING INPUT'}
+                  </span>
+                </div>
               </div>
             </div>
 
-            <p style={{ fontSize: '0.9rem', color: '#aaa', marginBottom: '1.5rem' }}>
-              Enter the 5-digit access code:
-            </p>
-
-            <div style={{ 
+            {/* Code Display */}
+            <div style={{
               display: 'flex',
               justifyContent: 'center',
               gap: '10px',
-              marginBottom: '1.5rem'
+              marginBottom: '2rem'
             }}>
-              {code.map((digit, index) => (
-                <input
+              {[0, 1, 2, 3, 4].map((index) => (
+                <div
                   key={index}
-                  id={`code-${index}`}
-                  type="text"
-                  inputMode="numeric"
-                  pattern="[0-9]*"
-                  value={digit}
-                  onChange={(e) => handleCodeChange(index, e.target.value)}
-                  maxLength={1}
                   style={{
                     width: '60px',
                     height: '60px',
                     background: 'rgba(0, 20, 40, 0.9)',
-                    border: '2px solid rgba(0, 204, 255, 0.5)',
-                    color: '#00ccff',
-                    textAlign: 'center',
+                    border: `2px solid ${code[index] ? '#00ccff' : 'rgba(0, 204, 255, 0.5)'}`,
                     borderRadius: '8px',
-                    fontFamily: 'Courier New, monospace',
-                    fontSize: '1.5rem',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '1.8rem',
                     fontWeight: 'bold',
-                    outline: 'none'
+                    color: '#00ccff',
+                    fontFamily: 'Courier New, monospace',
+                    boxShadow: code[index] ? '0 0 10px rgba(0, 204, 255, 0.3)' : 'none',
+                    transition: 'all 0.3s ease',
+                    opacity: flickers.code && code[index] ? 0.6 : 1
                   }}
-                  onFocus={(e) => e.target.style.borderColor = '#00ccff'}
-                  onBlur={(e) => e.target.style.borderColor = 'rgba(0, 204, 255, 0.5)'}
-                />
+                >
+                  {code[index] || ''}
+                </div>
               ))}
             </div>
 
+            {/* Interactive Keypad */}
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(3, 1fr)',
+              gap: '15px',
+              maxWidth: '300px',
+              margin: '0 auto',
+              marginBottom: '2rem'
+            }}>
+              {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
+                <button
+                  key={num}
+                  onClick={() => handleKeypadPress(num.toString())}
+                  disabled={code.length >= 5}
+                  style={{
+                    width: '80px',
+                    height: '80px',
+                    background: 'linear-gradient(145deg, rgba(0, 204, 255, 0.2), rgba(0, 204, 255, 0.1))',
+                    border: '2px solid rgba(0, 204, 255, 0.6)',
+                    borderRadius: '12px',
+                    color: '#00ccff',
+                    fontSize: '1.8rem',
+                    fontWeight: 'bold',
+                    fontFamily: 'Courier New, monospace',
+                    cursor: code.length < 5 ? 'pointer' : 'not-allowed',
+                    transition: 'all 0.2s ease',
+                    opacity: code.length >= 5 ? 0.5 : 1,
+                    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.3)'
+                  }}
+                  onMouseEnter={(e) => {
+                    if (code.length < 5) {
+                      e.target.style.background = 'linear-gradient(145deg, rgba(0, 204, 255, 0.4), rgba(0, 204, 255, 0.2))'
+                      e.target.style.boxShadow = '0 0 15px rgba(0, 204, 255, 0.4)'
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (code.length < 5) {
+                      e.target.style.background = 'linear-gradient(145deg, rgba(0, 204, 255, 0.2), rgba(0, 204, 255, 0.1))'
+                      e.target.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.3)'
+                    }
+                  }}
+                >
+                  {num}
+                </button>
+              ))}
+              
+              {/* Clear and Zero buttons */}
+              <button
+                onClick={handleClear}
+                style={{
+                  width: '80px',
+                  height: '80px',
+                  background: 'linear-gradient(145deg, rgba(255, 68, 68, 0.3), rgba(255, 68, 68, 0.2))',
+                  border: '2px solid rgba(255, 68, 68, 0.6)',
+                  borderRadius: '12px',
+                  color: '#ff4444',
+                  fontSize: '1rem',
+                  fontWeight: 'bold',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease',
+                  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.3)'
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.background = 'linear-gradient(145deg, rgba(255, 68, 68, 0.5), rgba(255, 68, 68, 0.3))'
+                  e.target.style.boxShadow = '0 0 15px rgba(255, 68, 68, 0.4)'
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.background = 'linear-gradient(145deg, rgba(255, 68, 68, 0.3), rgba(255, 68, 68, 0.2))'
+                  e.target.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.3)'
+                }}
+              >
+                CLR
+              </button>
+              
+              <button
+                onClick={() => handleKeypadPress('0')}
+                disabled={code.length >= 5}
+                style={{
+                  width: '80px',
+                  height: '80px',
+                  background: 'linear-gradient(145deg, rgba(0, 204, 255, 0.2), rgba(0, 204, 255, 0.1))',
+                  border: '2px solid rgba(0, 204, 255, 0.6)',
+                  borderRadius: '12px',
+                  color: '#00ccff',
+                  fontSize: '1.8rem',
+                  fontWeight: 'bold',
+                  fontFamily: 'Courier New, monospace',
+                  cursor: code.length < 5 ? 'pointer' : 'not-allowed',
+                  transition: 'all 0.2s ease',
+                  opacity: code.length >= 5 ? 0.5 : 1,
+                  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.3)'
+                }}
+                onMouseEnter={(e) => {
+                  if (code.length < 5) {
+                    e.target.style.background = 'linear-gradient(145deg, rgba(0, 204, 255, 0.4), rgba(0, 204, 255, 0.2))'
+                    e.target.style.boxShadow = '0 0 15px rgba(0, 204, 255, 0.4)'
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (code.length < 5) {
+                    e.target.style.background = 'linear-gradient(145deg, rgba(0, 204, 255, 0.2), rgba(0, 204, 255, 0.1))'
+                    e.target.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.3)'
+                  }
+                }}
+              >
+                0
+              </button>
+              
+              <div></div> {/* Empty space for grid alignment */}
+            </div>
+
+            {/* Error Display */}
             {error && (
               <div style={{
                 color: '#ff4444',
@@ -228,13 +397,15 @@ const Intro = () => {
                 padding: '1rem',
                 borderRadius: '8px',
                 marginTop: '1rem',
-                fontSize: '0.9rem'
+                fontSize: '0.9rem',
+                animation: 'pulse 1s infinite'
               }}>
                 {error}
               </div>
             )}
 
-            {code.every(digit => digit !== '') && code.join('') === correctCode && (
+            {/* Success Indicator */}
+            {code.length === 5 && code === correctCode && (
               <div style={{
                 color: '#00ff88',
                 background: 'rgba(0, 255, 136, 0.1)',
@@ -243,7 +414,8 @@ const Intro = () => {
                 borderRadius: '8px',
                 marginTop: '1rem',
                 fontSize: '1rem',
-                fontWeight: 'bold'
+                fontWeight: 'bold',
+                animation: 'fadeIn 0.5s ease-in'
               }}>
                 ✓ ACCESS GRANTED - Initializing memory recovery...
               </div>
@@ -264,9 +436,9 @@ const Intro = () => {
         </div>
         <div style={{ lineHeight: '1.4' }}>
           FACILITY... DORMANT<br />
-          SUBJECT ID... {code.join('') === correctCode ? 'VERIFIED' : 'PENDING'}<br />
+          SUBJECT ID... {code === correctCode ? 'VERIFIED' : 'PENDING'}<br />
           KEYPAD... {showKeypad ? 'ACTIVE' : 'STANDBY'}<br />
-          ACCESS CODE... {code.every(digit => digit !== '') && code.join('') === correctCode ? 'ACCEPTED' : 'REQUIRED'}<br />
+          ACCESS CODE... {code.length === 5 && code === correctCode ? 'ACCEPTED' : 'REQUIRED'}<br />
         </div>
       </div>
     </div>
