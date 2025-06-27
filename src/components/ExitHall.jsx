@@ -8,12 +8,14 @@ import { useGameState } from '../App'
 const ExitHall = () => {
   const navigate = useNavigate()
   const { gameState, updateGameState } = useGameState()
-  const [showRiddle, setShowRiddle] = useState(false)
-  const [riddleAnswer, setRiddleAnswer] = useState('')
+  const [showKeypad, setShowKeypad] = useState(false)
+  const [enteredCode, setEnteredCode] = useState('')
   const [showDecision, setShowDecision] = useState(false)
   const [voiceFragments, setVoiceFragments] = useState(0)
   const [finalChoice, setFinalChoice] = useState(null)
   const [endingScene, setEndingScene] = useState(null)
+  const [flickers, setFlickers] = useState({})
+  const [error, setError] = useState('')
 
   const voiceEchoes = [
     "Erase it.",
@@ -22,7 +24,7 @@ const ExitHall = () => {
     "The truth... or peace?"
   ]
 
-  const correctAnswer = "forgetfulness"
+  const correctCode = "5843" // Final access code for the decision terminal
 
   useEffect(() => {
     // Redirect to team name entry if no team name is set
@@ -38,7 +40,7 @@ const ExitHall = () => {
           return prev + 1
         } else {
           clearInterval(echoInterval)
-          setTimeout(() => setShowRiddle(true), 2000)
+          setTimeout(() => setShowKeypad(true), 2000)
           return prev
         }
       })
