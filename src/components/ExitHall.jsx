@@ -49,6 +49,49 @@ const ExitHall = () => {
     return () => clearInterval(echoInterval)
   }, [gameState.teamName, navigate])
 
+  // Flickering effect for terminal displays
+  useEffect(() => {
+    if (showKeypad) {
+      const flickerInterval = setInterval(() => {
+        setFlickers(prev => ({
+          ...prev,
+          terminal: Math.random() > 0.9,
+          code: Math.random() > 0.85,
+          status: Math.random() > 0.8
+        }))
+      }, 150)
+
+      return () => clearInterval(flickerInterval)
+    }
+  }, [showKeypad])
+
+  const handleKeypadPress = (digit) => {
+    if (enteredCode.length < 4) {
+      const newCode = enteredCode + digit
+      setEnteredCode(newCode)
+      
+      if (newCode.length === 4) {
+        setTimeout(() => {
+          if (newCode === correctCode) {
+            setShowDecision(true)
+            setShowKeypad(false)
+          } else {
+            setError('ACCESS DENIED - INVALID CODE')
+            setTimeout(() => {
+              setError('')
+              setEnteredCode('')
+            }, 2000)
+          }
+        }, 500)
+      }
+    }
+  }
+
+  const handleClear = () => {
+    setEnteredCode('')
+    setError('')
+  }
+
   const handleRiddleSubmit = () => {
     if (riddleAnswer.toLowerCase().trim() === correctAnswer) {
       setShowDecision(true)
