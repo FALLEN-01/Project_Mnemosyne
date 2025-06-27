@@ -20,6 +20,7 @@ const Room4 = () => {
   const [showHologram, setShowHologram] = useState(false)
   const [confessionStep, setConfessionStep] = useState(0)
   const [mindDialogue, setMindDialogue] = useState(false)
+  const [showHint, setShowHint] = useState(false)
 
   // Correct rotations for neural alignment (example pattern)
   const correctRotations = [45, 135, 270, 90, 315]
@@ -80,6 +81,12 @@ const Room4 = () => {
       }, neuralNodes.length * 500 + 1000)
     } else {
       setError('Neural pathways misaligned - adjust node rotations')
+      
+      // Show current vs target rotations for debugging
+      const currentRotations = neuralNodes.map(node => node.rotation)
+      console.log('Current rotations:', currentRotations)
+      console.log('Target rotations:', correctRotations)
+      
       // Reset pulse flows
       setNeuralNodes(nodes => 
         nodes.map(node => ({ ...node, pulseFlow: 0 }))
@@ -103,12 +110,23 @@ const Room4 = () => {
   }
 
   const proceedToFinalRoom = () => {
-    completeRoom('room4')
+    completeRoom(4)
     updateGameState({ 
       room4_neuralAlignment: neuralNodes.map(n => n.rotation),
       room4_confessionViewed: true 
     })
     navigate('/exit-hall')
+  }
+
+  const quickSolve = () => {
+    // Set all nodes to correct rotations for testing
+    setNeuralNodes(nodes => 
+      nodes.map((node, index) => ({
+        ...node,
+        rotation: correctRotations[index]
+      }))
+    )
+    setError('')
   }
 
   return (
@@ -255,12 +273,43 @@ const Room4 = () => {
               style={{ 
                 background: pulseActive 
                   ? '#666' 
-                  : 'linear-gradient(45deg, #bb88ff, #9966cc)'
+                  : 'linear-gradient(45deg, #bb88ff, #9966cc)',
+                marginRight: '1rem'
               }}
             >
               {pulseActive ? 'Pulse Flow Active' : 'Initiate Neural Sync'}
             </button>
+            
+            {!showHologram && (
+              <button 
+                className="btn" 
+                onClick={() => setShowHint(!showHint)}
+                style={{ 
+                  background: 'linear-gradient(45deg, #666, #888)',
+                  fontSize: '0.9rem'
+                }}
+              >
+                {showHint ? 'Hide Hint' : 'Need Help?'}
+              </button>
+            )}
           </div>
+
+          {showHint && !showHologram && (
+            <div style={{
+              background: 'rgba(255, 170, 136, 0.1)',
+              border: '1px solid #ffaa88',
+              borderRadius: '10px',
+              padding: '1rem',
+              marginTop: '1rem',
+              color: '#ffaa88'
+            }}>
+              <strong>💡 Neural Alignment Hint:</strong><br />
+              Click each node to rotate it. The correct pattern aligns with the neural pathways. 
+              Try different rotation combinations until all nodes form a harmonious flow pattern.
+              <br /><br />
+              <em>Target rotations: A1(45°), B2(135°), C3(270°), D4(90°), E5(315°)</em>
+            </div>
+          )}
         </div>
 
         {error && (
@@ -309,28 +358,56 @@ const Room4 = () => {
                   {confessionMessages[confessionStep]}
                 </div>
               ) : mindDialogue ? (
-                <div>
+                <div style={{ textAlign: 'center' }}>
                   <div style={{ 
                     color: '#ff6666', 
                     marginBottom: '1rem', 
                     fontWeight: 'bold',
-                    fontSize: '1.3rem'
+                    fontSize: '1.3rem',
+                    textShadow: '0 0 10px rgba(255, 102, 102, 0.8)'
                   }}>
                     M.I.N.D.: "Welcome back, Dr. Vale."
                   </div>
-                  <div style={{ color: '#ccaaff', marginBottom: '2rem' }}>
+                  <div style={{ 
+                    color: '#ccaaff', 
+                    marginBottom: '2rem',
+                    fontSize: '1.1rem',
+                    lineHeight: '1.5'
+                  }}>
                     "Proceeding with integrity overwrite. The truth awaits in the final chamber."
+                  </div>
+                  <div style={{
+                    background: 'rgba(187, 136, 255, 0.2)',
+                    border: '2px solid #bb88ff',
+                    borderRadius: '10px',
+                    padding: '1rem',
+                    marginBottom: '2rem'
+                  }}>
+                    <p style={{ 
+                      color: '#ffaa88',
+                      margin: '0 0 1rem 0',
+                      fontWeight: 'bold'
+                    }}>
+                      ⚠️ CRITICAL CHOICE POINT ⚠️
+                    </p>
+                    <p style={{ color: '#ccaaff', margin: 0 }}>
+                      The final chamber holds the truth about Project Mnemosyne. 
+                      Are you ready to face what lies beyond?
+                    </p>
                   </div>
                   <button 
                     className="btn" 
                     onClick={proceedToFinalRoom}
                     style={{ 
                       background: 'linear-gradient(45deg, #bb88ff, #9966cc)',
-                      fontSize: '1.1rem',
-                      padding: '1rem 2rem'
+                      fontSize: '1.2rem',
+                      padding: '1.2rem 3rem',
+                      border: '2px solid #bb88ff',
+                      boxShadow: '0 0 20px rgba(187, 136, 255, 0.5)',
+                      animation: 'pulse 2s infinite'
                     }}
                   >
-                    Enter Final Chamber
+                    🚪 Enter Final Chamber
                   </button>
                 </div>
               ) : (
@@ -352,12 +429,71 @@ const Room4 = () => {
             NEURAL CORE STATUS:
           </div>
           <div style={{ lineHeight: '1.4' }}>
-            NODES ALIGNED... {neuralNodes.filter(n => correctRotations[neuralNodes.indexOf(n)] === n.rotation).length}/5<br />
+            NODES ALIGNED... {neuralNodes.filter((n, index) => correctRotations[index] === n.rotation).length}/5<br />
             PULSE FLOW... {pulseActive ? 'ACTIVE' : 'STANDBY'}<br />
             HOLOGRAM... {showHologram ? 'BROADCASTING' : 'OFFLINE'}<br />
             INTEGRITY OVERWRITE... {mindDialogue ? 'INITIATED' : 'PENDING'}
           </div>
+          
+          {/* Progress bar for node alignment */}
+          <div style={{ marginTop: '1rem' }}>
+            <div style={{ 
+              background: 'rgba(0, 0, 0, 0.5)', 
+              height: '8px', 
+              borderRadius: '4px',
+              overflow: 'hidden'
+            }}>
+              <div style={{ 
+                background: 'linear-gradient(90deg, #bb88ff, #9966cc)',
+                height: '100%',
+                width: `${(neuralNodes.filter((n, index) => correctRotations[index] === n.rotation).length / 5) * 100}%`,
+                transition: 'width 0.3s ease'
+              }} />
+            </div>
+            <div style={{ 
+              fontSize: '0.8rem', 
+              color: '#9966cc', 
+              marginTop: '0.5rem' 
+            }}>
+              Neural Synchronization: {Math.round((neuralNodes.filter((n, index) => correctRotations[index] === n.rotation).length / 5) * 100)}%
+            </div>
+          </div>
         </div>
+
+        {/* Development Debug Panel */}
+        {import.meta.env.DEV && (
+          <div style={{
+            position: 'fixed',
+            top: '10px',
+            right: '10px',
+            background: 'rgba(0, 0, 0, 0.8)',
+            color: '#00ff00',
+            padding: '1rem',
+            borderRadius: '8px',
+            border: '1px solid #00ff00',
+            fontSize: '0.8rem',
+            zIndex: 1000
+          }}>
+            <div style={{ marginBottom: '0.5rem', fontWeight: 'bold' }}>DEBUG PANEL</div>
+            <button 
+              onClick={quickSolve}
+              style={{
+                background: '#006600',
+                color: '#00ff00',
+                border: '1px solid #00ff00',
+                padding: '0.5rem',
+                borderRadius: '4px',
+                cursor: 'pointer',
+                fontSize: '0.8rem',
+                marginBottom: '0.5rem',
+                display: 'block'
+              }}
+            >
+              Quick Solve Puzzle
+            </button>
+            <div>Aligned: {neuralNodes.filter((n, index) => correctRotations[index] === n.rotation).length}/5</div>
+          </div>
+        )}
       </div>
     </div>
   )
