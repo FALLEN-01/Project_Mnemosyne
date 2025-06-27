@@ -62,32 +62,32 @@ const Room4 = () => {
     const currentRotations = neuralNodes.map(node => node.rotation)
     
     if (JSON.stringify(currentRotations) === JSON.stringify(correctRotations)) {
-      // Success - show modal first
+      // Success - immediately start pulse animation (this hides the button)
+      setPulseActive(true)
+      
+      // Show success modal
       setStatusModalType('success')
       setShowStatusModal(true)
       
       setTimeout(() => {
         setShowStatusModal(false)
-        setTimeout(() => {
-          setPulseActive(true)
-          
-          // Animate pulse flow through nodes
-          neuralNodes.forEach((node, index) => {
-            setTimeout(() => {
-              setNeuralNodes(nodes => 
-                nodes.map(n => 
-                  n.id === node.id ? { ...n, pulseFlow: 100 } : n
-                )
-              )
-            }, index * 500)
-          })
-
-          // Activate hologram after pulse completes
+        
+        // Animate pulse flow through nodes
+        neuralNodes.forEach((node, index) => {
           setTimeout(() => {
-            setShowHologram(true)
-            startConfessionSequence()
-          }, neuralNodes.length * 500 + 1000)
-        }, 500)
+            setNeuralNodes(nodes => 
+              nodes.map(n => 
+                n.id === node.id ? { ...n, pulseFlow: 100 } : n
+              )
+            )
+          }, index * 500)
+        })
+
+        // Activate hologram after pulse completes
+        setTimeout(() => {
+          setShowHologram(true)
+          startConfessionSequence()
+        }, neuralNodes.length * 500 + 1000)
       }, 3000)
     } else {
       // Error - show modal
@@ -113,22 +113,8 @@ const Room4 = () => {
       
       if (step >= confessionMessages.length) {
         clearInterval(interval)
-        // After all messages displayed, proceed directly to Exit Hall
-        setTimeout(async () => {
-          try {
-            // Complete room and update game state
-            completeRoom(4)
-            await updateGameState({ 
-              room4_neuralAlignment: neuralNodes.map(n => n.rotation),
-              room4_confessionViewed: true 
-            })
-            
-            // Navigate directly to exit hall
-            navigate('/exit-hall')
-          } catch (error) {
-            console.error('Error proceeding to exit hall:', error)
-          }
-        }, 2000)
+        // After all messages displayed, show continue button (no auto-navigation)
+        // The continue button will handle navigation when clicked
       }
     }, 3000)
   }
@@ -279,21 +265,41 @@ const Room4 = () => {
             ))}
           </div>
 
-          {/* Only show button if sequence is not correct */}
-          {JSON.stringify(neuralNodes.map(node => node.rotation)) !== JSON.stringify(correctRotations) && (
+          {/* Show button only when not in pulse animation and not showing hologram */}
+          {!pulseActive && !showHologram && (
             <div style={{ textAlign: 'center', marginTop: '1rem' }}>
               <button 
                 className="btn" 
                 onClick={startPulseFlow}
-                disabled={pulseActive || showHologram}
                 style={{ 
-                  background: pulseActive 
-                    ? '#666' 
-                    : 'linear-gradient(45deg, #bb88ff, #9966cc)',
+                  background: 'linear-gradient(45deg, #bb88ff, #9966cc)',
                   marginRight: '1rem'
                 }}
               >
-                {pulseActive ? 'Pulse Flow Active' : 'Initiate Neural Sync'}
+                Initiate Neural Sync
+              </button>
+            </div>
+          )}
+          
+          {/* Show continue button only after hologram confession completes */}
+          {showHologram && confessionStep >= confessionMessages.length && (
+            <div style={{ textAlign: 'center', marginTop: '1rem' }}>
+              <button 
+                className="btn" 
+                onClick={() => {
+                  completeRoom(4)
+                  updateGameState({ 
+                    room4_neuralAlignment: neuralNodes.map(n => n.rotation),
+                    room4_confessionViewed: true 
+                  })
+                  navigate('/exit-hall')
+                }}
+                style={{ 
+                  background: 'linear-gradient(45deg, #bb88ff, #9966cc)',
+                  marginRight: '1rem'
+                }}
+              >
+                Continue to Exit Hall
               </button>
             </div>
           )}
