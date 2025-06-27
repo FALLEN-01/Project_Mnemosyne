@@ -2,15 +2,28 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useGameState } from '../App'
 
+// DEVELOPER NOTES - VISUAL & SOUND (Observation Hall):
+// - Blue/Grey color palette - cold surveillance room aesthetic
+// - CCTV monitors with static, glass panels reflecting dim light
+// - Ambient sound: electrical buzzing, static bursts from speakers
+// - Surveillance pods should appear damaged, screens flickering or shattered
+// - Bloodied clipboards scattered, overturned chair suggesting panic
+// - Movement path animation: glowing trail overlay on surveillance footage
+// - 3x3 keypad should have tactile button press sounds
+// - Audio log playback with distorted voice effects
+// - Success: mechanical door unlock sound with satisfying click
+
 const Room1 = () => {
   const navigate = useNavigate()
   const { gameState, updateGameState, completeRoom } = useGameState()
-  const [code, setCode] = useState(['', '', '', ''])
+  const [code, setCode] = useState(['', '', '', '', '', '', '', '', ''])
   const [error, setError] = useState('')
   const [showMemory, setShowMemory] = useState(false)
   const [showContent, setShowContent] = useState(false)
+  const [currentStep, setCurrentStep] = useState(0)
 
-  const correctCode = '3704'
+  // Movement path puzzle: 3x3 grid sequence
+  const correctSequence = [4, 1, 2, 5, 8, 7, 6, 3, 0] // Center -> Top-left -> Top-middle -> Middle-right -> Bottom-right -> Bottom-middle -> Bottom-left -> Top-right -> Middle-left
   useEffect(() => {
     // Redirect to team name entry if no team name is set
     if (!gameState.teamName) {
@@ -38,33 +51,38 @@ const Room1 = () => {
       setCode(newCode)
       
       // Auto-focus next input
-      if (value && index < 3) {
+      if (value && index < 8) {
         const nextInput = document.getElementById(`code-${index + 1}`)
         if (nextInput) nextInput.focus()
       }
     }
   }
 
-  const handleSubmit = () => {
-    const enteredCode = code.join('')
-    
-    if (enteredCode.length !== 4) {
-      setError('Please enter a 4-digit code')
-      return
+  const handleGridClick = (index) => {
+    if (currentStep < correctSequence.length) {
+      if (index === correctSequence[currentStep]) {
+        setCurrentStep(currentStep + 1)
+        if (currentStep + 1 === correctSequence.length) {
+          // Puzzle completed
+          updateGameState({ room1Sequence: correctSequence })
+          completeRoom(1)
+          setShowMemory(true)
+          
+          setTimeout(() => {
+            navigate('/room2')
+          }, 3000)
+        }
+      } else {
+        setError('Incorrect path. The surveillance system is resetting...')
+        setCurrentStep(0)
+        setTimeout(() => setError(''), 2000)
+      }
     }
+  }
 
-    if (enteredCode === correctCode) {
-      updateGameState({ room1Code: enteredCode })
-      completeRoom(1)
-      setShowMemory(true)
-      
-      setTimeout(() => {
-        navigate('/room2')
-      }, 3000)
-    } else {
-      setError('Memory sequence corrupted. Reassemble and try again.')
-      setCode(['', '', '', ''])
-    }
+  const handleSubmit = () => {
+    // This is now handled by handleGridClick
+    return
   }
 
   const handleKeyPress = (e, index) => {
@@ -79,7 +97,7 @@ const Room1 = () => {
     return (
       <div className="room-container">
         <div className="memory-fragment">
-          <h2 style={{ color: '#44ff44', marginBottom: '1rem' }}>MEMORY FRAGMENT RECOVERED</h2>
+          <h2 style={{ color: '#44ff44', marginBottom: '1rem' }}>SURVEILLANCE PATTERN RECOGNIZED</h2>
           <div style={{ 
             background: 'rgba(68, 255, 68, 0.1)', 
             padding: '1.5rem', 
@@ -87,19 +105,22 @@ const Room1 = () => {
             border: '2px solid rgba(68, 255, 68, 0.3)',
             marginBottom: '1.5rem'
           }}>
-            <h3 style={{ color: '#00ffff', marginBottom: '1rem', fontSize: '1rem' }}>IDENTITY VERIFICATION: COMPLETE</h3>
+            <h3 style={{ color: '#00ffff', marginBottom: '1rem', fontSize: '1rem' }}>🎧 LOG ENTRY 017 RECOVERED</h3>
             <p style={{ fontSize: '1rem', fontStyle: 'italic', marginBottom: '1.5rem', lineHeight: '1.6' }}>
-              The fragments align... You see flashes of a laboratory, restraints, the taste of copper in your mouth. 
-              Someone screaming in the distance. The memories are fragmented but real.
+              "Subject is beginning re-integration. Neural reconstruction unstable. Memory echoes predicted."
+            </p>
+            <p style={{ fontSize: '1rem', marginBottom: '1.5rem', lineHeight: '1.6' }}>
+              The movement pattern triggers something familiar. You've walked this path before... but when? 
+              The surveillance footage shows your own figure, but the memories feel distant, fragmented.
             </p>
             <div className="terminal" style={{ marginBottom: '1rem' }}>
-              <p>MEMORY SYNC: 25% COMPLETE</p>
-              <p>ACCESSING NEXT CHAMBER...</p>
-              <p style={{ color: '#ff4444' }}>WARNING: Identity reconstruction in progress</p>
+              <p>MEMORY RECONSTRUCTION: 25% COMPLETE</p>
+              <p>ACCESSING DEEPER FACILITY LEVELS...</p>
+              <p style={{ color: '#ff4444' }}>WARNING: Neural echoes detected</p>
             </div>
           </div>
           <div className="loading" style={{ margin: '1.5rem auto' }}></div>
-          <p>Proceeding to Memory Analysis Lab...</p>
+          <p>Proceeding to Chemical Containment...</p>
         </div>
       </div>
     )
@@ -109,17 +130,20 @@ const Room1 = () => {
     <div 
       className={`room-container ${showContent ? 'fade-in' : ''}`}
       style={{ 
-        background: 'linear-gradient(135deg, #0a0a0a 0%, #1a2e1a 50%, #163e16 100%)',
+        background: 'linear-gradient(135deg, #0a0a1a 0%, #1a1a2e 50%, #2e2e4a 100%)',
         minHeight: '100vh'
       }}
-    >      <div className="room-header">        <h1 className="room-title" style={{ color: '#44ff44', fontSize: '3rem' }}>
-          🔐 ROOM 1
-MEMORY RECOVERY LAB
+    >
+      <div className="room-header">
+        <h1 className="room-title" style={{ color: '#6666ff', fontSize: '3rem' }}>
+          ROOM 1 - OBSERVATION HALL
         </h1>
         <p style={{ fontSize: '1.2rem', color: '#00ffff', marginBottom: '1rem' }}>
-          SECURITY CLEARANCE: LEVEL 1 RESTRICTED
+          SURVEILLANCE SYSTEM ACTIVE - NEURAL RECONSTRUCTION UNSTABLE
         </p>
-      </div>      <div className="room-description" style={{ 
+      </div>
+
+      <div className="room-description" style={{ 
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -128,15 +152,34 @@ MEMORY RECOVERY LAB
         maxWidth: '800px',
         margin: '0 auto'
       }}>
-        <h2 style={{ color: '#44ff44', marginBottom: '1.5rem', fontSize: '1.6rem' }}>
-          🧬 Neural Pattern Analysis Required
-        </h2>
+        <div style={{ 
+          background: 'rgba(102, 102, 255, 0.1)', 
+          padding: '1.5rem', 
+          borderRadius: '15px',
+          border: '2px solid rgba(102, 102, 255, 0.3)',
+          marginBottom: '2rem',
+          maxWidth: '700px'
+        }}>
+          <p style={{ marginBottom: '1.5rem', fontSize: '1.1rem', lineHeight: '1.6' }}>
+            You enter a corridor of half-lit surveillance pods — shattered screens, bloodied clipboards, 
+            a chair knocked over as if someone left in a panic. Each room in the facility holds a piece of you — 
+            not just clues or codes, but memories you've locked away.
+          </p>
+          <div style={{ 
+            background: 'rgba(0, 255, 255, 0.2)', 
+            padding: '1rem', 
+            borderRadius: '8px',
+            marginBottom: '1rem',
+            fontFamily: 'Courier New, monospace'
+          }}>
+            <p style={{ color: '#00ffff', fontWeight: 'bold' }}>🎧 LOG ENTRY 017:</p>
+            <p>"Subject is beginning re-integration. Neural reconstruction unstable. Memory echoes predicted."</p>
+          </div>
+        </div>
         
-        <p style={{ marginBottom: '2rem', fontSize: '1.1rem', maxWidth: '600px' }}>
-          You step into the Memory Recovery Laboratory. The walls are lined with broken containment pods 
-          and flickering neural interface equipment. A central console displays fragments of your past — 
-          scattered images that don't quite make sense yet.
-        </p><div style={{ 
+        <h2 style={{ color: '#6666ff', marginBottom: '1.5rem', fontSize: '1.6rem' }}>
+          SURVEILLANCE FOOTAGE ANALYSIS
+        </h2>        <div style={{ 
           marginBottom: '2rem',
           display: 'flex',
           flexDirection: 'column',
@@ -144,116 +187,61 @@ MEMORY RECOVERY LAB
           width: '100%'
         }}>
           <p style={{ marginBottom: '2rem', fontSize: '1rem', textAlign: 'center', maxWidth: '600px' }}>
-            These manga panels contain fragments of your lost identity. Study each image carefully to unlock your memories.
+            The surveillance footage shows a movement path. Study the sequence carefully and retrace the path on the floor panel below.
           </p>
           
-          {/* Manga images with fade-in effect */}
+          {/* Surveillance Footage Display */}
           <div style={{ 
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '2rem',
-            width: '100%',
-            maxWidth: '800px',
-            alignItems: 'center'
-          }} className="manga-sequence">            
-            {/* Manga Image 1 */}
+            background: 'rgba(0, 0, 0, 0.8)',
+            borderRadius: '15px',
+            padding: '2rem',
+            border: '2px solid rgba(102, 102, 255, 0.4)',
+            marginBottom: '2rem',
+            maxWidth: '500px',
+            width: '100%'
+          }}>
+            <h4 style={{ color: '#6666ff', marginBottom: '1rem', textAlign: 'center' }}>
+              📹 SURVEILLANCE FOOTAGE - TIMESTAMP: 03:47:21
+            </h4>
             <div style={{ 
-              width: '100%',
-              maxWidth: '600px',
+              background: 'rgba(102, 102, 255, 0.1)',
+              padding: '1.5rem',
               borderRadius: '10px',
-              overflow: 'hidden',
-              position: 'relative',
-              opacity: showContent ? 1 : 0,
-              transform: showContent ? 'translateY(0)' : 'translateY(20px)',
-              transition: 'all 0.8s ease-in-out',
-              transitionDelay: '0.2s'
+              border: '1px solid rgba(102, 102, 255, 0.3)',
+              fontFamily: 'Courier New, monospace',
+              fontSize: '0.9rem',
+              lineHeight: '1.6'
             }}>
-              <div style={{ 
-                width: '100%', 
-                aspectRatio: '16/9',
-                background: 'rgba(255, 255, 255, 0.05)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexDirection: 'column'
-              }}>
-                <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>👨‍👩‍👧</div>
-              </div>
-            </div>
-
-            {/* Manga Image 2 */}
-            <div style={{ 
-              width: '100%',
-              maxWidth: '600px',
-              borderRadius: '10px',
-              overflow: 'hidden',
-              position: 'relative',
-              opacity: showContent ? 1 : 0,
-              transform: showContent ? 'translateY(0)' : 'translateY(20px)',
-              transition: 'all 0.8s ease-in-out',
-              transitionDelay: '0.6s'
-            }}>
-              <div style={{ 
-                width: '100%', 
-                aspectRatio: '16/9',
-                background: 'rgba(255, 255, 255, 0.05)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexDirection: 'column'
-              }}>
-                <div style={{ fontSize: '3rem', marginBottom: '1rem', color: '#ff4444' }}>07</div>
-              </div>
-            </div>
-
-            {/* Manga Image 3 */}
-            <div style={{ 
-              width: '100%',
-              maxWidth: '600px',
-              borderRadius: '10px',
-              overflow: 'hidden',
-              position: 'relative',
-              opacity: showContent ? 1 : 0,
-              transform: showContent ? 'translateY(0)' : 'translateY(20px)',
-              transition: 'all 0.8s ease-in-out',
-              transitionDelay: '1.0s'
-            }}>
-              <div style={{ 
-                width: '100%', 
-                aspectRatio: '16/9',
-                background: 'rgba(255, 255, 255, 0.05)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexDirection: 'column'
-              }}>
-                <div style={{ fontSize: '3rem', marginBottom: '1rem', color: '#ff4444' }}>❌</div>
-              </div>
-            </div>
-
-            {/* Manga Image 4 */}
-            <div style={{ 
-              width: '100%',
-              maxWidth: '600px',
-              borderRadius: '10px',
-              overflow: 'hidden',
-              position: 'relative',
-              opacity: showContent ? 1 : 0,
-              transform: showContent ? 'translateY(0)' : 'translateY(20px)',
-              transition: 'all 0.8s ease-in-out',
-              transitionDelay: '1.4s'
-            }}>
-              <div style={{ 
-                width: '100%', 
-                aspectRatio: '16/9',
-                background: 'rgba(255, 255, 255, 0.05)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexDirection: 'column'
-              }}>
-                <div style={{ fontSize: '3rem', marginBottom: '1rem', color: '#00ffff' }}>04</div>
-              </div>
+              <p style={{ color: '#cccccc', marginBottom: '1rem' }}>
+                MOVEMENT SEQUENCE DETECTED:
+              </p>
+              <p style={{ color: '#ffff88', marginBottom: '0.5rem' }}>
+                1. Subject enters from CENTER position
+              </p>
+              <p style={{ color: '#ffff88', marginBottom: '0.5rem' }}>
+                2. Moves to TOP-LEFT corner
+              </p>
+              <p style={{ color: '#ffff88', marginBottom: '0.5rem' }}>
+                3. Proceeds to TOP-CENTER
+              </p>
+              <p style={{ color: '#ffff88', marginBottom: '0.5rem' }}>
+                4. Shifts to MIDDLE-RIGHT
+              </p>
+              <p style={{ color: '#ffff88', marginBottom: '0.5rem' }}>
+                5. Continues to BOTTOM-RIGHT
+              </p>
+              <p style={{ color: '#ffff88', marginBottom: '0.5rem' }}>
+                6. Moves to BOTTOM-CENTER
+              </p>
+              <p style={{ color: '#ffff88', marginBottom: '0.5rem' }}>
+                7. Goes to BOTTOM-LEFT
+              </p>
+              <p style={{ color: '#ffff88', marginBottom: '0.5rem' }}>
+                8. Shifts to TOP-RIGHT
+              </p>
+              <p style={{ color: '#ffff88' }}>
+                9. Ends at MIDDLE-LEFT
+              </p>
             </div>
           </div>
         </div>        <div style={{ 
@@ -263,40 +251,82 @@ MEMORY RECOVERY LAB
           marginBottom: '3rem',
           width: '100%'
         }}>
-          <h3 style={{ color: '#00ffff', marginBottom: '1.5rem', textAlign: 'center' }}>🧮 NEURAL SEQUENCE PUZZLE</h3>
-          <p style={{ marginBottom: '2rem', textAlign: 'center', maxWidth: '600px' }}>
-            The memory fragments contain numeric elements. Enter the 4-digit sequence to unlock the next memory layer.
-          </p>
-        </div>
-      </div>      <div className="code-input">
-        {code.map((digit, index) => (
-          <input
-            key={index}
-            id={`code-${index}`}
-            type="text"
-            inputMode="numeric"
-            pattern="[0-9]*"
-            value={digit}
-            onChange={(e) => handleCodeChange(index, e.target.value)}
-            onKeyDown={(e) => handleKeyPress(e, index)}
-            maxLength={1}
-            className="code-digit"
-            style={{
-              background: 'rgba(0, 0, 0, 0.7)',
-              border: '2px solid rgba(68, 255, 68, 0.5)',
-              color: '#44ff44',
-              textAlign: 'center',
-              borderRadius: '8px',
-              fontFamily: 'Courier New, monospace',
-              outline: 'none'
-            }}
-            onFocus={(e) => e.target.style.borderColor = '#44ff44'}
-            onBlur={(e) => e.target.style.borderColor = 'rgba(68, 255, 68, 0.5)'}
-          />
-        ))}
-      </div>
+          <h3 style={{ color: '#6666ff', marginBottom: '1.5rem', textAlign: 'center' }}>MOVEMENT PATH RECONSTRUCTION</h3>
+          <div style={{ 
+            background: 'rgba(102, 102, 255, 0.1)', 
+            padding: '1.5rem', 
+            borderRadius: '10px',
+            border: '1px solid rgba(102, 102, 255, 0.3)',
+            maxWidth: '600px',
+            textAlign: 'center',
+            marginBottom: '2rem'
+          }}>
+            <p style={{ marginBottom: '1rem', fontSize: '1rem' }}>
+              A floor panel shows a 3x3 grid keypad. You must retrace the movement path via keypad taps.
+            </p>
+            <p style={{ fontSize: '0.9rem', color: '#ffff88' }}>
+              Follow the exact sequence shown in the surveillance footage. Click the grid positions in order.
+            </p>
+            <p style={{ fontSize: '0.8rem', color: '#ff4444', marginTop: '1rem' }}>
+              Progress: {currentStep}/9 steps completed
+            </p>
+          </div>
 
-      {error && (
+          {/* 3x3 Keypad Grid */}
+          <div style={{ 
+            display: 'grid',
+            gridTemplateColumns: 'repeat(3, 1fr)',
+            gap: '10px',
+            maxWidth: '300px',
+            width: '100%',
+            margin: '0 auto'
+          }}>
+            {Array.from({ length: 9 }, (_, index) => (
+              <button
+                key={index}
+                onClick={() => handleGridClick(index)}
+                disabled={currentStep >= correctSequence.length}
+                style={{
+                  width: '80px',
+                  height: '80px',
+                  background: currentStep > 0 && correctSequence.slice(0, currentStep).includes(index)
+                    ? 'linear-gradient(45deg, #6666ff, #4444cc)'
+                    : 'rgba(102, 102, 255, 0.2)',
+                  border: currentStep < correctSequence.length && index === correctSequence[currentStep]
+                    ? '3px solid #ffff00'
+                    : '2px solid rgba(102, 102, 255, 0.5)',
+                  borderRadius: '8px',
+                  color: '#ffffff',
+                  fontSize: '1.2rem',
+                  fontWeight: 'bold',
+                  cursor: currentStep < correctSequence.length ? 'pointer' : 'not-allowed',
+                  transition: 'all 0.2s ease',
+                  fontFamily: 'Courier New, monospace'
+                }}
+                onMouseEnter={(e) => {
+                  if (currentStep < correctSequence.length) {
+                    e.target.style.background = 'rgba(102, 102, 255, 0.4)'
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (currentStep < correctSequence.length && !correctSequence.slice(0, currentStep).includes(index)) {
+                    e.target.style.background = 'rgba(102, 102, 255, 0.2)'
+                  }
+                }}
+              >
+                {index === 4 ? 'C' : 
+                 index === 0 ? 'TL' : 
+                 index === 1 ? 'TM' : 
+                 index === 2 ? 'TR' :
+                 index === 3 ? 'ML' :
+                 index === 5 ? 'MR' :
+                 index === 6 ? 'BL' :
+                 index === 7 ? 'BM' : 'BR'}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>      {error && (
         <div style={{
           color: '#ff4444',
           background: 'rgba(255, 68, 68, 0.1)',
@@ -309,35 +339,23 @@ MEMORY RECOVERY LAB
         }}>
           {error}
         </div>
-      )}      <button 
-        onClick={handleSubmit}
-        disabled={code.join('').length !== 4}
-        className="btn"
-        style={{
-          background: code.join('').length === 4 
-            ? 'linear-gradient(45deg, #44ff44, #22aa22)' 
-            : '#333',
-          color: code.join('').length === 4 ? '#000' : '#666',
-          cursor: code.join('').length === 4 ? 'pointer' : 'not-allowed',
-          marginTop: '1rem'
-        }}
-      >
-        🔓 UNLOCK MEMORY
-      </button>      <div className="terminal" style={{ 
-        color: '#44ff44',
-        border: '1px solid #44ff44',
+      )}
+
+      <div className="terminal" style={{ 
+        color: '#6666ff',
+        border: '1px solid #6666ff',
         maxWidth: '600px',
         margin: '0 auto',
         textAlign: 'center'
       }}>
         <div style={{ color: '#00ffff', fontWeight: 'bold', marginBottom: '0.5rem' }}>
-          NEURAL ANALYZER STATUS:
+          SURVEILLANCE TRACKING SYSTEM:
         </div>
         <div style={{ lineHeight: '1.6', whiteSpace: 'pre-wrap' }}>
-          MEMORY FRAGMENTS... {code.filter(c => c).length}/4 DETECTED{'\n'}
-          PATTERN ANALYSIS... {code.join('').length === 4 ? 'READY' : 'INCOMPLETE'}{'\n'}
-          SECURITY LEVEL... RESTRICTED{'\n'}
-          NEXT SECTOR... {code.join('') === correctCode ? 'UNLOCKED' : 'LOCKED'}
+          PATH SEQUENCE... {currentStep}/9 STEPS{'\n'}
+          NEURAL PATTERN... {currentStep === correctSequence.length ? 'RECOGNIZED' : 'ANALYZING'}{'\n'}
+          MEMORY ACCESS... {currentStep === correctSequence.length ? 'GRANTED' : 'RESTRICTED'}{'\n'}
+          NEXT CHAMBER... {currentStep === correctSequence.length ? 'UNLOCKED' : 'LOCKED'}
         </div>
       </div>
     </div>

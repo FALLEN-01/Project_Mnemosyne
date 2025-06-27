@@ -5,20 +5,37 @@ import { useGameState } from '../App'
 const Room3 = () => {
   const navigate = useNavigate()
   const { gameState, updateGameState, completeRoom } = useGameState()
-  const [selectedPattern, setSelectedPattern] = useState('')
-  const [cipherAnswer, setCipherAnswer] = useState('')
+  const [selectedLog, setSelectedLog] = useState('')
+  const [audioSequence, setAudioSequence] = useState([])
   const [currentStep, setCurrentStep] = useState(1)
   const [error, setError] = useState('')
   const [showMemory, setShowMemory] = useState(false)
+  const [playingLog, setPlayingLog] = useState(null)
 
-  const patterns = {
-    A: { word: 'DAMAGE', description: 'Missing neural nodes in critical pathways' },
-    B: { word: 'REGRESS', description: 'Reversed synaptic connections' },
-    C: { word: 'FRAGMENT', description: 'Complete neural circuit pattern' }
+  // Video logs with timestamps and corruption levels
+  const videoLogs = {
+    LOG_001: { 
+      timestamp: '2087.03.15', 
+      status: 'CORRUPTED',
+      snippet: 'Project M.I.N.D. initialization... subjects responding well...',
+      corruption: 'high'
+    },
+    LOG_047: { 
+      timestamp: '2087.11.23', 
+      status: 'PARTIAL',
+      snippet: 'Ethical concerns raised by the board... proceeding anyway...',
+      corruption: 'medium'
+    },
+    LOG_101: { 
+      timestamp: '2088.01.07', 
+      status: 'INTACT',
+      snippet: 'I am Dr. Eon Vale... if you find this, I tried to stop it...',
+      corruption: 'low'
+    }
   }
 
-  const correctPattern = 'C'
-  const correctCipher = 'FRAGMENTS ARE LETHAL'
+  const correctLog = 'LOG_101'
+  const correctSequence = ['ALPHA', 'OMEGA', 'DELTA', 'THETA']
 
   useEffect(() => {
     // Redirect to team name entry if no team name is set
@@ -28,44 +45,56 @@ const Room3 = () => {
     }
   }, [gameState.teamName, navigate])
 
-  const handlePatternSelect = (pattern) => {
-    setSelectedPattern(pattern)
+  const handleLogSelect = (logId) => {
+    setSelectedLog(logId)
     setError('')
+    
+    // Simulate playing the log
+    setPlayingLog(logId)
+    setTimeout(() => setPlayingLog(null), 3000)
   }
 
-  const handlePatternSubmit = () => {
-    if (selectedPattern === correctPattern) {
+  const handleLogSubmit = () => {
+    if (selectedLog === correctLog) {
       setCurrentStep(2)
     } else {
-      setError('Neural pattern mismatch. Circuit overload detected. Try again.')
-      setSelectedPattern('')
+      setError('Archive access denied. Video log corrupted or incomplete. Try another.')
+      setSelectedLog('')
     }
   }
 
-  const handleCipherSubmit = () => {
-    const cleanAnswer = cipherAnswer.trim().toLowerCase()
-    const correctAnswer = correctCipher.toLowerCase()
-    
-    if (cleanAnswer === correctAnswer) {
-      updateGameState({ room3Word: patterns[correctPattern].word })
+  const handleSequenceClick = (tone) => {
+    if (audioSequence.length < 4) {
+      setAudioSequence([...audioSequence, tone])
+    }
+  }
+
+  const clearSequence = () => {
+    setAudioSequence([])
+    setError('')
+  }
+
+  const handleSequenceSubmit = () => {
+    if (JSON.stringify(audioSequence) === JSON.stringify(correctSequence)) {
+      updateGameState({ room3Archive: 'UNLOCKED' })
       completeRoom(3)
       setShowMemory(true)
       
       setTimeout(() => {
         navigate('/room4')
-      }, 3000)
+      }, 4000)
     } else {
-      setError('Decryption failed. Memory fragments corrupted. Try again.')
-      setCipherAnswer('')
+      setError('Audio sequence incorrect. Memory core remains locked.')
+      setAudioSequence([])
     }
   }
 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
       if (currentStep === 1) {
-        handlePatternSubmit()
-      } else {
-        handleCipherSubmit()
+        handleLogSubmit()
+      } else if (currentStep === 2 && audioSequence.length === 4) {
+        handleSequenceSubmit()
       }
     }
   }
@@ -74,30 +103,77 @@ const Room3 = () => {
     return (
       <div className="room-container">
         <div className="memory-fragment">
-          <h2 style={{ color: '#00ffff', marginBottom: '1rem' }}>MEMORY SYNC RESTORED</h2>
-          <p style={{ fontSize: '1.2rem', fontStyle: 'italic' }}>
-            "They said it was too dangerous. But I had to finish it.
-            The mind isn't fragile — it's programmable. I proved it.
-            And now... it's all breaking apart."
-          </p>
+          <h2 style={{ color: '#ff6b00', marginBottom: '1rem' }}>ARCHIVE UNLOCKED</h2>
+          <div style={{ 
+            background: 'rgba(255, 107, 0, 0.1)', 
+            padding: '2rem', 
+            borderRadius: '10px',
+            border: '1px solid rgba(255, 107, 0, 0.3)',
+            marginBottom: '2rem',
+            fontStyle: 'italic'
+          }}>
+            <p style={{ fontSize: '1.2rem', color: '#ff6b00', marginBottom: '1rem' }}>
+              "My name is Dr. Eon Vale, Chief Neural Engineer of Project M.I.N.D."
+            </p>
+            <p style={{ marginBottom: '1rem' }}>
+              "If you're watching this, the experiments have gone too far. 
+              The memory modification technology... it's not just editing memories anymore."
+            </p>
+            <p style={{ marginBottom: '1rem' }}>
+              "It's creating entire false realities. Trapping consciousness in loops. 
+              I tried to destroy the core, but they stopped me."
+            </p>
+            <p style={{ color: '#ff4444' }}>
+              "You must reach the Neural Sync Core. End this before it spreads beyond the facility."
+            </p>
+          </div>
           <div className="loading" style={{ margin: '2rem auto' }}></div>
-          <p>Accessing containment protocols...</p>
+          <p>Accessing Neural Sync Core...</p>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="room-container">      <div className="room-header">
-        <h1 className="room-title">Room 3
-Neural Sync</h1>
-      </div>      <div className="room-description">
+    <div className="room-container">
+      {/* 
+        DEVELOPER NOTES - Act 3: The Archive
+        
+        VISUAL STYLE:
+        - Orange/amber theme (archival, data preservation)
+        - Flickering holographic displays showing corrupted video logs
+        - Rows of server towers with pulsing orange LEDs
+        - Central viewing station with multiple screens
+        - Scattered data drives and corrupted memory cores
+        - Dr. Eon Vale's personal workspace with scattered notes
+        
+        SOUND DESIGN:
+        - Constant low hum of server cooling systems
+        - Intermittent electrical crackling from damaged equipment
+        - Distorted audio fragments playing on loop
+        - When video logs play: static, audio dropouts, digital artifacts
+        - Audio sequence puzzle: distinct musical tones (Alpha=low, Omega=high, Delta=medium, Theta=harmonic)
+        - Success sound: harmonious chord progression resolving
+        
+        ATMOSPHERE:
+        - Repository of forbidden knowledge
+        - Corporate cover-up evidence
+        - Dr. Vale's desperate attempt to expose the truth
+        - Archives partially destroyed but still containing crucial evidence
+        - Feeling of uncovering a conspiracy
+      */}
+      
+      <div className="room-header">
+        <h1 className="room-title">Room 3 — The Archive</h1>
+      </div>
+
+      <div className="room-description">
         <p style={{ marginBottom: '2rem' }}>
-          The air buzzes with static. You enter a room lined with holographic brain scans — flickering 
-          blue and red, pulsing like they're alive. You approach a neural interface console labeled:
+          You enter a vast archive chamber lined with server towers. Orange LEDs pulse weakly 
+          along damaged data banks. Holographic displays flicker with corrupted video logs. 
+          A central viewing station hums with activity, surrounded by scattered notes and drives.
         </p>
         
-        {/* Neural Interface Images */}
         <div style={{ 
           display: 'flex',
           flexDirection: 'column',
@@ -107,7 +183,6 @@ Neural Sync</h1>
           alignItems: 'center',
           margin: '2rem auto'
         }}>
-          {/* Neural Image 1 */}
           <div style={{ 
             width: '100%',
             maxWidth: '500px',
@@ -120,17 +195,18 @@ Neural Sync</h1>
             <div style={{ 
               width: '100%', 
               aspectRatio: '16/9',
-              background: 'rgba(255, 255, 255, 0.05)',
+              background: 'linear-gradient(135deg, rgba(255, 107, 0, 0.1), rgba(0, 0, 0, 0.8))',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              flexDirection: 'column'
+              flexDirection: 'column',
+              border: '1px solid rgba(255, 107, 0, 0.3)'
             }}>
-              <div style={{ fontSize: '3rem', marginBottom: '1rem', color: '#00ffff' }}>🔬</div>
+              <div style={{ fontSize: '3rem', marginBottom: '1rem', color: '#ff6b00' }}>�</div>
+              <p style={{ color: '#ff6b00', fontSize: '0.9rem' }}>Server Archive</p>
             </div>
           </div>
 
-          {/* Neural Image 2 */}
           <div style={{ 
             width: '100%',
             maxWidth: '500px',
@@ -143,87 +219,106 @@ Neural Sync</h1>
             <div style={{ 
               width: '100%', 
               aspectRatio: '16/9',
-              background: 'rgba(255, 255, 255, 0.05)',
+              background: 'linear-gradient(135deg, rgba(255, 107, 0, 0.1), rgba(0, 0, 0, 0.8))',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              flexDirection: 'column'
+              flexDirection: 'column',
+              border: '1px solid rgba(255, 107, 0, 0.3)'
             }}>
-              <div style={{ fontSize: '3rem', marginBottom: '1rem', color: '#ff4444' }}>⚡</div>
+              <div style={{ fontSize: '3rem', marginBottom: '1rem', color: '#ff6b00' }}>🎬</div>
+              <p style={{ color: '#ff6b00', fontSize: '0.9rem' }}>Video Logs</p>
             </div>
           </div>
         </div>
         
         <div className="terminal" style={{ margin: '2rem auto' }}>
           <div className="terminal-text">
-            MNEMO-SYNC v3.4 — Synchronization Failed<br />
-            <span style={{ color: '#ff4444' }}>
-              WARNING: NEURAL PATTERN CORRUPTION DETECTED
+            ARCHIVE SYSTEM v2.1 — Data Recovery Mode<br />
+            <span style={{ color: '#ff6b00' }}>
+              WARNING: MULTIPLE LOG FILES CORRUPTED
             </span>
           </div>
         </div>
 
         <p style={{ marginBottom: '2rem', fontStyle: 'italic', color: '#888' }}>
-          As you step closer, a wave of nausea hits you. For a split second, you're somewhere else — 
-          standing in a white room, voices yelling...
+          A nameplate catches your eye: "Dr. Eon Vale - Chief Neural Engineer". 
+          Notes are scattered across the desk, many burned or deliberately destroyed.
         </p>
 
         <div style={{ 
-          background: 'rgba(255, 68, 68, 0.1)', 
+          background: 'rgba(255, 107, 0, 0.1)', 
           padding: '1.5rem', 
           borderRadius: '10px',
-          border: '1px solid rgba(255, 68, 68, 0.3)',
+          border: '1px solid rgba(255, 107, 0, 0.3)',
           marginBottom: '2rem',
           fontStyle: 'italic'
         }}>
-          <p>"This violates every ethical code we've sworn to uphold!"</p>
-          <p>"You can't do this!"</p>
-          <p style={{ color: '#00ffff' }}>"I won't let them stop me... I have to finish it."</p>
+          <p style={{ color: '#ff6b00' }}>Handwritten note (partially burned):</p>
+          <p>"They won't listen... the board refuses to shut down M.I.N.D..."</p>
+          <p>"Hidden the truth in the archive... someone has to know..."</p>
+          <p style={{ color: '#ff4444' }}>"If something happens to me... look for LOG_101..."</p>
         </div>
-
-        <p style={{ color: '#ff4444' }}>
-          Your head throbs. Were those your memories?
-        </p>
       </div>
 
       {currentStep === 1 && (
         <div>
           <div style={{ textAlign: 'center', margin: '3rem 0' }}>
-            <h3 style={{ color: '#00ffff', marginBottom: '1rem' }}>
-              Part 1: Neural Pattern Analysis
+            <h3 style={{ color: '#ff6b00', marginBottom: '1rem' }}>
+              Part 1: Video Log Recovery
             </h3>
             <p style={{ marginBottom: '2rem', maxWidth: '600px', margin: '0 auto 2rem' }}>
-              The interface shows three neural circuit patterns. Only one pattern leads to a full memory sync. 
-              The others cause overload.
+              Multiple video logs are corrupted. Find the intact log that Dr. Vale left behind.
             </p>
           </div>
 
           <div className="puzzle-grid" style={{ gridTemplateColumns: 'repeat(3, 1fr)', maxWidth: '900px' }}>
-            {Object.entries(patterns).map(([key, pattern]) => (
+            {Object.entries(videoLogs).map(([logId, log]) => (
               <div 
-                key={key}
-                className={`puzzle-item ${selectedPattern === key ? 'selected' : ''}`}
-                onClick={() => handlePatternSelect(key)}
-                style={{ cursor: 'pointer' }}
+                key={logId}
+                className={`puzzle-item ${selectedLog === logId ? 'selected' : ''} ${playingLog === logId ? 'playing' : ''}`}
+                onClick={() => handleLogSelect(logId)}
+                style={{ 
+                  cursor: 'pointer',
+                  background: log.corruption === 'high' ? 'rgba(255, 68, 68, 0.1)' : 
+                            log.corruption === 'medium' ? 'rgba(255, 170, 68, 0.1)' : 
+                            'rgba(255, 107, 0, 0.1)',
+                  border: `1px solid ${log.corruption === 'high' ? 'rgba(255, 68, 68, 0.3)' : 
+                                      log.corruption === 'medium' ? 'rgba(255, 170, 68, 0.3)' : 
+                                      'rgba(255, 107, 0, 0.3)'}`
+                }}
               >
-                <h3>Pattern {key}</h3>
+                <h3 style={{ color: '#ff6b00' }}>{logId}</h3>
                 <div style={{ 
-                  fontSize: '3rem', 
+                  fontSize: '2rem', 
                   margin: '1rem 0',
-                  color: key === 'A' ? '#ff4444' : key === 'B' ? '#ffaa44' : '#44ff44'
+                  color: log.corruption === 'high' ? '#ff4444' : 
+                        log.corruption === 'medium' ? '#ffaa44' : '#ff6b00'
                 }}>
-                  {key === 'A' ? '❌' : key === 'B' ? '🔄' : '✨'}
+                  {log.corruption === 'high' ? '⚠️' : 
+                   log.corruption === 'medium' ? '�' : '✅'}
                 </div>
-                <p style={{ fontSize: '0.9rem' }}>{pattern.description}</p>
+                <p style={{ fontSize: '0.8rem', color: '#888' }}>{log.timestamp}</p>
+                <p style={{ fontSize: '0.9rem', marginTop: '0.5rem' }}>
+                  Status: <span style={{ color: log.corruption === 'low' ? '#44ff44' : '#ffaa44' }}>
+                    {log.status}
+                  </span>
+                </p>
                 <div style={{ 
                   marginTop: '1rem', 
                   padding: '0.5rem',
                   background: 'rgba(0, 0, 0, 0.3)',
                   borderRadius: '5px',
-                  fontSize: '0.8rem',
-                  color: '#00ffff'
+                  fontSize: '0.7rem',
+                  color: '#ccc',
+                  fontStyle: 'italic',
+                  minHeight: '3rem'
                 }}>
-                  → {pattern.word}
+                  {playingLog === logId ? (
+                    <span style={{ color: '#ff6b00' }}>▶️ PLAYING...</span>
+                  ) : (
+                    `"${log.snippet}"`
+                  )}
                 </div>
               </div>
             ))}
@@ -233,11 +328,11 @@ Neural Sync</h1>
 
           <button 
             className="btn" 
-            onClick={handlePatternSubmit}
-            disabled={!selectedPattern}
+            onClick={handleLogSubmit}
+            disabled={!selectedLog}
             style={{ marginTop: '2rem' }}
           >
-            Sync Neural Pattern
+            Access Video Log
           </button>
         </div>
       )}
@@ -245,73 +340,140 @@ Neural Sync</h1>
       {currentStep === 2 && (
         <div>
           <div className="success-message">
-            ✅ Neural Pattern Synchronized: {patterns[correctPattern].word}
+            ✅ Archive Access Granted: {videoLogs[correctLog].timestamp}
+          </div>
+
+          <div style={{ 
+            background: 'rgba(255, 107, 0, 0.1)', 
+            padding: '2rem', 
+            borderRadius: '10px',
+            border: '1px solid rgba(255, 107, 0, 0.3)',
+            margin: '2rem auto',
+            maxWidth: '700px'
+          }}>
+            <h4 style={{ color: '#ff6b00', marginBottom: '1rem' }}>
+              📼 LOG_101 - Dr. Eon Vale - Final Message
+            </h4>
+            <div style={{ 
+              fontSize: '1rem', 
+              lineHeight: '1.6',
+              fontStyle: 'italic',
+              color: '#e8e8e8',
+              marginBottom: '1rem'
+            }}>
+              "Project M.I.N.D. was meant to help trauma victims. Delete painful memories. 
+              Give people a fresh start. But the corporation... they saw profit."
+            </div>
+            <div style={{ 
+              fontSize: '1rem', 
+              lineHeight: '1.6',
+              fontStyle: 'italic',
+              color: '#e8e8e8',
+              marginBottom: '1rem'
+            }}>
+              "Now they're creating false memories. Implanting loyalty. Control. 
+              The subjects don't even know they're trapped."
+            </div>
+            <div style={{ 
+              fontSize: '1rem', 
+              lineHeight: '1.6',
+              fontStyle: 'italic',
+              color: '#ff4444'
+            }}>
+              "I've hidden the shutdown sequence. Four tones. Find them. Stop this madness."
+            </div>
           </div>
 
           <div style={{ textAlign: 'center', margin: '3rem 0' }}>
-            <h3 style={{ color: '#00ffff', marginBottom: '1rem' }}>
-              Part 2: Decode Corrupted Message
-            </h3>            <p style={{ marginBottom: '2rem' }}>
-              A corrupted memory fragment has been unlocked. Decode the message.
+            <h3 style={{ color: '#ff6b00', marginBottom: '1rem' }}>
+              Part 2: Audio Sequence Lock
+            </h3>
+            <p style={{ marginBottom: '2rem' }}>
+              Dr. Vale's shutdown sequence is locked behind an audio puzzle. 
+              Find the correct four-tone sequence to unlock the neural core.
             </p>
           </div>
 
           <div style={{ 
-            background: 'rgba(0, 0, 0, 0.7)', 
-            padding: '2rem', 
-            borderRadius: '10px',
-            border: '1px solid rgba(0, 255, 255, 0.3)',
-            margin: '2rem auto',
-            maxWidth: '600px'
+            display: 'grid',
+            gridTemplateColumns: 'repeat(2, 1fr)',
+            gap: '1rem',
+            maxWidth: '400px',
+            margin: '2rem auto'
           }}>
-            <div className="terminal" style={{ marginBottom: '2rem' }}>
-              <div className="terminal-text">
-                MNEMO-SYNC OUTPUT: CORRUPTED MESSAGE DETECTED<br />                <br />                <span style={{ fontSize: '1.5rem', color: '#ff4444', letterSpacing: '2px' }}>
-                  Iudphqwv duh ohwkdov.
-                </span><br />
-              </div>
-            </div>            <div style={{ textAlign: 'center' }}>
-              <p style={{ marginBottom: '1rem', color: '#888' }}>
-                Decode the encrypted neural sync message.
-              </p>
+            {['ALPHA', 'OMEGA', 'DELTA', 'THETA'].map((tone) => (
+              <button
+                key={tone}
+                className="btn"
+                onClick={() => handleSequenceClick(tone)}
+                disabled={audioSequence.length >= 4}
+                style={{
+                  padding: '1rem',
+                  fontSize: '1rem',
+                  background: audioSequence.includes(tone) ? 
+                    'rgba(255, 107, 0, 0.3)' : 'rgba(255, 107, 0, 0.1)',
+                  border: '1px solid rgba(255, 107, 0, 0.5)',
+                  color: '#ff6b00'
+                }}
+              >
+                {tone}
+                <div style={{ fontSize: '0.8rem', marginTop: '0.5rem', color: '#888' }}>
+                  {tone === 'ALPHA' ? '🎵 Low' : 
+                   tone === 'OMEGA' ? '🎵 High' : 
+                   tone === 'DELTA' ? '🎵 Medium' : '🎵 Harmonic'}
+                </div>
+              </button>
+            ))}
+          </div>
+
+          <div style={{ 
+            textAlign: 'center', 
+            margin: '2rem auto',
+            padding: '1rem',
+            background: 'rgba(0, 0, 0, 0.5)',
+            borderRadius: '10px',
+            maxWidth: '400px'
+          }}>
+            <h4 style={{ color: '#ff6b00', marginBottom: '1rem' }}>Current Sequence:</h4>
+            <div style={{ fontSize: '1.2rem', letterSpacing: '0.5rem', color: '#00ffff' }}>
+              {audioSequence.join(' → ') || 'NONE'}
+            </div>
+            <div style={{ marginTop: '1rem' }}>
+              <button 
+                className="btn" 
+                onClick={clearSequence}
+                style={{ 
+                  background: 'rgba(255, 68, 68, 0.2)',
+                  border: '1px solid rgba(255, 68, 68, 0.5)',
+                  color: '#ff4444',
+                  marginRight: '1rem',
+                  padding: '0.5rem 1rem'
+                }}
+              >
+                Clear
+              </button>
+              <button 
+                className="btn" 
+                onClick={handleSequenceSubmit}
+                disabled={audioSequence.length !== 4}
+                style={{ padding: '0.5rem 1rem' }}
+              >
+                Submit Sequence
+              </button>
             </div>
           </div>
 
-          <div style={{ textAlign: 'center', margin: '2rem 0' }}>
-            <input
-              type="text"
-              className="input-field"
-              value={cipherAnswer}
-              onChange={(e) => setCipherAnswer(e.target.value.toUpperCase())}
-              onKeyPress={handleKeyPress}
-              placeholder="ENTER DECODED MESSAGE"
-              style={{ 
-                width: '400px', 
-                fontSize: '1.1rem'
-              }}
-            />
-          </div>
-
           {error && <div className="error-message">{error}</div>}
-
-          <button 
-            className="btn" 
-            onClick={handleCipherSubmit}
-            disabled={!cipherAnswer.trim()}
-            style={{ marginTop: '1rem' }}
-          >
-            Submit Decoded Message
-          </button>
         </div>
       )}
 
       <div className="terminal" style={{ marginTop: '3rem', maxWidth: '500px' }}>
-        <div className="terminal-prompt">NEURAL INTERFACE STATUS:</div>
+        <div className="terminal-prompt">ARCHIVE STATUS:</div>
         <div className="terminal-text">
-          SYNC STAGE... {currentStep}/2<br />
-          PATTERN MATCH... {selectedPattern ? 'SELECTED' : 'PENDING'}<br />
-          MEMORY CORE... {currentStep === 2 ? 'DECRYPTING' : 'LOCKED'}<br />
-          FRAGMENTATION... CRITICAL<br />
+          LOG RECOVERY... {currentStep}/2<br />
+          VIDEO ACCESS... {selectedLog ? 'GRANTED' : 'DENIED'}<br />
+          AUDIO SEQUENCE... {audioSequence.length}/4 TONES<br />
+          NEURAL CORE... {currentStep === 2 && audioSequence.length === 4 ? 'READY' : 'LOCKED'}<br />
         </div>
       </div>
     </div>

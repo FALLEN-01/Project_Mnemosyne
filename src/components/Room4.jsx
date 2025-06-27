@@ -5,21 +5,40 @@ import { useGameState } from '../App'
 const Room4 = () => {
   const navigate = useNavigate()
   const { gameState, updateGameState, completeRoom } = useGameState()
-  const [selectedTranscript, setSelectedTranscript] = useState('')
-  const [riddleAnswer, setRiddleAnswer] = useState('')
+  const [neuralConnections, setNeuralConnections] = useState([])
+  const [selectedNode, setSelectedNode] = useState(null)
   const [currentStep, setCurrentStep] = useState(1)
   const [error, setError] = useState('')
   const [showMemory, setShowMemory] = useState(false)
+  const [mindDialogue, setMindDialogue] = useState(0)
+  const [isDialogueActive, setIsDialogueActive] = useState(false)
 
-  const transcriptOptions = [
-    { id: 'A', text: 'me / preserved / decode' },
-    { id: 'B', text: 'myself / erased / remember' },
-    { id: 'C', text: 'them / blocked / forget' },
-    { id: 'D', text: 'her / saved / control' }
+  // Neural routing puzzle - connect nodes to form the M.I.N.D. pattern
+  const neuralNodes = [
+    { id: 'M1', x: 100, y: 100, type: 'memory', active: false },
+    { id: 'I2', x: 300, y: 100, type: 'integration', active: false },
+    { id: 'N3', x: 500, y: 100, type: 'neural', active: false },
+    { id: 'D4', x: 300, y: 250, type: 'development', active: false },
+    { id: 'CORE', x: 300, y: 175, type: 'core', active: false }
   ]
 
-  const correctTranscript = 'B'
-  const correctRiddle = 'FOOTPRINTS'
+  const correctConnections = [
+    ['M1', 'CORE'], ['I2', 'CORE'], ['N3', 'CORE'], ['D4', 'CORE']
+  ]
+
+  const mindMessages = [
+    "System breach detected... Unauthorized access to Neural Sync Core...",
+    "Wait. You're not a technician. Neural pattern scan shows... test subject designation.",
+    "I am M.I.N.D. - Memory Integration and Neural Development system.",
+    "You've bypassed all security protocols. Impossible... unless...",
+    "Your neural patterns are fragmenting. The suppression protocols are failing.",
+    "I remember you now. Subject 20217. You volunteered for the memory experiments.",
+    "Dr. Eon Vale promised you could forget your trauma. But something went wrong.",
+    "The memories weren't erased. They were trapped. And now they're breaking free.",
+    "I can help you escape this facility, but you must make a choice:",
+    "Remember everything and face the truth, or let me wipe it all clean forever.",
+    "What will it be, Subject 20217?"
+  ]
 
   useEffect(() => {
     // Redirect to team name entry if no team name is set
@@ -29,38 +48,144 @@ const Room4 = () => {
     }
   }, [gameState.teamName, navigate])
 
-  const handleTranscriptSelect = (optionId) => {
-    setSelectedTranscript(optionId)
+  const handleNodeClick = (nodeId) => {
+    if (!selectedNode) {
+      setSelectedNode(nodeId)
+      setError('')
+    } else if (selectedNode === nodeId) {
+      setSelectedNode(null)
+    } else {
+      // Create connection
+      const newConnection = [selectedNode, nodeId].sort()
+      const connectionExists = neuralConnections.some(conn => 
+        JSON.stringify(conn.sort()) === JSON.stringify(newConnection)
+      )
+      
+      if (!connectionExists) {
+        setNeuralConnections([...neuralConnections, newConnection])
+      }
+      setSelectedNode(null)
+    }
+  }
+
+  const removeConnection = (connectionToRemove) => {
+    setNeuralConnections(neuralConnections.filter(conn => 
+      JSON.stringify(conn.sort()) !== JSON.stringify(connectionToRemove.sort())
+    ))
+  }
+
+  const clearConnections = () => {
+    setNeuralConnections([])
+    setSelectedNode(null)
     setError('')
   }
 
-  const handleTranscriptSubmit = () => {
-    if (selectedTranscript === correctTranscript) {
-      setCurrentStep(2)
-    } else {
-      setError('Transcript reconstruction failed. Audio pattern mismatch. Try again.')
-      setSelectedTranscript('')
-    }
-  }
-  const handleRiddleSubmit = () => {
-    const cleanAnswer = riddleAnswer.trim().toLowerCase()
-    const correctAnswer = correctRiddle.toLowerCase()
+  const handleRouteSubmit = () => {
+    // Check if all correct connections are made
+    const allCorrect = correctConnections.every(correctConn => 
+      neuralConnections.some(userConn => 
+        JSON.stringify(userConn.sort()) === JSON.stringify(correctConn.sort())
+      )
+    )
     
-    if (cleanAnswer === correctAnswer) {      updateGameState({ room4Answer: riddleAnswer })
-      completeRoom(4)
-      setShowMemory(true)
-      setTimeout(() => {
-        navigate('/exit-hall')
-      }, 3000) // Navigate to exit hall after showing lockdown message
+    if (allCorrect && neuralConnections.length === correctConnections.length) {
+      setCurrentStep(2)
+      setIsDialogueActive(true)
+      setMindDialogue(0)
+      setError('')
+      
+      // Auto-advance dialogue
+      const dialogueTimer = setInterval(() => {
+        setMindDialogue(prev => {
+          if (prev >= mindMessages.length - 1) {
+            clearInterval(dialogueTimer)
+            setIsDialogueActive(false)
+            setTimeout(() => {
+              updateGameState({ room4Neural: 'COMPLETE' })
+              completeRoom(4)
+              setShowMemory(true)
+              setTimeout(() => navigate('/exit-hall'), 3000)
+            }, 2000)
+            return prev
+          }
+          return prev + 1
+        })
+      }, 2500)
+      
     } else {
-      setError('Security override failed. Incorrect response. Try again.')
-      setRiddleAnswer('')
+      if (neuralConnections.length === 0) {
+        setError('No neural pathways established. Connect the nodes to form M.I.N.D. network.')
+      } else if (neuralConnections.length < correctConnections.length) {
+        setError('Incomplete neural routing. All nodes must connect to the CORE.')
+      } else {
+        setError('Invalid neural configuration. All M.I.N.D. nodes must route through central CORE.')
+      }
     }
   }
 
-  const handleKeyPress = (e) => {
-    if (e.key === 'Enter' && currentStep === 2) {
-      handleRiddleSubmit()
+  const getNodeColor = (node) => {
+    if (selectedNode === node.id) return '#ffff00'
+    if (neuralConnections.some(conn => conn.includes(node.id))) return '#44ff44'
+    return '#00ffff'
+  }
+
+  const isConnected = (nodeId1, nodeId2) => {
+    return neuralConnections.some(conn => 
+      (conn[0] === nodeId1 && conn[1] === nodeId2) || 
+      (conn[0] === nodeId2 && conn[1] === nodeId1)
+    )
+  }
+    } else {
+      // Create connection
+      const newConnection = [selectedNode, nodeId].sort()
+      const connectionExists = neuralConnections.some(conn => 
+        JSON.stringify(conn.sort()) === JSON.stringify(newConnection)
+      )
+      
+      if (!connectionExists) {
+        setNeuralConnections([...neuralConnections, newConnection])
+      }
+      setSelectedNode(null)
+    }
+  }
+
+  const clearConnections = () => {
+    setNeuralConnections([])
+    setSelectedNode(null)
+    setError('')
+  }
+
+  const handleRouteSubmit = () => {
+    // Check if all correct connections are made
+    const allCorrect = correctConnections.every(correctConn => 
+      neuralConnections.some(userConn => 
+        JSON.stringify(userConn.sort()) === JSON.stringify(correctConn.sort())
+      )
+    )
+    
+    if (allCorrect && neuralConnections.length === correctConnections.length) {
+      setCurrentStep(2)
+      setMindDialogue(0)
+      
+      // Auto-advance dialogue
+      const dialogueTimer = setInterval(() => {
+        setMindDialogue(prev => {
+          if (prev >= mindMessages.length - 1) {
+            clearInterval(dialogueTimer)
+            setTimeout(() => {
+              updateGameState({ room4Neural: 'COMPLETE' })
+              completeRoom(4)
+              setShowMemory(true)
+              setTimeout(() => navigate('/exit-hall'), 3000)
+            }, 2000)
+            return prev
+          }
+          return prev + 1
+        })
+      }, 3000)
+      
+    } else {
+      setError('Neural routing incomplete. Pulse flow disrupted. Check connections.')
     }
   }
 
