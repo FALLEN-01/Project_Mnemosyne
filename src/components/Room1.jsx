@@ -113,11 +113,7 @@ const Room1 = () => {
               The movement pattern triggers something familiar. You've walked this path before... but when? 
               The surveillance footage shows your own figure, but the memories feel distant, fragmented.
             </p>
-            <div className="terminal" style={{ marginBottom: '1rem' }}>
-              <p>MEMORY RECONSTRUCTION: 25% COMPLETE</p>
-              <p>ACCESSING DEEPER FACILITY LEVELS...</p>
-              <p style={{ color: '#ff4444' }}>WARNING: Neural echoes detected</p>
-            </div>
+
           </div>
           <div className="loading" style={{ margin: '1.5rem auto' }}></div>
           <p>Proceeding to Chemical Containment...</p>
@@ -340,24 +336,6 @@ const Room1 = () => {
           {error}
         </div>
       )}
-
-      <div className="terminal" style={{ 
-        color: '#6666ff',
-        border: '1px solid #6666ff',
-        maxWidth: '600px',
-        margin: '0 auto',
-        textAlign: 'center'
-      }}>
-        <div style={{ color: '#00ffff', fontWeight: 'bold', marginBottom: '0.5rem' }}>
-          SURVEILLANCE TRACKING SYSTEM:
-        </div>
-        <div style={{ lineHeight: '1.6', whiteSpace: 'pre-wrap' }}>
-          PATH SEQUENCE... {currentStep}/9 STEPS{'\n'}
-          NEURAL PATTERN... {currentStep === correctSequence.length ? 'RECOGNIZED' : 'ANALYZING'}{'\n'}
-          MEMORY ACCESS... {currentStep === correctSequence.length ? 'GRANTED' : 'RESTRICTED'}{'\n'}
-          NEXT CHAMBER... {currentStep === correctSequence.length ? 'UNLOCKED' : 'LOCKED'}
-        </div>
-      </div>
     </div>
   )
 }

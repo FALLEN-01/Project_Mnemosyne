@@ -387,25 +387,6 @@ const ExitHall = () => {
             </div>
           </div>
         )}
-
-        {/* Status Terminal */}
-        {!endingScene && (
-          <div className="terminal" style={{ 
-            background: '#2d2d1a',
-            border: '2px solid #ffff88',
-            color: '#ffff88'
-          }}>
-            <div style={{ color: '#ffffcc', fontWeight: 'bold', marginBottom: '0.5rem' }}>
-              ITOR CHAMBER STATUS:
-            </div>
-            <div style={{ lineHeight: '1.4' }}>
-              VOICE ECHOES... {voiceFragments + 1}/{voiceEchoes.length}<br />
-              ACCESS RIDDLE... {showRiddle ? 'ACTIVE' : 'PENDING'}<br />
-              DECISION INTERFACE... {showDecision ? 'READY' : 'LOCKED'}<br />
-              FINAL CHOICE... {finalChoice ? finalChoice.toUpperCase() : 'PENDING'}
-            </div>
-          </div>
-        )}
       </div>
     </div>
   )

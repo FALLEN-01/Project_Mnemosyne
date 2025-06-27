@@ -411,45 +411,7 @@ const Room4 = () => {
           </div>
         )}
 
-        <div className="terminal" style={{ 
-          background: '#1a0f2d',
-          border: '2px solid #bb88ff',
-          color: '#bb88ff'
-        }}>
-          <div style={{ color: '#ccaaff', fontWeight: 'bold', marginBottom: '0.5rem' }}>
-            NEURAL CORE STATUS:
-          </div>
-          <div style={{ lineHeight: '1.4' }}>
-            NODES ALIGNED... {neuralNodes.filter((n, index) => correctRotations[index] === n.rotation).length}/5<br />
-            PULSE FLOW... {pulseActive ? 'ACTIVE' : 'STANDBY'}<br />
-            HOLOGRAM... {showHologram ? 'BROADCASTING' : 'OFFLINE'}<br />
-            INTEGRITY OVERWRITE... {mindDialogue ? 'INITIATED' : 'PENDING'}
-          </div>
-          
-          {/* Progress bar for node alignment */}
-          <div style={{ marginTop: '1rem' }}>
-            <div style={{ 
-              background: 'rgba(0, 0, 0, 0.5)', 
-              height: '8px', 
-              borderRadius: '4px',
-              overflow: 'hidden'
-            }}>
-              <div style={{ 
-                background: 'linear-gradient(90deg, #bb88ff, #9966cc)',
-                height: '100%',
-                width: `${(neuralNodes.filter((n, index) => correctRotations[index] === n.rotation).length / 5) * 100}%`,
-                transition: 'width 0.3s ease'
-              }} />
-            </div>
-            <div style={{ 
-              fontSize: '0.8rem', 
-              color: '#9966cc', 
-              marginTop: '0.5rem' 
-            }}>
-              Neural Synchronization: {Math.round((neuralNodes.filter((n, index) => correctRotations[index] === n.rotation).length / 5) * 100)}%
-            </div>
-          </div>
-        </div>
+
       </div>
     </div>
   )

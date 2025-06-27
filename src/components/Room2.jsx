@@ -105,11 +105,7 @@ const Room2 = () => {
               The cabinet hisses open, releasing a cloud of vapor. Inside, research notes scatter in the artificial wind. 
               "IN CASE OF IDENTITY COLLAPSE" - the words burn into your vision. What were you trying to forget?
             </p>
-            <div className="terminal" style={{ marginBottom: '1rem' }}>
-              <p>CONTAINMENT BREACH: LOCALIZED</p>
-              <p>MEMORY RECONSTRUCTION: 50% COMPLETE</p>
-              <p style={{ color: '#ff4444' }}>WARNING: Neural trauma indicators rising</p>
-            </div>
+
           </div>
           <div className="loading" style={{ margin: '1.5rem auto' }}></div>
           <p>Accessing Archive Systems...</p>
@@ -428,24 +424,6 @@ const Room2 = () => {
           VERIFY MOLECULAR SEQUENCE
         </button>
       )}
-
-      <div className="terminal" style={{ 
-        color: '#00cccc',
-        border: '1px solid #00cccc',
-        maxWidth: '600px',
-        margin: '0 auto',
-        textAlign: 'center'
-      }}>
-        <div style={{ color: '#00ffff', fontWeight: 'bold', marginBottom: '0.5rem' }}>
-          CHEMICAL ANALYSIS SYSTEM:
-        </div>
-        <div style={{ lineHeight: '1.6', whiteSpace: 'pre-wrap' }}>
-          MOLECULAR SCAN... {code.filter(c => c).length}/6 ELEMENTS{'\n'}
-          SEQUENCE MATCH... {code.join('').length === 6 && code.join('') === correctCode ? 'VERIFIED' : 'ANALYZING'}{'\n'}
-          BIOMETRIC LOCK... {showRetinalScan ? 'ACTIVE' : 'STANDBY'}{'\n'}
-          CABINET ACCESS... {showRetinalScan ? 'READY' : 'LOCKED'}
-        </div>
-      </div>
     </div>
   )
 }

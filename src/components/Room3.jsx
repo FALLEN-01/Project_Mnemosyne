@@ -346,22 +346,6 @@ const Room3 = () => {
             </div>
           </div>
         )}
-
-        <div className="terminal" style={{ 
-          background: '#1a0f0a',
-          border: '2px solid #ff9900',
-          color: '#ff9900'
-        }}>
-          <div style={{ color: '#ffcc00', fontWeight: 'bold', marginBottom: '0.5rem' }}>
-            ARCHIVE STATUS:
-          </div>
-          <div style={{ lineHeight: '1.4' }}>
-            MEMORY FRAGMENTS... {videoSegments.filter(s => s !== '').length}/6 LOADED<br />
-            SEQUENCE INTEGRITY... {videoSegments.includes('') ? 'INCOMPLETE' : 'READY'}<br />
-            IDENTITY RECONSTRUCTION... {showReveal ? 'ACTIVE' : 'PENDING'}<br />
-            NEXT CHAMBER... {showReveal ? 'UNLOCKING' : 'LOCKED'}
-          </div>
-        </div>
       </div>
     </div>
   )
