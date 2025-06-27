@@ -109,14 +109,18 @@ const Room4 = () => {
   const startConfessionSequence = () => {
     let step = 0
     const interval = setInterval(() => {
+      console.log('Confession step:', step, 'of', confessionMessages.length)
       setConfessionStep(step)
       step++
       
       if (step >= confessionMessages.length) {
+        console.log('Confession complete, clearing interval and starting mind dialogue')
         clearInterval(interval)
+        // Add a slightly longer delay to ensure the last message is fully displayed
         setTimeout(() => {
+          console.log('Setting mind dialogue to true')
           setMindDialogue(true)
-        }, 2000)
+        }, 3000)
       }
     }, 3000)
   }
@@ -365,6 +369,9 @@ const Room4 = () => {
                   animation: 'pulse 2s infinite'
                 }}>
                   {confessionMessages[confessionStep]}
+                  <div style={{ fontSize: '0.8rem', color: '#888', marginTop: '0.5rem' }}>
+                    Step {confessionStep + 1} of {confessionMessages.length}
+                  </div>
                 </div>
               ) : mindDialogue ? (
                 <div style={{ textAlign: 'center' }}>
@@ -417,12 +424,90 @@ const Room4 = () => {
                   </button>
                 </div>
               ) : (
-                <div className="loading" style={{ 
-                  borderTopColor: '#bb88ff',
-                  borderLeftColor: 'rgba(187, 136, 255, 0.3)'
-                }} />
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ 
+                    color: '#ff6666', 
+                    marginBottom: '1rem', 
+                    fontWeight: 'bold',
+                    fontSize: '1.3rem',
+                    textShadow: '0 0 10px rgba(255, 102, 102, 0.8)'
+                  }}>
+                    M.I.N.D.: "Welcome back, Dr. Vale."
+                  </div>
+                  <div style={{ 
+                    color: '#ccaaff', 
+                    marginBottom: '2rem',
+                    fontSize: '1.1rem',
+                    lineHeight: '1.5'
+                  }}>
+                    "Proceeding with integrity overwrite."
+                  </div>
+                  <div style={{
+                    background: 'rgba(255, 170, 136, 0.1)',
+                    border: '1px solid #ffaa88',
+                    borderRadius: '10px',
+                    padding: '1.5rem',
+                    marginBottom: '2rem',
+                    color: '#ffaa88',
+                    fontStyle: 'italic'
+                  }}>
+                    <p style={{ margin: '0 0 1rem 0' }}>
+                      You stagger as the room flickers and powers down around you...
+                    </p>
+                    <p style={{ margin: 0 }}>
+                      The neural pathways dim. The hologram fades. The truth has been revealed.
+                    </p>
+                  </div>
+                  <button 
+                    className="btn" 
+                    onClick={proceedToFinalRoom}
+                    style={{ 
+                      background: 'linear-gradient(45deg, #bb88ff, #9966cc)',
+                      fontSize: '1.2rem',
+                      padding: '1.2rem 3rem',
+                      border: '2px solid #bb88ff',
+                      boxShadow: '0 0 20px rgba(187, 136, 255, 0.5)',
+                      animation: 'pulse 2s infinite'
+                    }}
+                  >
+                    🚪 Exit to Final Chamber
+                  </button>
+                </div>
               )}
             </div>
+          </div>
+        )}
+
+        {/* Emergency Fallback - Show exit button if confession is complete but mind dialogue didn't trigger */}
+        {showHologram && confessionStep >= confessionMessages.length && !mindDialogue && (
+          <div style={{
+            background: 'rgba(255, 170, 136, 0.2)',
+            border: '2px solid #ffaa88',
+            borderRadius: '15px',
+            padding: '2rem',
+            marginTop: '1rem',
+            textAlign: 'center'
+          }}>
+            <div style={{ 
+              color: '#ffaa88', 
+              marginBottom: '1rem',
+              fontSize: '1.1rem'
+            }}>
+              CONFESSION SEQUENCE COMPLETE
+            </div>
+            <button 
+              className="btn" 
+              onClick={() => setMindDialogue(true)}
+              style={{ 
+                background: 'linear-gradient(45deg, #ffaa88, #ff8844)',
+                fontSize: '1.1rem',
+                padding: '1rem 2rem',
+                border: '2px solid #ffaa88',
+                boxShadow: '0 0 15px rgba(255, 170, 136, 0.5)'
+              }}
+            >
+              Continue to Mind Interface
+            </button>
           </div>
         )}
 

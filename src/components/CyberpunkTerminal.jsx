@@ -169,21 +169,7 @@ const CyberpunkTerminal = ({
               }}>_</span>
             </div>
           )}
-
-          {/* Completion message */}
-          {completed && (
-            <div style={{
-              color: '#66aaff',
-              fontSize: '1rem',
-              marginTop: '1rem',
-              textAlign: 'center',
-              textShadow: '0 0 5px #66aaff'
-            }}>
-              TRANSFER INITIATED...
-            </div>
-          )}
         </div>
-
         {/* Bottom status bar */}
         <div style={{
           marginTop: '1rem',
