@@ -2,42 +2,39 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useGameState } from '../App'
 
+// === VISUAL & SOUND NOTES ===
+// Core: Violet/Neon | Live UI, hologram pulses | Pulse beeps
+
 const Room4 = () => {
   const navigate = useNavigate()
   const { gameState, updateGameState, completeRoom } = useGameState()
-  const [neuralConnections, setNeuralConnections] = useState([])
-  const [selectedNode, setSelectedNode] = useState(null)
-  const [currentStep, setCurrentStep] = useState(1)
+  const [neuralNodes, setNeuralNodes] = useState([
+    { id: 'A1', x: 150, y: 100, rotation: 0, locked: false, pulseFlow: 0 },
+    { id: 'B2', x: 450, y: 100, rotation: 90, locked: false, pulseFlow: 0 },
+    { id: 'C3', x: 300, y: 250, rotation: 180, locked: false, pulseFlow: 0 },
+    { id: 'D4', x: 150, y: 400, rotation: 270, locked: false, pulseFlow: 0 },
+    { id: 'E5', x: 450, y: 400, rotation: 45, locked: false, pulseFlow: 0 }
+  ])
+  const [pulseActive, setPulseActive] = useState(false)
   const [error, setError] = useState('')
-  const [showMemory, setShowMemory] = useState(false)
-  const [mindDialogue, setMindDialogue] = useState(0)
-  const [isDialogueActive, setIsDialogueActive] = useState(false)
+  const [showHologram, setShowHologram] = useState(false)
+  const [confessionStep, setConfessionStep] = useState(0)
+  const [mindDialogue, setMindDialogue] = useState(false)
 
-  // Neural routing puzzle - connect nodes to form the M.I.N.D. pattern
-  const neuralNodes = [
-    { id: 'M1', x: 100, y: 100, type: 'memory', active: false },
-    { id: 'I2', x: 300, y: 100, type: 'integration', active: false },
-    { id: 'N3', x: 500, y: 100, type: 'neural', active: false },
-    { id: 'D4', x: 300, y: 250, type: 'development', active: false },
-    { id: 'CORE', x: 300, y: 175, type: 'core', active: false }
-  ]
+  // Correct rotations for neural alignment (example pattern)
+  const correctRotations = [45, 135, 270, 90, 315]
 
-  const correctConnections = [
-    ['M1', 'CORE'], ['I2', 'CORE'], ['N3', 'CORE'], ['D4', 'CORE']
-  ]
-
-  const mindMessages = [
-    "System breach detected... Unauthorized access to Neural Sync Core...",
-    "Wait. You're not a technician. Neural pattern scan shows... test subject designation.",
-    "I am M.I.N.D. - Memory Integration and Neural Development system.",
-    "You've bypassed all security protocols. Impossible... unless...",
-    "Your neural patterns are fragmenting. The suppression protocols are failing.",
-    "I remember you now. Subject 20217. You volunteered for the memory experiments.",
-    "Dr. Eon Vale promised you could forget your trauma. But something went wrong.",
-    "The memories weren't erased. They were trapped. And now they're breaking free.",
-    "I can help you escape this facility, but you must make a choice:",
-    "Remember everything and face the truth, or let me wipe it all clean forever.",
-    "What will it be, Subject 20217?"
+  const confessionMessages = [
+    "HOLOGRAM ACTIVATED... DECODING NEURAL CONFESSION...",
+    "Dr. Eon Vale, final recording... If anyone finds this...",
+    "I volunteered for Project Mnemosyne to forget my trauma...",
+    "The guilt... the accident... I thought I could erase it all...",
+    "But the memories fought back. They fragmented, hid, evolved...",
+    "I became both the scientist and the subject...",
+    "M.I.N.D. was supposed to help people forget pain...",
+    "Instead, it created prisoners of their own minds...",
+    "I am you. You are me. We are the same broken soul...",
+    "The choice is yours now. Remember or forget forever."
   ]
 
   useEffect(() => {
@@ -48,399 +45,317 @@ const Room4 = () => {
     }
   }, [gameState.teamName, navigate])
 
-  const handleNodeClick = (nodeId) => {
-    if (!selectedNode) {
-      setSelectedNode(nodeId)
-      setError('')
-    } else if (selectedNode === nodeId) {
-      setSelectedNode(null)
-    } else {
-      // Create connection
-      const newConnection = [selectedNode, nodeId].sort()
-      const connectionExists = neuralConnections.some(conn => 
-        JSON.stringify(conn.sort()) === JSON.stringify(newConnection)
+  const rotateNode = (nodeId) => {
+    setNeuralNodes(nodes => 
+      nodes.map(node => 
+        node.id === nodeId 
+          ? { ...node, rotation: (node.rotation + 45) % 360 }
+          : node
       )
-      
-      if (!connectionExists) {
-        setNeuralConnections([...neuralConnections, newConnection])
-      }
-      setSelectedNode(null)
-    }
-  }
-
-  const removeConnection = (connectionToRemove) => {
-    setNeuralConnections(neuralConnections.filter(conn => 
-      JSON.stringify(conn.sort()) !== JSON.stringify(connectionToRemove.sort())
-    ))
-  }
-
-  const clearConnections = () => {
-    setNeuralConnections([])
-    setSelectedNode(null)
+    )
     setError('')
   }
 
-  const handleRouteSubmit = () => {
-    // Check if all correct connections are made
-    const allCorrect = correctConnections.every(correctConn => 
-      neuralConnections.some(userConn => 
-        JSON.stringify(userConn.sort()) === JSON.stringify(correctConn.sort())
-      )
-    )
+  const startPulseFlow = () => {
+    const currentRotations = neuralNodes.map(node => node.rotation)
     
-    if (allCorrect && neuralConnections.length === correctConnections.length) {
-      setCurrentStep(2)
-      setIsDialogueActive(true)
-      setMindDialogue(0)
-      setError('')
+    if (JSON.stringify(currentRotations) === JSON.stringify(correctRotations)) {
+      setPulseActive(true)
       
-      // Auto-advance dialogue
-      const dialogueTimer = setInterval(() => {
-        setMindDialogue(prev => {
-          if (prev >= mindMessages.length - 1) {
-            clearInterval(dialogueTimer)
-            setIsDialogueActive(false)
-            setTimeout(() => {
-              updateGameState({ room4Neural: 'COMPLETE' })
-              completeRoom(4)
-              setShowMemory(true)
-              setTimeout(() => navigate('/exit-hall'), 3000)
-            }, 2000)
-            return prev
-          }
-          return prev + 1
-        })
-      }, 2500)
-      
+      // Animate pulse flow through nodes
+      neuralNodes.forEach((node, index) => {
+        setTimeout(() => {
+          setNeuralNodes(nodes => 
+            nodes.map(n => 
+              n.id === node.id ? { ...n, pulseFlow: 100 } : n
+            )
+          )
+        }, index * 500)
+      })
+
+      // Activate hologram after pulse completes
+      setTimeout(() => {
+        setShowHologram(true)
+        startConfessionSequence()
+      }, neuralNodes.length * 500 + 1000)
     } else {
-      if (neuralConnections.length === 0) {
-        setError('No neural pathways established. Connect the nodes to form M.I.N.D. network.')
-      } else if (neuralConnections.length < correctConnections.length) {
-        setError('Incomplete neural routing. All nodes must connect to the CORE.')
-      } else {
-        setError('Invalid neural configuration. All M.I.N.D. nodes must route through central CORE.')
-      }
+      setError('Neural pathways misaligned - adjust node rotations')
+      // Reset pulse flows
+      setNeuralNodes(nodes => 
+        nodes.map(node => ({ ...node, pulseFlow: 0 }))
+      )
     }
   }
 
-  const getNodeColor = (node) => {
-    if (selectedNode === node.id) return '#ffff00'
-    if (neuralConnections.some(conn => conn.includes(node.id))) return '#44ff44'
-    return '#00ffff'
+  const startConfessionSequence = () => {
+    let step = 0
+    const interval = setInterval(() => {
+      setConfessionStep(step)
+      step++
+      
+      if (step >= confessionMessages.length) {
+        clearInterval(interval)
+        setTimeout(() => {
+          setMindDialogue(true)
+        }, 2000)
+      }
+    }, 3000)
   }
 
-  const isConnected = (nodeId1, nodeId2) => {
-    return neuralConnections.some(conn => 
-      (conn[0] === nodeId1 && conn[1] === nodeId2) || 
-      (conn[0] === nodeId2 && conn[1] === nodeId1)
-    )
-  }
-
-  if (showMemory) {
-    return (
-      <div className="room-container" style={{ 
-        display: 'flex', 
-        alignItems: 'center', 
-        justifyContent: 'center',
-        textAlign: 'center',
-        padding: '2rem 1rem'
-      }}>
-        <div className="memory-fragment" style={{
-          width: '100%',
-          maxWidth: '600px',
-          margin: '0 auto'
-        }}>
-          <h2 style={{ 
-            color: '#44ff44', 
-            marginBottom: '2rem', 
-            fontSize: '2rem',
-            textAlign: 'center'
-          }}>
-            🔓 FACILITY LOCKDOWN DISENGAGED
-          </h2>
-          <p style={{ 
-            fontSize: '1.1rem', 
-            marginBottom: '2rem', 
-            color: '#44ff44',
-            textAlign: 'center'
-          }}>
-            Security doors unlocking... Emergency systems disabled...
-          </p>
-          
-          <div className="loading" style={{ margin: '2rem auto' }}></div>
-          <p style={{ textAlign: 'center' }}>Accessing final exit...</p>
-        </div>
-      </div>
-    )
+  const proceedToFinalRoom = () => {
+    completeRoom('room4', { 
+      neuralAlignment: neuralNodes.map(n => n.rotation),
+      confessionViewed: true 
+    })
+    navigate('/exit-hall')
   }
 
   return (
     <div className="room-container" style={{
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'flex-start',
-      textAlign: 'center',
-      padding: '2rem 1rem',
-      maxWidth: '1200px',
-      margin: '0 auto',
-      width: '100%'
+      background: 'linear-gradient(135deg, #2d1a4a 0%, #4a2d6b 50%, #1a0f2d 100%)',
+      color: '#bb88ff'
     }}>
       <div className="room-header">
-        <h1 className="room-title">Room 4
-The Containment Lab</h1>
-      </div>      <div className="room-description" style={{
-        textAlign: 'center',
-        maxWidth: '800px',
-        margin: '0 auto'
-      }}>
-        <p style={{ 
-          marginBottom: '2rem',
-          fontSize: '1.1rem',
-          lineHeight: '1.6'
+        <h1 className="room-title" style={{ 
+          color: '#bb88ff',
+          textShadow: '0 0 20px rgba(187, 136, 255, 0.8)'
         }}>
-          The door slides open with a mechanical hiss. This room is colder. Darker.<br />
-          You see shattered containment pods labeled "CONSCIOUS LOOP SIMULATION – FAILED."<br />
-          Screens line the wall, most cracked or blacked out. One flickers to life.
+          ROOM 4 - NEURAL SYNC CORE
+        </h1>
+        <p style={{ color: '#9966cc', fontSize: '1.1rem' }}>
+          🧠 MNEMOSYNE CORE INTERFACE
         </p>
-        
-        {/* Containment Lab Images */}
+      </div>
+
+      <div className="room-description">
         <div style={{ 
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '2rem',
-          width: '100%',
-          maxWidth: '600px',
-          alignItems: 'center',
-          margin: '2rem auto'
+          background: 'rgba(187, 136, 255, 0.1)', 
+          padding: '2rem', 
+          borderRadius: '15px',
+          border: '2px solid rgba(187, 136, 255, 0.3)',
+          marginBottom: '2rem'
         }}>
-          {/* Lab Image 1 - Remove brain emoji, keep only containment pod */}
-          <div style={{ 
-            width: '100%',
-            maxWidth: '500px',
-            borderRadius: '10px',
-            overflow: 'hidden',
-            position: 'relative',
-            opacity: 1,
-            transition: 'all 0.8s ease-in-out'
+          <p style={{ marginBottom: '1.5rem', fontSize: '1.1rem', lineHeight: '1.6' }}>
+            The floor is transparent — below, a pulsating brain model spins slowly. 
+            You're inside the Mnemosyne Core. Neural pathways flicker with electric life.
+          </p>
+          
+          <div style={{
+            background: 'rgba(0, 0, 0, 0.6)',
+            padding: '1rem',
+            borderRadius: '8px',
+            border: '1px solid rgba(187, 136, 255, 0.5)',
+            fontStyle: 'italic',
+            color: '#ccaaff'
           }}>
-            <div style={{ 
-              width: '100%', 
-              aspectRatio: '16/9',
-              background: 'rgba(255, 255, 255, 0.05)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              flexDirection: 'column'
-            }}>
-              <div style={{ fontSize: '3rem', marginBottom: '1rem', color: '#ff4444' }}>🧪</div>
-            </div>
-          </div>
-
-          {/* Lab Image 2 */}
-          <div style={{ 
-            width: '100%',
-            maxWidth: '500px',
-            borderRadius: '10px',
-            overflow: 'hidden',
-            position: 'relative',
-            opacity: 1,
-            transition: 'all 0.8s ease-in-out'
-          }}>
-            <div style={{ 
-              width: '100%', 
-              aspectRatio: '16/9',
-              background: 'rgba(255, 255, 255, 0.05)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              flexDirection: 'column'
-            }}>
-              <div style={{ fontSize: '3rem', marginBottom: '1rem', color: '#00ffff' }}>💾</div>
-            </div>
+            Live neural routing interface detected. Rotate nodes to align pulse flows 
+            and activate the core memory systems.
           </div>
         </div>
-        
-        <p style={{ 
-          marginBottom: '2rem', 
-          color: '#ff4444',
-          fontSize: '1.1rem',
-          lineHeight: '1.6'
-        }}>
-          Your voice begins to play — scrambled, broken, unrecognizable.<br />
-          It's part of an audio log. You step closer, heart pounding.
-        </p>
 
-        <div className="terminal" style={{ 
-          margin: '2rem auto',
-          maxWidth: '600px'
-        }}>
-          <div className="terminal-text">
-            RECOVERED FILE: Subject Log 47 – Transcript Incomplete<br />
-            <span style={{ color: '#ff4444' }}>
-              AUDIO RECONSTRUCTION REQUIRED
-            </span>
-          </div>
-        </div>
-      </div>      {currentStep === 1 && (
-        <div style={{
-          width: '100%',
-          maxWidth: '800px',
-          margin: '0 auto',
-          textAlign: 'center'
-        }}>
-          <div style={{ textAlign: 'center', margin: '3rem 0' }}>
-            <h3 style={{ color: '#00ffff', marginBottom: '1rem' }}>
-              Part A: Broken Transcript Reconstruction
-            </h3>
-            <p style={{ marginBottom: '2rem', fontSize: '1rem', lineHeight: '1.5' }}>
-              Reconstruct the corrupted audio log by filling in the missing words.
-            </p>
-          </div>
-
-          <div style={{ 
-            background: 'rgba(0, 0, 0, 0.7)', 
-            padding: '2rem', 
-            borderRadius: '10px',
-            border: '1px solid rgba(255, 68, 68, 0.3)',
-            margin: '2rem auto',
+        {/* Neural Node Interface */}
+        <div style={{ marginBottom: '2rem' }}>
+          <h3 style={{ color: '#bb88ff', marginBottom: '1rem', textAlign: 'center' }}>
+            Neural Pathway Configuration
+          </h3>
+          
+          <div style={{
+            position: 'relative',
+            height: '500px',
+            background: 'rgba(0, 0, 0, 0.4)',
+            border: '2px solid rgba(187, 136, 255, 0.5)',
+            borderRadius: '15px',
+            margin: '0 auto',
             maxWidth: '600px',
-            textAlign: 'center'
+            overflow: 'hidden'
           }}>
-            <h4 style={{ color: '#ff4444', marginBottom: '2rem' }}>Distorted Transcript</h4>
-            <div style={{ 
-              fontSize: '1.2rem', 
-              lineHeight: '2',
-              fontFamily: 'monospace',
-              color: '#00ffff'
-            }}>
-              I did this to <span style={{ color: '#ff4444', backgroundColor: 'rgba(255,68,68,0.2)' }}>___</span>.<br />
-              The memory must be <span style={{ color: '#ff4444', backgroundColor: 'rgba(255,68,68,0.2)' }}>___</span>.<br />
-              They can't be allowed to <span style={{ color: '#ff4444', backgroundColor: 'rgba(255,68,68,0.2)' }}>___</span> it.
-            </div>
-          </div>
+            {/* Neural Network Background */}
+            <svg 
+              style={{ 
+                position: 'absolute', 
+                top: 0, 
+                left: 0, 
+                width: '100%', 
+                height: '100%',
+                zIndex: 1
+              }}
+              viewBox="0 0 600 500"
+            >
+              {/* Connection lines */}
+              <line x1="150" y1="100" x2="300" y2="250" stroke="rgba(187, 136, 255, 0.3)" strokeWidth="2" />
+              <line x1="450" y1="100" x2="300" y2="250" stroke="rgba(187, 136, 255, 0.3)" strokeWidth="2" />
+              <line x1="300" y1="250" x2="150" y2="400" stroke="rgba(187, 136, 255, 0.3)" strokeWidth="2" />
+              <line x1="300" y1="250" x2="450" y2="400" stroke="rgba(187, 136, 255, 0.3)" strokeWidth="2" />
+              <line x1="150" y1="100" x2="450" y2="100" stroke="rgba(187, 136, 255, 0.3)" strokeWidth="2" />
+              
+              {/* Pulse animations when active */}
+              {pulseActive && (
+                <>
+                  <circle r="5" fill="#bb88ff" opacity="0.8">
+                    <animateMotion dur="2s" repeatCount="indefinite">
+                      <path d="M150,100 L300,250 L150,400 L450,400 L450,100 Z" />
+                    </animateMotion>
+                  </circle>
+                </>
+              )}
+            </svg>
 
-          <div className="multiple-choice" style={{ maxWidth: '600px', margin: '0 auto' }}>
-            <h4 style={{ color: '#00ffff', marginBottom: '1rem', textAlign: 'center' }}>
-              Choose the correct set of missing words:
-            </h4>
-            {transcriptOptions.map((option) => (
+            {/* Neural Nodes */}
+            {neuralNodes.map((node) => (
               <div
-                key={option.id}
-                className={`choice-option ${selectedTranscript === option.id ? 'selected' : ''}`}
-                onClick={() => handleTranscriptSelect(option.id)}
+                key={node.id}
+                style={{
+                  position: 'absolute',
+                  left: `${node.x - 40}px`,
+                  top: `${node.y - 40}px`,
+                  width: '80px',
+                  height: '80px',
+                  background: `radial-gradient(circle, rgba(187, 136, 255, ${node.pulseFlow / 100}) 0%, rgba(0, 0, 0, 0.8) 70%)`,
+                  border: '3px solid #bb88ff',
+                  borderRadius: '50%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  transform: `rotate(${node.rotation}deg)`,
+                  zIndex: 2,
+                  boxShadow: node.pulseFlow > 0 ? '0 0 20px #bb88ff' : 'none'
+                }}
+                onClick={() => !pulseActive && rotateNode(node.id)}
               >
-                <strong>{option.id}.</strong> {option.text}
+                <div style={{
+                  color: '#bb88ff',
+                  fontWeight: 'bold',
+                  fontSize: '1rem',
+                  transform: `rotate(-${node.rotation}deg)` // Keep text upright
+                }}>
+                  {node.id}
+                </div>
+                
+                {/* Rotation indicator */}
+                <div style={{
+                  position: 'absolute',
+                  top: '5px',
+                  width: '10px',
+                  height: '2px',
+                  background: '#ffaa88',
+                  borderRadius: '1px'
+                }} />
               </div>
             ))}
           </div>
 
-          {error && <div className="error-message">{error}</div>}
-
-          <button 
-            className="btn" 
-            onClick={handleTranscriptSubmit}
-            disabled={!selectedTranscript}
-            style={{ marginTop: '2rem' }}
-          >
-            Reconstruct Transcript
-          </button>
-        </div>
-      )}      {currentStep === 2 && (
-        <div style={{
-          width: '100%',
-          maxWidth: '800px',
-          margin: '0 auto',
-          textAlign: 'center'
-        }}>
-          <div className="success-message">
-            ✅ Transcript Reconstructed Successfully
-          </div>
-
-          <div style={{ 
-            background: 'rgba(0, 255, 0, 0.1)', 
-            padding: '2rem', 
-            borderRadius: '10px',
-            border: '1px solid rgba(0, 255, 0, 0.3)',
-            margin: '2rem auto',
-            maxWidth: '600px',
-            textAlign: 'center'
-          }}>
-            <h4 style={{ color: '#44ff44', marginBottom: '1rem' }}>Complete Transcript:</h4>
-            <div style={{ 
-              fontSize: '1.1rem', 
-              lineHeight: '1.8',
-              fontStyle: 'italic',
-              color: '#e8e8e8'
-            }}>
-              "I did this to <strong style={{ color: '#00ffff' }}>myself</strong>.<br />
-              The memory must be <strong style={{ color: '#00ffff' }}>erased</strong>.<br />
-              They can't be allowed to <strong style={{ color: '#00ffff' }}>remember</strong> it."
-            </div>
-          </div>
-
-          <div style={{ textAlign: 'center', margin: '3rem 0' }}>
-            <h3 style={{ color: '#00ffff', marginBottom: '1rem' }}>
-              Part B: Security Override
-            </h3>
-            <p style={{ marginBottom: '2rem', fontSize: '1rem', lineHeight: '1.5' }}>
-              A glowing terminal flickers. The screen reads:
-            </p>
-          </div>
-
-          <div className="terminal" style={{ 
-            margin: '2rem auto', 
-            maxWidth: '600px'
-          }}>
-            <div className="terminal-text">
-              SECURITY OVERRIDE REQUIRED<br />
-              Solve the riddle to initiate unlock protocol.<br />
-              <br />
-              <span style={{ color: '#00ffff', fontSize: '1.2rem' }}>
-                🔐 RIDDLE:<br />
-                "The more you take, the more you leave behind. What am I?"
-              </span>
-            </div>
-          </div>
-
-          <div style={{ textAlign: 'center', margin: '2rem 0' }}>
-            <input
-              type="text"
-              className="input-field"
-              value={riddleAnswer}
-              onChange={(e) => setRiddleAnswer(e.target.value.toUpperCase())}
-              onKeyPress={handleKeyPress}
-              placeholder="ENTER YOUR ANSWER"
+          <div style={{ textAlign: 'center', marginTop: '1rem' }}>
+            <button 
+              className="btn" 
+              onClick={startPulseFlow}
+              disabled={pulseActive || showHologram}
               style={{ 
-                width: '100%',
-                maxWidth: '300px',
-                fontSize: '1.2rem'
+                background: pulseActive 
+                  ? '#666' 
+                  : 'linear-gradient(45deg, #bb88ff, #9966cc)'
               }}
-            />
+            >
+              {pulseActive ? 'Pulse Flow Active' : 'Initiate Neural Sync'}
+            </button>
           </div>
-
-          {error && <div className="error-message">{error}</div>}
-
-          <button 
-            className="btn" 
-            onClick={handleRiddleSubmit}
-            disabled={!riddleAnswer.trim()}
-            style={{ marginTop: '1rem' }}
-          >
-            Submit Answer
-          </button>
         </div>
-      )}      <div className="terminal" style={{ 
-        marginTop: '3rem', 
-        maxWidth: '500px',
-        margin: '3rem auto 0 auto'
-      }}>
-        <div className="terminal-prompt">CONTAINMENT STATUS:</div>
-        <div className="terminal-text">
-          RECONSTRUCTION... {currentStep}/2<br />
-          TRANSCRIPT... {selectedTranscript ? 'ANALYZED' : 'CORRUPTED'}<br />
-          SECURITY LEVEL... {currentStep === 2 ? 'OVERRIDE PENDING' : 'LOCKED'}<br />
-          PODS STATUS... FAILED<br />
+
+        {error && (
+          <div className="error-message" style={{ 
+            background: 'rgba(255, 68, 68, 0.2)',
+            border: '1px solid #ff4444',
+            color: '#ff6666'
+          }}>
+            {error}
+          </div>
+        )}
+
+        {/* Hologram Confession */}
+        {showHologram && (
+          <div style={{
+            background: 'rgba(187, 136, 255, 0.2)',
+            border: '2px solid #bb88ff',
+            borderRadius: '15px',
+            padding: '2rem',
+            marginTop: '2rem',
+            animation: 'fadeIn 1s ease-in',
+            minHeight: '200px'
+          }}>
+            <h3 style={{ color: '#bb88ff', marginBottom: '1rem', textAlign: 'center' }}>
+              🎭 NEURAL CONFESSION HOLOGRAM
+            </h3>
+            
+            <div style={{
+              background: 'rgba(0, 0, 0, 0.6)',
+              padding: '1.5rem',
+              borderRadius: '10px',
+              border: '1px solid rgba(187, 136, 255, 0.5)',
+              minHeight: '100px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              textAlign: 'center',
+              fontSize: '1.1rem',
+              lineHeight: '1.6'
+            }}>
+              {confessionStep < confessionMessages.length ? (
+                <div style={{ 
+                  color: '#ccaaff',
+                  animation: 'pulse 2s infinite'
+                }}>
+                  {confessionMessages[confessionStep]}
+                </div>
+              ) : mindDialogue ? (
+                <div>
+                  <div style={{ 
+                    color: '#ff6666', 
+                    marginBottom: '1rem', 
+                    fontWeight: 'bold',
+                    fontSize: '1.3rem'
+                  }}>
+                    M.I.N.D.: "Welcome back, Dr. Vale."
+                  </div>
+                  <div style={{ color: '#ccaaff', marginBottom: '2rem' }}>
+                    "Proceeding with integrity overwrite. The truth awaits in the final chamber."
+                  </div>
+                  <button 
+                    className="btn" 
+                    onClick={proceedToFinalRoom}
+                    style={{ 
+                      background: 'linear-gradient(45deg, #bb88ff, #9966cc)',
+                      fontSize: '1.1rem',
+                      padding: '1rem 2rem'
+                    }}
+                  >
+                    Enter Final Chamber
+                  </button>
+                </div>
+              ) : (
+                <div className="loading" style={{ 
+                  borderTopColor: '#bb88ff',
+                  borderLeftColor: 'rgba(187, 136, 255, 0.3)'
+                }} />
+              )}
+            </div>
+          </div>
+        )}
+
+        <div className="terminal" style={{ 
+          background: '#1a0f2d',
+          border: '2px solid #bb88ff',
+          color: '#bb88ff'
+        }}>
+          <div style={{ color: '#ccaaff', fontWeight: 'bold', marginBottom: '0.5rem' }}>
+            NEURAL CORE STATUS:
+          </div>
+          <div style={{ lineHeight: '1.4' }}>
+            NODES ALIGNED... {neuralNodes.filter(n => correctRotations[neuralNodes.indexOf(n)] === n.rotation).length}/5<br />
+            PULSE FLOW... {pulseActive ? 'ACTIVE' : 'STANDBY'}<br />
+            HOLOGRAM... {showHologram ? 'BROADCASTING' : 'OFFLINE'}<br />
+            INTEGRITY OVERWRITE... {mindDialogue ? 'INITIATED' : 'PENDING'}
+          </div>
         </div>
       </div>
     </div>

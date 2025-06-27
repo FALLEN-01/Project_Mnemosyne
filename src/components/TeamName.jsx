@@ -296,15 +296,20 @@ const TeamName = () => {
   const [showPopup, setShowPopup] = useState({ show: false, title: '', subtitle: '', type: 'info' })
   const [showSequence, setShowSequence] = useState(false)
 
+  console.log('TeamName component rendered, gameState:', gameState)
+
   useEffect(() => {
+    console.log('TeamName useEffect triggered, gameState.teamName:', gameState.teamName)
     // Redirect if team name already set
     if (gameState.teamName) {
+      console.log('Redirecting to room1')
       navigate('/room1')
       return
     }
 
     // Show initial awakening popup
     setTimeout(() => {
+      console.log('Showing initial popup')
       setShowPopup({
         show: true,
         title: '⚡ SYSTEM ONLINE',
@@ -353,6 +358,18 @@ const TeamName = () => {
 
   return (
     <div className="room-container">
+      <div style={{ 
+        position: 'fixed', 
+        top: '10px', 
+        left: '10px', 
+        background: 'red', 
+        color: 'white', 
+        padding: '10px', 
+        zIndex: 10000 
+      }}>
+        TeamName Component Loaded - Phase: {currentPhase}
+      </div>
+      
       <ManhwaPopup
         show={showPopup.show}
         title={showPopup.title}
