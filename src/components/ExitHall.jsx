@@ -58,13 +58,14 @@ const ExitHall = () => {
   }
 
   const handleFinalChoice = (choice) => {
+    setFinalChoice(choice)
     updateGameState({ 
       finalChoice: choice,
       endTime: new Date()
     })
     
-    // Navigate to the escaped page with the final choice
-    navigate('/escaped')
+    // Show the ending instead of navigating
+    setShowEnding(true)
   }
 
   const restartGame = () => {
@@ -229,7 +230,7 @@ const ExitHall = () => {
         )}
 
         {/* Decision Interface */}
-        {showDecision && (
+        {showDecision && !showEnding && (
           <div style={{
             background: 'rgba(255, 255, 136, 0.2)',
             border: '2px solid #ffff88',
@@ -299,6 +300,124 @@ const ExitHall = () => {
                 }}
               >
                 NO
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Ending Story */}
+        {showEnding && (
+          <div style={{
+            background: 'rgba(255, 255, 136, 0.2)',
+            border: '2px solid #ffff88',
+            borderRadius: '15px',
+            padding: '2rem',
+            marginBottom: '2rem',
+            animation: 'fadeIn 1s ease-in'
+          }}>
+            <h3 style={{ color: '#ffff88', marginBottom: '2rem', textAlign: 'center' }}>
+              {finalChoice === 'remember' ? '📚 CHOICE: REMEMBER' : '🌫️ CHOICE: FORGET'}
+            </h3>
+            
+            <div style={{
+              background: 'rgba(0, 0, 0, 0.6)',
+              padding: '2rem',
+              borderRadius: '10px',
+              border: '1px solid rgba(255, 255, 136, 0.5)',
+              marginBottom: '2rem',
+              textAlign: 'center',
+              fontSize: '1.1rem',
+              lineHeight: '1.8'
+            }}>
+              {finalChoice === 'remember' ? (
+                <div>
+                  <p style={{ marginBottom: '1.5rem', color: '#ffff88' }}>
+                    💡 <strong>You chose to remember.</strong>
+                  </p>
+                  
+                  <p style={{ marginBottom: '1.5rem' }}>
+                    The memories flood back—Dr. Eon Vale, the ethics breach, the deaths. 
+                    Your mistake. You feel the weight of every moment you tried to erase.
+                  </p>
+                  
+                  <p style={{ marginBottom: '1.5rem' }}>
+                    The lab doors open with a mechanical hiss.
+                  </p>
+                  
+                  <p style={{ marginBottom: '1.5rem' }}>
+                    You walk out carrying everything—the guilt, the knowledge, the truth.
+                  </p>
+                  
+                  <p style={{ marginBottom: '1.5rem', fontStyle: 'italic', color: '#ffffcc' }}>
+                    But you are no longer whole.
+                  </p>
+                  
+                  <div style={{ 
+                    marginTop: '2rem', 
+                    padding: '1.5rem',
+                    border: '2px solid rgba(255, 255, 136, 0.5)',
+                    borderRadius: '10px',
+                    background: 'rgba(255, 255, 136, 0.1)',
+                    fontWeight: 'bold',
+                    color: '#ffff88'
+                  }}>
+                    🚪 You have escaped—but you carry the burden of truth.
+                  </div>
+                </div>
+              ) : (
+                <div>
+                  <p style={{ marginBottom: '1.5rem', color: '#ffff88' }}>
+                    🌊 <strong>You chose to forget.</strong>
+                  </p>
+                  
+                  <p style={{ marginBottom: '1.5rem' }}>
+                    The purge restarts. Neural pathways dissolve.
+                  </p>
+                  
+                  <p style={{ marginBottom: '1.5rem' }}>
+                    You collapse as the memories drain away.
+                  </p>
+                  
+                  <p style={{ marginBottom: '1.5rem' }}>
+                    Fade to white...
+                  </p>
+                  
+                  <p style={{ marginBottom: '1.5rem' }}>
+                    You awaken again, unsure of what was lost. The lab doors open.
+                  </p>
+                  
+                  <p style={{ marginBottom: '1.5rem', fontStyle: 'italic', color: '#ffffcc' }}>
+                    You step out into the unknown with no memory, but a strange calm.
+                  </p>
+                  
+                  <div style={{ 
+                    marginTop: '2rem', 
+                    padding: '1.5rem',
+                    border: '2px solid rgba(255, 255, 136, 0.5)',
+                    borderRadius: '10px',
+                    background: 'rgba(255, 255, 136, 0.1)',
+                    fontWeight: 'bold',
+                    color: '#ffff88'
+                  }}>
+                    🚪 You have escaped—but you are not the same person.
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div style={{ textAlign: 'center' }}>
+              <button 
+                className="btn" 
+                onClick={restartGame}
+                style={{ 
+                  background: 'linear-gradient(45deg, #ffff88, #cccc77)',
+                  color: '#000',
+                  fontSize: '1.2rem',
+                  padding: '1rem 2rem',
+                  fontWeight: 'bold'
+                }}
+              >
+                🔄 Start New Game
               </button>
             </div>
           </div>
