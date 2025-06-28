@@ -1,2 +1,0 @@
-<!-- Placeholder for favicon.ico - Replace with actual ICO file -->
-<!-- For now using the SVG favicon which modern browsers support -->
