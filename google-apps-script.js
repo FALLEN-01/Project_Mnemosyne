@@ -113,18 +113,23 @@ function createCORSResponse(data) {
 function readProgress(teamName) {
   const sheet = getSheet();
   const data = sheet.getDataRange().getValues();
-  
-  // Find team row (assuming header in row 1)
+  // Columns: 0-Team Name, 1-Entry Time, 2-R1, 3-R2, 4-R3, 5-R4, 6-Exit Hall, 7-Completion, 8-Passwords
   for (let i = 1; i < data.length; i++) {
     if (data[i][0] === teamName) {
-      const progress = JSON.parse(data[i][5] || '{}'); // Column F contains full state
-      return createCORSResponse({ 
-        found: true, 
-        progress: progress 
-      });
+      const progress = {
+        teamName: data[i][0],
+        entryTime: data[i][1],
+        room1Entry: data[i][2],
+        room2Entry: data[i][3],
+        room3Entry: data[i][4],
+        room4Entry: data[i][5],
+        exitHallEntry: data[i][6],
+        completionTime: data[i][7],
+        passwords: (data[i][8] || '').split(',').map(s => s.trim()).filter(Boolean)
+      };
+      return createCORSResponse({ found: true, progress });
     }
   }
-  
   return createCORSResponse({ found: false });
 }
 
@@ -133,67 +138,66 @@ function updateProgress(data) {
   const teamName = data.team;
   const progress = data.progress;
   const timestamp = data.timestamp;
-  
   const dataRange = sheet.getDataRange().getValues();
   let rowIndex = -1;
-  
   // Check if headers exist, if not create them
   if (dataRange.length === 0 || dataRange[0][0] !== 'Team Name') {
-    sheet.getRange(1, 1, 1, 6).setValues([
-      ['Team Name', 'Current Room', 'Rooms Completed', 'Start Time', 'Last Updated', 'Full State']
+    sheet.getRange(1, 1, 1, 9).setValues([
+      ['Team Name', 'Entry Time', 'Room 1 Entry Time', 'Room 2 Entry Time', 'Room 3 Entry Time', 'Room 4 Entry Time', 'Exit Hall Entry Time', 'Completion Time', 'Passwords']
     ]);
   }
-  
   // Find existing team row
   for (let i = 1; i < dataRange.length; i++) {
     if (dataRange[i][0] === teamName) {
-      rowIndex = i + 1; // Sheet rows are 1-indexed
+      rowIndex = i + 1;
       break;
     }
   }
-  
-  // If team not found, add new row
   if (rowIndex === -1) {
     rowIndex = sheet.getLastRow() + 1;
   }
-  
-  // Update the row
+  // Prepare passwords as comma-separated string
+  let passwords = '';
+  if (progress.passwords && Array.isArray(progress.passwords)) {
+    passwords = progress.passwords.join(',');
+  } else if (typeof progress.passwords === 'string') {
+    passwords = progress.passwords;
+  }
+  // Prepare row data
   const rowData = [
     teamName,
-    progress.currentRoom || 0,
-    (progress.roomsCompleted || []).join(','),
-    progress.startTime || '',
-    timestamp,
-    JSON.stringify(progress)
+    progress.entryTime || '',
+    progress.room1Entry || '',
+    progress.room2Entry || '',
+    progress.room3Entry || '',
+    progress.room4Entry || '',
+    progress.exitHallEntry || '',
+    progress.completionTime || '',
+    passwords
   ];
-  
-  sheet.getRange(rowIndex, 1, 1, 6).setValues([rowData]);
-  
-  return createCORSResponse({ 
-    success: true, 
-    message: 'Progress updated successfully' 
-  });
+  sheet.getRange(rowIndex, 1, 1, 9).setValues([rowData]);
+  return createCORSResponse({ success: true, message: 'Progress updated successfully' });
 }
 
 // Optional: Function to get all team progress (for admin dashboard)
 function getAllProgress() {
   const sheet = getSheet();
   const data = sheet.getDataRange().getValues();
-  
   if (data.length <= 1) {
     return createCORSResponse({ teams: [] });
   }
-  
   const teams = data.slice(1).map(row => ({
     teamName: row[0],
-    currentRoom: row[1],
-    roomsCompleted: row[2].split(',').filter(r => r),
-    startTime: row[3],
-    lastUpdated: row[4],
-    fullState: JSON.parse(row[5] || '{}')
+    entryTime: row[1],
+    room1Entry: row[2],
+    room2Entry: row[3],
+    room3Entry: row[4],
+    room4Entry: row[5],
+    exitHallEntry: row[6],
+    completionTime: row[7],
+    passwords: (row[8] || '').split(',').map(s => s.trim()).filter(Boolean)
   }));
-  
-  return createCORSResponse({ teams: teams });
+  return createCORSResponse({ teams });
 }
 
 // Test function to verify sheet access (call this from the Apps Script editor)
