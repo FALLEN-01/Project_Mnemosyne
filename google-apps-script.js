@@ -8,6 +8,9 @@
  * 4. REPLACE THE SPREADSHEET_ID below with your actual Google Sheet ID
  * 5. Deploy as web app with execute permissions for "Anyone"
  * 6. Copy the web app URL to your .env file
+ * 
+ * column name as follows 
+ * Team Name, Entry Time, Room 1 Entry Time, Room 2 Entry Time, Room 3 Entry Time, Room 4 Entry Time, Exit Hall Entry Time, Passwords 
  */
 
 // REPLACE THIS WITH YOUR ACTUAL GOOGLE SHEET ID
