@@ -12,7 +12,7 @@
 
 // REPLACE THIS WITH YOUR ACTUAL GOOGLE SHEET ID
 // You can find this in the URL of your Google Sheet: https://docs.google.com/spreadsheets/d/SHEET_ID_HERE/edit
-const SPREADSHEET_ID = '10FaBmiVZJpnhaQKe-VjMVQxN2-G433ohz_9aU1Mpd6E'; // Updated with your actual ID
+const SPREADSHEET_ID = '1rXXQJR1bhIASh5pQ4nnCCY52GPzgCzunOHW_Vx-JQA0'; // Updated with your actual ID
 const SHEET_NAME = 'Sheet1'; // Change if your sheet has a different name
 
 function getSheet() {
