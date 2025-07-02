@@ -54,13 +54,9 @@ function App() {
     isLoading: false // For Google Sheets operations
   })
 
-  // Google Sheets integration - temporarily disabled for debugging
-  const GOOGLE_SHEETS_URL = '' // process.env.REACT_APP_GOOGLE_SHEETS_URL || ''
-  
-  // Load progress from localStorage only (Google Sheets temporarily disabled)
+  // Load progress from localStorage and sync with Google Sheets
   useEffect(() => {
-    // Skip loading for now to debug
-    console.log('App loaded, gameState:', gameState)
+    loadProgress()
   }, [])
 
   const loadProgress = async () => {
@@ -71,8 +67,8 @@ function App() {
         const parsed = JSON.parse(savedState)
         setGameState(prev => ({ ...prev, ...parsed }))
         
-        // Only sync with Google Sheets if URL is configured and we have a team name
-        if (parsed.teamName && GOOGLE_SHEETS_URL) {
+        // Sync with Google Sheets if we have a team name
+        if (parsed.teamName) {
           syncWithGoogleSheets(parsed.teamName)
         }
       }
@@ -82,32 +78,27 @@ function App() {
   }
 
   const syncWithGoogleSheets = async (teamName) => {
-    if (!GOOGLE_SHEETS_URL || !teamName) {
-      console.log('Google Sheets URL not configured or no team name')
+    if (!teamName || !window.loadProgressFromSheets) {
+      console.log('Google Sheets not available or no team name')
       return
     }
 
     try {
       setGameState(prev => ({ ...prev, isLoading: true }))
       
-      // Read current progress from Google Sheets
-      const response = await fetch(`${GOOGLE_SHEETS_URL}?action=read&team=${encodeURIComponent(teamName)}`)
+      // Read current progress from Google Sheets using standalone script
+      const progressData = await window.loadProgressFromSheets(teamName)
       
-      if (response.ok) {
-        const data = await response.json()
-        if (data.found) {
-          // Restore progress from Google Sheets
-          setGameState(prev => ({
-            ...prev,
-            ...data.progress,
-            isLoading: false
-          }))
-          
-          // Save to localStorage as backup
-          localStorage.setItem('mnemosyne-progress', JSON.stringify(data.progress))
-        } else {
-          setGameState(prev => ({ ...prev, isLoading: false }))
-        }
+      if (progressData) {
+        // Restore progress from Google Sheets
+        setGameState(prev => ({
+          ...prev,
+          ...progressData,
+          isLoading: false
+        }))
+        
+        // Save to localStorage as backup
+        localStorage.setItem('mnemosyne-progress', JSON.stringify(progressData))
       } else {
         setGameState(prev => ({ ...prev, isLoading: false }))
       }
@@ -126,20 +117,27 @@ function App() {
     // Save to localStorage immediately
     localStorage.setItem('mnemosyne-progress', JSON.stringify(newState))
     
-    // Update Google Sheets if we have a team name and URL is configured
-    if (newState.teamName && GOOGLE_SHEETS_URL) {
+    // Update Google Sheets using standalone script
+    if (newState.teamName && window.saveProgressToSheets) {
       try {
-        await fetch(GOOGLE_SHEETS_URL, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            action: 'update',
-            team: newState.teamName,
-            progress: newState,
-            timestamp: new Date().toISOString()
-          })
+        // Collect all passwords entered by the team
+        const passwords = [
+          newState.room1Code,
+          newState.room2Phrase, 
+          newState.room3Word,
+          newState.room4Answer
+        ].filter(p => p && p.trim())
+
+        await window.saveProgressToSheets({
+          teamName: newState.teamName,
+          entryTime: newState.startTime,
+          room1Entry: newState.roomsCompleted.includes(0) ? new Date().toISOString() : '',
+          room2Entry: newState.roomsCompleted.includes(1) ? new Date().toISOString() : '',
+          room3Entry: newState.roomsCompleted.includes(2) ? new Date().toISOString() : '',
+          room4Entry: newState.roomsCompleted.includes(3) ? new Date().toISOString() : '',
+          exitHallEntry: newState.roomsCompleted.includes(4) ? new Date().toISOString() : '',
+          completionTime: newState.endTime || '',
+          passwords: passwords
         })
       } catch (error) {
         console.error('Error updating Google Sheets:', error)

@@ -1,23 +1,22 @@
 // Standalone Google Sheets Integration for Project Mnemosyne
-// Usage: Include this file via <script> or call functions from browser console
+// Usage: Include this file via <script> in index.html or call functions from browser console
 // No import into main React app required
 
 // Set your Google Apps Script Web App URL here:
-const GOOGLE_SHEETS_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
+const GOOGLE_SHEETS_URL = ''; // REPLACE WITH YOUR NEW WEB APP URL FROM APPS SCRIPT DEPLOYMENT
 
 /**
  * Save team progress to Google Sheets
- * @param {string} teamName
- * @param {object} progressObj - { currentRoom, roomsCompleted, startTime, endTime, room1Code, room2Phrase, room3Word, room4Answer }
+ * @param {object} progressObj - { teamName, entryTime, room1Entry, room2Entry, room3Entry, room4Entry, exitHallEntry, completionTime, passwords }
  * @returns {Promise<object>} - Result from Google Apps Script
  */
-async function saveProgressToSheets(teamName, progressObj) {
-  if (!GOOGLE_SHEETS_URL || !teamName) {
+async function saveProgressToSheets(progressObj) {
+  if (!GOOGLE_SHEETS_URL || !progressObj.teamName) {
     throw new Error('Google Sheets URL or team name missing');
   }
   const payload = {
     action: 'update',
-    team: teamName,
+    team: progressObj.teamName,
     progress: progressObj,
     timestamp: new Date().toISOString()
   };
@@ -44,7 +43,20 @@ async function loadProgressFromSheets(teamName) {
   return null;
 }
 
+// Expose globally for use from anywhere
+window.saveProgressToSheets = saveProgressToSheets;
+window.loadProgressFromSheets = loadProgressFromSheets;
+
 // Example usage (uncomment to test in browser console):
-// saveProgressToSheets('Test Team', { currentRoom: 1, roomsCompleted: [0], startTime: new Date().toISOString(), room1Code: 'TEST' })
-//   .then(console.log).catch(console.error);
+// saveProgressToSheets({
+//   teamName: 'Test Team',
+//   entryTime: new Date().toISOString(),
+//   room1Entry: '',
+//   room2Entry: '',
+//   room3Entry: '',
+//   room4Entry: '',
+//   exitHallEntry: '',
+//   completionTime: '',
+//   passwords: ['alpha', 'beta', 'gamma']
+// }).then(console.log).catch(console.error);
 // loadProgressFromSheets('Test Team').then(console.log).catch(console.error);
