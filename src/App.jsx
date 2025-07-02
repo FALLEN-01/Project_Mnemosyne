@@ -51,7 +51,13 @@ function App() {
     endTime: null,
     roomsCompleted: [],
     currentRoom: 0, // Track current room for restoration
-    isLoading: false // For Google Sheets operations
+    isLoading: false, // For Google Sheets operations
+    // Room completion timestamps
+    room1EntryTime: null,
+    room2EntryTime: null,
+    room3EntryTime: null,
+    room4EntryTime: null,
+    exitHallEntryTime: null
   })
 
   // Load progress from localStorage and sync with Google Sheets
@@ -126,11 +132,11 @@ function App() {
         await window.saveProgressToSheets({
           teamName: newState.teamName,
           entryTime: newState.startTime,
-          room1Entry: newState.roomsCompleted.includes(1) ? new Date().toISOString() : '',
-          room2Entry: newState.roomsCompleted.includes(2) ? new Date().toISOString() : '',
-          room3Entry: newState.roomsCompleted.includes(3) ? new Date().toISOString() : '',
-          room4Entry: newState.roomsCompleted.includes(4) ? new Date().toISOString() : '',
-          exitHallEntry: newState.roomsCompleted.includes(5) ? new Date().toISOString() : '',
+          room1Entry: newState.room1EntryTime || (newState.roomsCompleted.includes(1) ? new Date().toISOString() : ''),
+          room2Entry: newState.room2EntryTime || (newState.roomsCompleted.includes(2) ? new Date().toISOString() : ''),
+          room3Entry: newState.room3EntryTime || (newState.roomsCompleted.includes(3) ? new Date().toISOString() : ''),
+          room4Entry: newState.room4EntryTime || (newState.roomsCompleted.includes(4) ? new Date().toISOString() : ''),
+          exitHallEntry: newState.exitHallEntryTime || (newState.roomsCompleted.includes(5) ? new Date().toISOString() : ''),
           completionTime: newState.endTime || '',
           passwords: passwords
         })
@@ -146,10 +152,31 @@ function App() {
   }
 
   const completeRoom = (roomNumber) => {
+    const now = new Date().toISOString()
     const newState = {
       roomsCompleted: [...gameState.roomsCompleted, roomNumber],
       currentRoom: roomNumber
     }
+    
+    // Set the appropriate room entry timestamp
+    switch(roomNumber) {
+      case 1:
+        newState.room1EntryTime = now
+        break
+      case 2:
+        newState.room2EntryTime = now
+        break
+      case 3:
+        newState.room3EntryTime = now
+        break
+      case 4:
+        newState.room4EntryTime = now
+        break
+      case 5:
+        newState.exitHallEntryTime = now
+        break
+    }
+    
     updateProgress(newState)
   }
 
