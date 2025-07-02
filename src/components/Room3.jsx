@@ -64,7 +64,7 @@ const Room3 = () => {
 
   const handleTerminalComplete = () => {
     setShowTerminal(false)
-    completeRoom('room3')
+    completeRoom(3)
     updateGameState({ room3_memorySequence: videoSegments })
     navigate('/room4')
   }

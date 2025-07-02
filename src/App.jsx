@@ -120,13 +120,8 @@ function App() {
     // Update Google Sheets using standalone script
     if (newState.teamName && window.saveProgressToSheets) {
       try {
-        // Collect all passwords entered by the team
-        const passwords = [
-          newState.room1Code,
-          newState.room2Phrase, 
-          newState.room3Word,
-          newState.room4Answer
-        ].filter(p => p && p.trim())
+        // Collect all passwords entered by the team (ignoring for now)
+        const passwords = []
 
         await window.saveProgressToSheets({
           teamName: newState.teamName,

@@ -7,7 +7,7 @@ import { useGameState } from '../App'
 
 const ExitHall = () => {
   const navigate = useNavigate()
-  const { gameState, updateGameState } = useGameState()
+  const { gameState, updateGameState, completeRoom } = useGameState()
   const [showDecision, setShowDecision] = useState(false)
   const [voiceFragments, setVoiceFragments] = useState(0)
   const [showRiddle, setShowRiddle] = useState(false)
@@ -63,6 +63,9 @@ const ExitHall = () => {
       finalChoice: choice,
       endTime: new Date()
     })
+    
+    // Mark exit hall as completed
+    completeRoom(5)
     
     // Show the ending instead of navigating
     setShowEnding(true)
