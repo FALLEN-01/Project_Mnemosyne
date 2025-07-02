@@ -131,11 +131,11 @@ function App() {
         await window.saveProgressToSheets({
           teamName: newState.teamName,
           entryTime: newState.startTime,
-          room1Entry: newState.roomsCompleted.includes(0) ? new Date().toISOString() : '',
-          room2Entry: newState.roomsCompleted.includes(1) ? new Date().toISOString() : '',
-          room3Entry: newState.roomsCompleted.includes(2) ? new Date().toISOString() : '',
-          room4Entry: newState.roomsCompleted.includes(3) ? new Date().toISOString() : '',
-          exitHallEntry: newState.roomsCompleted.includes(4) ? new Date().toISOString() : '',
+          room1Entry: newState.roomsCompleted.includes(1) ? new Date().toISOString() : '',
+          room2Entry: newState.roomsCompleted.includes(2) ? new Date().toISOString() : '',
+          room3Entry: newState.roomsCompleted.includes(3) ? new Date().toISOString() : '',
+          room4Entry: newState.roomsCompleted.includes(4) ? new Date().toISOString() : '',
+          exitHallEntry: newState.roomsCompleted.includes(5) ? new Date().toISOString() : '',
           completionTime: newState.endTime || '',
           passwords: passwords
         })
@@ -161,11 +161,11 @@ function App() {
   // Function to get the appropriate route based on progress
   const getProgressRoute = () => {
     if (!gameState.teamName) return '/'
-    if (gameState.roomsCompleted.includes(4)) return '/exit-hall'
-    if (gameState.roomsCompleted.includes(3)) return '/room4'
-    if (gameState.roomsCompleted.includes(2)) return '/room3'
-    if (gameState.roomsCompleted.includes(1)) return '/room2'
-    if (gameState.roomsCompleted.includes(0)) return '/room1'
+    if (gameState.roomsCompleted.includes(5)) return '/exit-hall'
+    if (gameState.roomsCompleted.includes(4)) return '/room4'
+    if (gameState.roomsCompleted.includes(3)) return '/room3'
+    if (gameState.roomsCompleted.includes(2)) return '/room2'
+    if (gameState.roomsCompleted.includes(1)) return '/room1'
     return '/intro'
   }
 
