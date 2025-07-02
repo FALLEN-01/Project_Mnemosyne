@@ -14,6 +14,46 @@ Project Mnemosyne is an immersive online escape room where players recover lost 
 - **🏆 Competition-Ready**: No hints or clues - pure puzzle challenge
 - **⚡ Fast Performance**: Built with Vite for instant loading
 - **🔒 Team-Based Flow**: Team registration → sequential rooms → finale
+- **📊 Google Sheets Integration**: Automatic progress tracking and data collection
+
+## 📊 Google Sheets Integration
+
+**Automatic team progress tracking with comprehensive data collection.**
+
+### Features:
+
+- **🔄 Real-time Sync**: Progress automatically saved to Google Sheets
+- **⏱️ Timestamp Tracking**: Records entry time for each room and completion
+- **📈 Competition Analytics**: Perfect for event organizers and competitions
+- **🛡️ Data Reliability**: No overwriting or data loss - timestamps preserved permanently
+- **🔌 Standalone Integration**: Works independently of React components
+- **🔄 Offline Resilience**: Game continues even if Google Sheets is temporarily unavailable
+
+### Data Structure:
+
+| Column | Data | Description |
+|--------|------|-------------|
+| A | Team Name | Unique team identifier |
+| B | Entry Time | When team started the game |
+| C | Room 1 Entry | Timestamp when team entered Room 1 |
+| D | Room 2 Entry | Timestamp when team entered Room 2 |
+| E | Room 3 Entry | Timestamp when team entered Room 3 |
+| F | Room 4 Entry | Timestamp when team entered Room 4 |
+| G | Exit Hall Entry | Timestamp when team reached finale |
+| H | Completion Time | When team completed the entire game |
+
+### Setup Instructions:
+
+1. **Create Google Apps Script** using the provided `google-apps-script.js`
+2. **Deploy as Web App** with "Anyone" access for CORS
+3. **Update URL** in `public/googleSheetsStandalone.js`
+4. **Test Integration** using the included test page
+
+### Files:
+
+- `google-apps-script.js` - Backend server script
+- `public/googleSheetsStandalone.js` - Frontend integration
+- `test-integration.html` - Integration testing page
 
 ## 🏠 Room Structure
 
@@ -62,6 +102,8 @@ The escape room uses placeholder images that can be easily replaced with manga/a
 - **React Router** - Navigation
 - **CSS3** - Responsive styling with animations
 - **Context API** - Global state management
+- **Google Apps Script** - Backend data collection
+- **Google Sheets API** - Progress tracking and analytics
 
 ## 📁 Project Structure
 
@@ -76,6 +118,11 @@ src/
 │   └── ExitHall.jsx      # Victory screen
 ├── App.jsx               # Main app + routing
 └── App.css               # Global styles
+public/
+├── googleSheetsStandalone.js  # Google Sheets integration
+└── index.html            # Main HTML with integrations
+google-apps-script.js     # Backend server script
+test-integration.html     # Integration testing page
 ```
 
 ## 🎨 Customization
@@ -96,6 +143,22 @@ Open source - customize and deploy for your events!
 - Educational events
 - Gaming tournaments
 - Mobile-focused events
+- **Competition Analytics**: Track team performance and completion times
+- **Event Management**: Real-time progress monitoring via Google Sheets
+
+## 🔧 Additional Setup
+
+### Google Sheets Integration (Optional)
+1. Copy `google-apps-script.js` to Google Apps Script
+2. Deploy as web app with public access
+3. Update `GOOGLE_SHEETS_URL` in `public/googleSheetsStandalone.js`
+4. Test with `test-integration.html`
+
+### For Competition Use
+- Enable Google Sheets for automatic team tracking
+- Monitor progress in real-time during events
+- Export completion data for analysis
+- All timestamps preserved with no data loss
 
 ---
 
