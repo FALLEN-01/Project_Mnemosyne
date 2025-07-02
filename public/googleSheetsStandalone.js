@@ -26,6 +26,15 @@ async function saveProgressToSheets(progressObj) {
   console.log('exitHallEntry:', progressObj.exitHallEntry);
   console.log('completionTime:', progressObj.completionTime);
   console.log('passwords:', progressObj.passwords);
+  
+  // Additional debug to track when timestamps are being cleared
+  if (progressObj.room3Entry === '') {
+    console.log('🔴 WARNING: Room 3 entry timestamp is empty!');
+  }
+  if (progressObj.room4Entry === '') {
+    console.log('🔴 WARNING: Room 4 entry timestamp is empty!');
+  }
+  
   console.log('=== END DEBUG ===');
   
   // Use form data approach to avoid CORS preflight for POST

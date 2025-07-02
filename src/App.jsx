@@ -117,6 +117,14 @@ function App() {
   const updateProgress = async (updates) => {
     const newState = { ...gameState, ...updates }
     
+    // Debug: Check if we're losing room completion data
+    if (gameState.roomsCompleted.length > 0 && (!newState.roomsCompleted || newState.roomsCompleted.length < gameState.roomsCompleted.length)) {
+      console.error('🚨 CRITICAL: Room completion data being lost!');
+      console.error('Previous roomsCompleted:', gameState.roomsCompleted);
+      console.error('New roomsCompleted:', newState.roomsCompleted);
+      console.error('Stack trace:', new Error().stack);
+    }
+    
     // Update local state
     setGameState(newState)
     
@@ -129,7 +137,16 @@ function App() {
         // Collect all passwords entered by the team (ignoring for now)
         const passwords = []
 
-        await window.saveProgressToSheets({
+        // Debug room entry logic
+        console.log('🔍 ROOM ENTRY DEBUG:');
+        console.log('newState.roomsCompleted:', newState.roomsCompleted);
+        console.log('newState.room1EntryTime:', newState.room1EntryTime);
+        console.log('newState.room2EntryTime:', newState.room2EntryTime);
+        console.log('newState.room3EntryTime:', newState.room3EntryTime);
+        console.log('newState.room4EntryTime:', newState.room4EntryTime);
+        console.log('newState.exitHallEntryTime:', newState.exitHallEntryTime);
+
+        const progressData = {
           teamName: newState.teamName,
           entryTime: newState.startTime,
           room1Entry: newState.room1EntryTime || (newState.roomsCompleted.includes(1) ? new Date().toISOString() : ''),
@@ -139,7 +156,11 @@ function App() {
           exitHallEntry: newState.exitHallEntryTime || (newState.roomsCompleted.includes(5) ? new Date().toISOString() : ''),
           completionTime: newState.endTime || '',
           passwords: passwords
-        })
+        }
+
+        console.log('📤 SENDING TO SHEETS:', progressData);
+
+        await window.saveProgressToSheets(progressData)
       } catch (error) {
         console.error('Error updating Google Sheets:', error)
         // Don't block the game if Google Sheets fails
