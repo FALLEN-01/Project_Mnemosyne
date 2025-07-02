@@ -55,41 +55,55 @@ function doPost(e) {
   try {
     let data;
     
-    // Handle JSON POST (from fetch)
-    if (e.postData && e.postData.contents) {
-      try {
-        data = JSON.parse(e.postData.contents);
-      } catch (jsonError) {
-        // If JSON parsing fails, treat as form data
-        data = null;
-      }
-    }
+    console.log('doPost called with parameters:', JSON.stringify(e.parameter));
+    console.log('doPost called with postData:', e.postData ? JSON.stringify(e.postData) : 'null');
     
-    // Handle form submission (CORS bypass)
-    if (!data && e.parameter) {
+    // Handle form data (from FormData submission)
+    if (e.parameter && e.parameter.action) {
+      console.log('Processing as form data');
       data = {
         action: e.parameter.action,
         team: e.parameter.team,
-        progress: {
-          teamName: e.parameter.teamName,
-          currentRoom: parseInt(e.parameter.currentRoom) || 0,
-          roomsCompleted: JSON.parse(e.parameter.roomsCompleted || '[]'),
-          startTime: e.parameter.startTime,
-          endTime: e.parameter.endTime,
-          fullState: JSON.parse(e.parameter.fullState || '{}')
-        },
+        progress: e.parameter.progress ? JSON.parse(e.parameter.progress) : {},
         timestamp: e.parameter.timestamp
       };
+      console.log('Form data processed:', JSON.stringify(data));
+    }
+    // Handle JSON POST (from fetch with JSON)
+    else if (e.postData && e.postData.contents) {
+      console.log('Processing as JSON data');
+      try {
+        data = JSON.parse(e.postData.contents);
+        console.log('JSON data processed:', JSON.stringify(data));
+      } catch (jsonError) {
+        console.error('JSON parsing failed:', jsonError.toString());
+        return createCORSResponse({ error: 'Invalid JSON format' });
+      }
     }
     
-    if (data && data.action === 'update') {
+    // Additional validation
+    if (!data) {
+      console.error('No data received');
+      return createCORSResponse({ error: 'No data received', parameters: e.parameter, postData: e.postData });
+    }
+    
+    if (!data.action) {
+      console.error('No action specified');
+      return createCORSResponse({ error: 'No action specified', data: data });
+    }
+    
+    // Log the received data for debugging
+    console.log('Final processed data:', JSON.stringify(data));
+    
+    if (data.action === 'update') {
       return updateProgress(data);
     }
     
-    return createCORSResponse({ error: 'Invalid action or data format' });
+    return createCORSResponse({ error: 'Invalid action: ' + data.action, receivedData: data });
       
   } catch (error) {
-    return createCORSResponse({ error: error.toString() });
+    console.error('doPost error:', error.toString());
+    return createCORSResponse({ error: error.toString(), stack: error.stack });
   }
 }
 
@@ -108,7 +122,7 @@ function createCORSResponse(data) {
 function readProgress(teamName) {
   const sheet = getSheet();
   const data = sheet.getDataRange().getValues();
-  // Columns: 0-Team Name, 1-Entry Time, 2-R1, 3-R2, 4-R3, 5-R4, 6-Exit Hall, 7-Completion, 8-Passwords
+  // Columns: 0-teamName, 1-entryTime, 2-room1Entry, 3-room2Entry, 4-room3Entry, 5-room4Entry, 6-exitHallEntry, 7-completionTime, 8-passwords
   for (let i = 1; i < data.length; i++) {
     if (data[i][0] === teamName) {
       const progress = {
@@ -129,49 +143,91 @@ function readProgress(teamName) {
 }
 
 function updateProgress(data) {
-  const sheet = getSheet();
-  const teamName = data.team;
-  const progress = data.progress;
-  const timestamp = data.timestamp;
-  const dataRange = sheet.getDataRange().getValues();
-  let rowIndex = -1;
-  // Check if headers exist, if not create them
-  if (dataRange.length === 0 || dataRange[0][0] !== 'Team Name') {
-    sheet.getRange(1, 1, 1, 9).setValues([
-      ['Team Name', 'Entry Time', 'Room 1 Entry Time', 'Room 2 Entry Time', 'Room 3 Entry Time', 'Room 4 Entry Time', 'Exit Hall Entry Time', 'Completion Time', 'Passwords']
-    ]);
-  }
-  // Find existing team row
-  for (let i = 1; i < dataRange.length; i++) {
-    if (dataRange[i][0] === teamName) {
-      rowIndex = i + 1;
-      break;
+  try {
+    const sheet = getSheet();
+    
+    // Add detailed logging for debugging
+    console.log('updateProgress received data type:', typeof data);
+    console.log('updateProgress received data keys:', Object.keys(data || {}));
+    console.log('updateProgress full data:', JSON.stringify(data));
+    
+    // Extract team name - handle multiple possible structures
+    let teamName = null;
+    let progress = {};
+    
+    if (data.team) {
+      teamName = data.team;
+      progress = data.progress || {};
+    } else if (data.progress && data.progress.teamName) {
+      teamName = data.progress.teamName;
+      progress = data.progress;
+    } else if (data.teamName) {
+      teamName = data.teamName;
+      progress = data;
     }
+    
+    const timestamp = data.timestamp;
+    
+    console.log('Extracted values:', { teamName, progress, timestamp });
+    
+    if (!teamName) {
+      console.error('Team name extraction failed. Available data:', JSON.stringify(data));
+      throw new Error('Team name is required. Available keys: ' + Object.keys(data || {}).join(', '));
+    }
+    
+    const dataRange = sheet.getDataRange().getValues();
+    let rowIndex = -1;
+    
+    // Check if headers exist, if not create them
+    if (dataRange.length === 0 || dataRange[0][0] !== 'teamName') {
+      sheet.getRange(1, 1, 1, 9).setValues([
+        ['teamName', 'entryTime', 'room1Entry', 'room2Entry', 'room3Entry', 'room4Entry', 'exitHallEntry', 'completionTime', 'passwords']
+      ]);
+    }
+    
+    // Find existing team row
+    for (let i = 1; i < dataRange.length; i++) {
+      if (dataRange[i][0] === teamName) {
+        rowIndex = i + 1;
+        break;
+      }
+    }
+    
+    if (rowIndex === -1) {
+      rowIndex = sheet.getLastRow() + 1;
+    }
+    
+    // Prepare passwords as comma-separated string
+    let passwords = '';
+    if (progress.passwords && Array.isArray(progress.passwords)) {
+      passwords = progress.passwords.join(',');
+    } else if (typeof progress.passwords === 'string') {
+      passwords = progress.passwords;
+    }
+    
+    // Prepare row data
+    const rowData = [
+      teamName,
+      progress.entryTime || '',
+      progress.room1Entry || '',
+      progress.room2Entry || '',
+      progress.room3Entry || '',
+      progress.room4Entry || '',
+      progress.exitHallEntry || '',
+      progress.completionTime || '',
+      passwords
+    ];
+    
+    sheet.getRange(rowIndex, 1, 1, 9).setValues([rowData]);
+    console.log('Successfully updated row', rowIndex, 'with data:', rowData);
+    
+    return createCORSResponse({ success: true, message: 'Progress updated successfully', rowIndex });
+    
+  } catch (error) {
+    console.error('updateProgress error:', error.toString());
+    console.error('updateProgress error stack:', error.stack);
+    return createCORSResponse({ success: false, error: error.toString() });
   }
-  if (rowIndex === -1) {
-    rowIndex = sheet.getLastRow() + 1;
-  }
-  // Prepare passwords as comma-separated string
-  let passwords = '';
-  if (progress.passwords && Array.isArray(progress.passwords)) {
-    passwords = progress.passwords.join(',');
-  } else if (typeof progress.passwords === 'string') {
-    passwords = progress.passwords;
-  }
-  // Prepare row data
-  const rowData = [
-    teamName,
-    progress.entryTime || '',
-    progress.room1Entry || '',
-    progress.room2Entry || '',
-    progress.room3Entry || '',
-    progress.room4Entry || '',
-    progress.exitHallEntry || '',
-    progress.completionTime || '',
-    passwords
-  ];
-  sheet.getRange(rowIndex, 1, 1, 9).setValues([rowData]);
-  return createCORSResponse({ success: true, message: 'Progress updated successfully' });
 }
 
 // Optional: Function to get all team progress (for admin dashboard)
@@ -209,7 +265,12 @@ function testSheetAccess() {
   }
 }
 
-// Test endpoint for basic connectivity
+// Test endpoint for basic connectivity and CORS preflight
 function doOptions(e) {
-  return createCORSResponse({ message: 'CORS preflight successful' });
+  // Handle CORS preflight requests
+  return createCORSResponse({ 
+    message: 'CORS preflight successful',
+    allowedMethods: ['GET', 'POST', 'OPTIONS'],
+    timestamp: new Date().toISOString()
+  });
 }

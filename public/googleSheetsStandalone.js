@@ -3,7 +3,7 @@
 // No import into main React app required
 
 // Set your Google Apps Script Web App URL here:
-const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbwm9Jxma30_GkhH8UIJMXXIRZD5kr0eFH0XhvskBBSw147FlqUz4MN2RZZ8rxs1lwQrfg/exec'; // REPLACE WITH YOUR NEW WEB APP URL FROM APPS SCRIPT DEPLOYMENT
+const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbzMaXVIngKK2F7MFpkdwNb5M2yxvX_sNoB1_oQZtwKL9pdYcYpE_TN-PHyPEaqCkGLoww/exec';
 
 /**
  * Save team progress to Google Sheets
@@ -14,18 +14,33 @@ async function saveProgressToSheets(progressObj) {
   if (!GOOGLE_SHEETS_URL || !progressObj.teamName) {
     throw new Error('Google Sheets URL or team name missing');
   }
-  const payload = {
-    action: 'update',
-    team: progressObj.teamName,
-    progress: progressObj,
-    timestamp: new Date().toISOString()
-  };
-  const response = await fetch(GOOGLE_SHEETS_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
-  });
-  return await response.json();
+  
+  console.log('Saving progress to sheets:', progressObj);
+  
+  // Use form data approach to avoid CORS preflight for POST
+  const formData = new FormData();
+  formData.append('action', 'update');
+  formData.append('team', progressObj.teamName);
+  formData.append('progress', JSON.stringify(progressObj));
+  formData.append('timestamp', new Date().toISOString());
+  
+  try {
+    const response = await fetch(GOOGLE_SHEETS_URL, {
+      method: 'POST',
+      body: formData
+    });
+    
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
+    
+    const result = await response.json();
+    console.log('Save result:', result);
+    return result;
+  } catch (error) {
+    console.error('Save to sheets failed:', error);
+    throw error;
+  }
 }
 
 /**
