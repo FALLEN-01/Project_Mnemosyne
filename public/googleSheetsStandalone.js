@@ -3,7 +3,7 @@
 // No import into main React app required
 
 // Set your Google Apps Script Web App URL here:
-const GOOGLE_SHEETS_URL = ''; // REPLACE WITH YOUR NEW WEB APP URL FROM APPS SCRIPT DEPLOYMENT
+const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbwm9Jxma30_GkhH8UIJMXXIRZD5kr0eFH0XhvskBBSw147FlqUz4MN2RZZ8rxs1lwQrfg/exec'; // REPLACE WITH YOUR NEW WEB APP URL FROM APPS SCRIPT DEPLOYMENT
 
 /**
  * Save team progress to Google Sheets

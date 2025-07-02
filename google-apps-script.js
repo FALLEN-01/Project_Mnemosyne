@@ -99,13 +99,8 @@ function createCORSResponse(data) {
     .createTextOutput(JSON.stringify(data))
     .setMimeType(ContentService.MimeType.JSON);
     
-  // Add CORS headers - this is the key fix!
-  response.setHeaders({
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type',
-    'Access-Control-Max-Age': '86400'
-  });
+  // Note: Google Apps Script automatically handles CORS for web apps deployed with "Anyone" access
+  // No manual CORS headers needed when properly deployed
   
   return response;
 }
