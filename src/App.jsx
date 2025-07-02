@@ -96,15 +96,38 @@ function App() {
       const progressData = await window.loadProgressFromSheets(teamName)
       
       if (progressData) {
-        // Restore progress from Google Sheets
-        setGameState(prev => ({
-          ...prev,
-          ...progressData,
-          isLoading: false
-        }))
+        // Restore progress from Google Sheets, but preserve existing timestamps
+        setGameState(prev => {
+          const restored = {
+            ...prev,
+            ...progressData,
+            isLoading: false
+          }
+          
+          // Preserve existing timestamps if they exist and aren't being overwritten
+          if (prev.room1EntryTime && !progressData.room1EntryTime) {
+            restored.room1EntryTime = prev.room1EntryTime
+          }
+          if (prev.room2EntryTime && !progressData.room2EntryTime) {
+            restored.room2EntryTime = prev.room2EntryTime
+          }
+          if (prev.room3EntryTime && !progressData.room3EntryTime) {
+            restored.room3EntryTime = prev.room3EntryTime
+          }
+          if (prev.room4EntryTime && !progressData.room4EntryTime) {
+            restored.room4EntryTime = prev.room4EntryTime
+          }
+          if (prev.exitHallEntryTime && !progressData.exitHallEntryTime) {
+            restored.exitHallEntryTime = prev.exitHallEntryTime
+          }
+          
+          return restored
+        })
         
-        // Save to localStorage as backup
-        localStorage.setItem('mnemosyne-progress', JSON.stringify(progressData))
+        // Save to localStorage as backup - but use the merged state
+        setTimeout(() => {
+          localStorage.setItem('mnemosyne-progress', JSON.stringify(progressData))
+        }, 100)
       } else {
         setGameState(prev => ({ ...prev, isLoading: false }))
       }
@@ -115,56 +138,86 @@ function App() {
   }
 
   const updateProgress = async (updates) => {
-    const newState = { ...gameState, ...updates }
+    let newState
     
-    // Debug: Check if we're losing room completion data
-    if (gameState.roomsCompleted.length > 0 && (!newState.roomsCompleted || newState.roomsCompleted.length < gameState.roomsCompleted.length)) {
-      console.error('🚨 CRITICAL: Room completion data being lost!');
-      console.error('Previous roomsCompleted:', gameState.roomsCompleted);
-      console.error('New roomsCompleted:', newState.roomsCompleted);
-      console.error('Stack trace:', new Error().stack);
-    }
+    // Use functional state update to ensure we get the latest state
+    setGameState(prevState => {
+      newState = { ...prevState, ...updates }
+      
+      // Debug: Check if we're losing room completion data
+      if (prevState.roomsCompleted.length > 0 && (!newState.roomsCompleted || newState.roomsCompleted.length < prevState.roomsCompleted.length)) {
+        console.error('🚨 CRITICAL: Room completion data being lost!');
+        console.error('Previous roomsCompleted:', prevState.roomsCompleted);
+        console.error('New roomsCompleted:', newState.roomsCompleted);
+        console.error('Stack trace:', new Error().stack);
+      }
+      
+      // Ensure timestamp fields are never overwritten with null/undefined
+      if (prevState.room1EntryTime && !newState.room1EntryTime) {
+        console.warn('⚠️ Preserving room1EntryTime:', prevState.room1EntryTime);
+        newState.room1EntryTime = prevState.room1EntryTime;
+      }
+      if (prevState.room2EntryTime && !newState.room2EntryTime) {
+        console.warn('⚠️ Preserving room2EntryTime:', prevState.room2EntryTime);
+        newState.room2EntryTime = prevState.room2EntryTime;
+      }
+      if (prevState.room3EntryTime && !newState.room3EntryTime) {
+        console.warn('⚠️ Preserving room3EntryTime:', prevState.room3EntryTime);
+        newState.room3EntryTime = prevState.room3EntryTime;
+      }
+      if (prevState.room4EntryTime && !newState.room4EntryTime) {
+        console.warn('⚠️ Preserving room4EntryTime:', prevState.room4EntryTime);
+        newState.room4EntryTime = prevState.room4EntryTime;
+      }
+      if (prevState.exitHallEntryTime && !newState.exitHallEntryTime) {
+        console.warn('⚠️ Preserving exitHallEntryTime:', prevState.exitHallEntryTime);
+        newState.exitHallEntryTime = prevState.exitHallEntryTime;
+      }
+      
+      return newState
+    })
     
-    // Update local state
-    setGameState(newState)
-    
-    // Save to localStorage immediately
-    localStorage.setItem('mnemosyne-progress', JSON.stringify(newState))
+    // Save to localStorage immediately after state is set
+    setTimeout(() => {
+      localStorage.setItem('mnemosyne-progress', JSON.stringify(newState))
+    }, 0)
     
     // Update Google Sheets using standalone script
-    if (newState.teamName && window.saveProgressToSheets) {
-      try {
-        // Collect all passwords entered by the team (ignoring for now)
-        const passwords = []
+    if (newState?.teamName && window.saveProgressToSheets) {
+      setTimeout(async () => {
+        try {
+          // Collect all passwords entered by the team (ignoring for now)
+          const passwords = []
 
-        // Debug room entry logic
-        console.log('🔍 ROOM ENTRY DEBUG:');
-        console.log('newState.roomsCompleted:', newState.roomsCompleted);
-        console.log('newState.room1EntryTime:', newState.room1EntryTime);
-        console.log('newState.room2EntryTime:', newState.room2EntryTime);
-        console.log('newState.room3EntryTime:', newState.room3EntryTime);
-        console.log('newState.room4EntryTime:', newState.room4EntryTime);
-        console.log('newState.exitHallEntryTime:', newState.exitHallEntryTime);
+          // Debug room entry logic
+          console.log('🔍 ROOM ENTRY DEBUG:');
+          console.log('newState.roomsCompleted:', newState.roomsCompleted);
+          console.log('newState.room1EntryTime:', newState.room1EntryTime);
+          console.log('newState.room2EntryTime:', newState.room2EntryTime);
+          console.log('newState.room3EntryTime:', newState.room3EntryTime);
+          console.log('newState.room4EntryTime:', newState.room4EntryTime);
+          console.log('newState.exitHallEntryTime:', newState.exitHallEntryTime);
 
-        const progressData = {
-          teamName: newState.teamName,
-          entryTime: newState.startTime,
-          room1Entry: newState.room1EntryTime || (newState.roomsCompleted.includes(1) ? new Date().toISOString() : ''),
-          room2Entry: newState.room2EntryTime || (newState.roomsCompleted.includes(2) ? new Date().toISOString() : ''),
-          room3Entry: newState.room3EntryTime || (newState.roomsCompleted.includes(3) ? new Date().toISOString() : ''),
-          room4Entry: newState.room4EntryTime || (newState.roomsCompleted.includes(4) ? new Date().toISOString() : ''),
-          exitHallEntry: newState.exitHallEntryTime || (newState.roomsCompleted.includes(5) ? new Date().toISOString() : ''),
-          completionTime: newState.endTime || '',
-          passwords: passwords
+          const progressData = {
+            teamName: newState.teamName,
+            entryTime: newState.startTime,
+            room1Entry: newState.room1EntryTime || (newState.roomsCompleted.includes(1) ? new Date().toISOString() : ''),
+            room2Entry: newState.room2EntryTime || (newState.roomsCompleted.includes(2) ? new Date().toISOString() : ''),
+            room3Entry: newState.room3EntryTime || (newState.roomsCompleted.includes(3) ? new Date().toISOString() : ''),
+            room4Entry: newState.room4EntryTime || (newState.roomsCompleted.includes(4) ? new Date().toISOString() : ''),
+            exitHallEntry: newState.exitHallEntryTime || (newState.roomsCompleted.includes(5) ? new Date().toISOString() : ''),
+            completionTime: newState.endTime || '',
+            passwords: passwords
+          }
+
+          console.log('📤 SENDING TO SHEETS:', progressData);
+
+          await window.saveProgressToSheets(progressData)
+        } catch (error) {
+          console.error('Error updating Google Sheets:', error)
+          // Don't block the game if Google Sheets fails
         }
-
-        console.log('📤 SENDING TO SHEETS:', progressData);
-
-        await window.saveProgressToSheets(progressData)
-      } catch (error) {
-        console.error('Error updating Google Sheets:', error)
-        // Don't block the game if Google Sheets fails
-      }
+      }, 0)
     }
   }
 
@@ -174,31 +227,68 @@ function App() {
 
   const completeRoom = (roomNumber) => {
     const now = new Date().toISOString()
-    const newState = {
-      roomsCompleted: [...gameState.roomsCompleted, roomNumber],
-      currentRoom: roomNumber
-    }
     
-    // Set the appropriate room entry timestamp
-    switch(roomNumber) {
-      case 1:
-        newState.room1EntryTime = now
-        break
-      case 2:
-        newState.room2EntryTime = now
-        break
-      case 3:
-        newState.room3EntryTime = now
-        break
-      case 4:
-        newState.room4EntryTime = now
-        break
-      case 5:
-        newState.exitHallEntryTime = now
-        break
-    }
-    
-    updateProgress(newState)
+    // Use functional update to get current state and create updates
+    setGameState(prevState => {
+      const updates = {
+        ...prevState,
+        roomsCompleted: [...prevState.roomsCompleted, roomNumber],
+        currentRoom: roomNumber
+      }
+      
+      // Set the appropriate room entry timestamp only if not already set
+      switch(roomNumber) {
+        case 1:
+          if (!prevState.room1EntryTime) {
+            updates.room1EntryTime = now
+          }
+          break
+        case 2:
+          if (!prevState.room2EntryTime) {
+            updates.room2EntryTime = now
+          }
+          break
+        case 3:
+          if (!prevState.room3EntryTime) {
+            updates.room3EntryTime = now
+          }
+          break
+        case 4:
+          if (!prevState.room4EntryTime) {
+            updates.room4EntryTime = now
+          }
+          break
+        case 5:
+          if (!prevState.exitHallEntryTime) {
+            updates.exitHallEntryTime = now
+          }
+          break
+      }
+      
+      // Save to localStorage and Google Sheets
+      setTimeout(() => {
+        localStorage.setItem('mnemosyne-progress', JSON.stringify(updates))
+        
+        if (updates.teamName && window.saveProgressToSheets) {
+          const progressData = {
+            teamName: updates.teamName,
+            entryTime: updates.startTime,
+            room1Entry: updates.room1EntryTime || '',
+            room2Entry: updates.room2EntryTime || '',
+            room3Entry: updates.room3EntryTime || '',
+            room4Entry: updates.room4EntryTime || '',
+            exitHallEntry: updates.exitHallEntryTime || '',
+            completionTime: updates.endTime || '',
+            passwords: []
+          }
+          
+          console.log(`📤 ROOM ${roomNumber} COMPLETED - SENDING TO SHEETS:`, progressData);
+          window.saveProgressToSheets(progressData).catch(console.error)
+        }
+      }, 0)
+      
+      return updates
+    })
   }
 
   // Function to get the appropriate route based on progress

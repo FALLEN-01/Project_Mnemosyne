@@ -81,7 +81,13 @@ const ExitHall = () => {
       startTime: null,
       endTime: null,
       roomsCompleted: [],
-      finalChoice: null
+      finalChoice: null,
+      // Reset timestamp fields
+      room1EntryTime: null,
+      room2EntryTime: null,
+      room3EntryTime: null,
+      room4EntryTime: null,
+      exitHallEntryTime: null
     })
     navigate('/')
   }
