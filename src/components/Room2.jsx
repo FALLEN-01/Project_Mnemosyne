@@ -108,7 +108,7 @@ const Room2 = () => {
       setTimeout(() => {
         setShowStatusModal(false)
         setError('')
-      }, 2000)
+      }, 13000)
     }
   }
 
