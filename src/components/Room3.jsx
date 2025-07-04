@@ -16,6 +16,7 @@ const Room3 = () => {
   const [showStatusModal, setShowStatusModal] = useState(false)
   const [statusModalType, setStatusModalType] = useState('') // 'success' or 'error'
   const [showTerminal, setShowTerminal] = useState(false)
+  const [showMemory, setShowMemory] = useState(false)
 
   // Six memory video segments (A-F) that need to be sequenced correctly
   const memorySegments = {
@@ -66,7 +67,11 @@ const Room3 = () => {
     setShowTerminal(false)
     completeRoom(3)
     updateGameState({ room3_memorySequence: videoSegments })
-    navigate('/room4')
+    setShowMemory(true)
+    
+    setTimeout(() => {
+      navigate('/room4')
+    }, 3000)
   }
 
   const handleSegmentSelect = (position, segment) => {
@@ -126,6 +131,30 @@ const Room3 = () => {
   const clearSequence = () => {
     setVideoSegments(['', '', '', '', '', ''])
     setError('')
+  }
+
+  if (showMemory) {
+    return (
+      <div className="room-container">
+        <div className="memory-fragment">
+          <h2 style={{ color: '#ff9900', marginBottom: '1rem' }}>MEMORY RECONSTRUCTION COMPLETE</h2>
+          <div style={{ 
+            background: 'rgba(255, 153, 0, 0.1)', 
+            padding: '1.5rem', 
+            borderRadius: '15px',
+            border: '2px solid rgba(255, 153, 0, 0.3)',
+            marginBottom: '1.5rem'
+          }}>
+            <h3 style={{ color: '#ffcc00', marginBottom: '1rem', fontSize: '1rem' }}>📼 ARCHIVE ANALYSIS COMPLETE</h3>
+            <p style={{ fontSize: '1rem', fontStyle: 'italic', marginBottom: '1.5rem', lineHeight: '1.6' }}>
+              Here is the message - The timeline clarifies. You remember now... fragments of Dr. Eon Vale surface in your consciousness.
+            </p>
+          </div>
+          <div className="loading" style={{ margin: '1.5rem auto' }}></div>
+          <p>Proceeding to Neural Sync Core...</p>
+        </div>
+      </div>
+    )
   }
 
   return (

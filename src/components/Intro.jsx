@@ -13,6 +13,7 @@ const Intro = () => {
   const [flickers, setFlickers] = useState({})
   const [showCorrupted, setShowCorrupted] = useState(true)
   const [showTerminal, setShowTerminal] = useState(false)
+  const [showMemory, setShowMemory] = useState(false)
 
   // Prologue puzzle: binary 11001010 = 202, + room number 17 = 20217
   const correctCode = '20217'
@@ -84,7 +85,35 @@ const Intro = () => {
       introCompleted: true
     })
     setShowTerminal(false)
-    navigate('/room1')
+    setShowMemory(true)
+    
+    setTimeout(() => {
+      navigate('/room1')
+    }, 3000)
+  }
+
+  if (showMemory) {
+    return (
+      <div className="room-container">
+        <div className="memory-fragment">
+          <h2 style={{ color: '#00ccff', marginBottom: '1rem' }}>NEURAL PATHWAY ACTIVATED</h2>
+          <div style={{ 
+            background: 'rgba(0, 204, 255, 0.1)', 
+            padding: '1.5rem', 
+            borderRadius: '15px',
+            border: '2px solid rgba(0, 204, 255, 0.3)',
+            marginBottom: '1.5rem'
+          }}>
+            <h3 style={{ color: '#66aaff', marginBottom: '1rem', fontSize: '1rem' }}>🧠 MEMORY CORE INITIALIZING</h3>
+            <p style={{ fontSize: '1rem', fontStyle: 'italic', marginBottom: '1.5rem', lineHeight: '1.6' }}>
+              Here is the message - The facility awakens around you, systems humming to life. Distant memories flicker at the edge of consciousness.
+            </p>
+          </div>
+          <div className="loading" style={{ margin: '1.5rem auto' }}></div>
+          <p>Entering Observation Hall...</p>
+        </div>
+      </div>
+    )
   }
 
   return (

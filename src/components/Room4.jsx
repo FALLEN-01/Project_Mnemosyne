@@ -55,6 +55,7 @@ const Room4 = () => {
   const [showHint, setShowHint] = useState(false)
   const [showStatusModal, setShowStatusModal] = useState(false)
   const [statusModalType, setStatusModalType] = useState('') // 'success' or 'error'
+  const [showMemory, setShowMemory] = useState(false)
 
   // Correct rotations for neural alignment (example pattern)
   const correctRotations = [45, 135, 270, 90, 315]
@@ -150,6 +151,30 @@ const Room4 = () => {
         setConfessionStep(confessionMessages.length)
       }
     }, 3000)
+  }
+
+  if (showMemory) {
+    return (
+      <div className="room-container">
+        <div className="memory-fragment">
+          <h2 style={{ color: '#bb88ff', marginBottom: '1rem' }}>NEURAL SYNC COMPLETE</h2>
+          <div style={{ 
+            background: 'rgba(187, 136, 255, 0.1)', 
+            padding: '1.5rem', 
+            borderRadius: '15px',
+            border: '2px solid rgba(187, 136, 255, 0.3)',
+            marginBottom: '1.5rem'
+          }}>
+            <h3 style={{ color: '#9966cc', marginBottom: '1rem', fontSize: '1rem' }}>🧠 FINAL CONFESSION DECODED</h3>
+            <p style={{ fontSize: '1rem', fontStyle: 'italic', marginBottom: '1.5rem', lineHeight: '1.6' }}>
+              Here is the message - The neural pathways align. Dr. Eon Vale's final confession echoes through your consciousness.
+            </p>
+          </div>
+          <div className="loading" style={{ margin: '1.5rem auto' }}></div>
+          <p>Approaching Final Chamber...</p>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -337,7 +362,11 @@ const Room4 = () => {
                     room4_neuralAlignment: neuralNodes.map(n => n.rotation),
                     room4_confessionViewed: true 
                   })
-                  navigate('/exit-hall')
+                  setShowMemory(true)
+                  
+                  setTimeout(() => {
+                    navigate('/exit-hall')
+                  }, 3000)
                 }}
                 style={{ 
                   background: 'linear-gradient(45deg, #bb88ff, #9966cc)',
