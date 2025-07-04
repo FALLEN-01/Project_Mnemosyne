@@ -239,6 +239,81 @@ const Room4 = () => {
           </div>
         </div>
 
+        {/* Neural Pathway Clues */}
+        <div style={{ 
+          background: 'rgba(187, 136, 255, 0.1)', 
+          padding: '1.5rem', 
+          borderRadius: '15px',
+          border: '2px solid rgba(187, 136, 255, 0.3)',
+          marginBottom: '2rem'
+        }}>
+          <h3 style={{ color: '#bb88ff', marginBottom: '1rem', textAlign: 'center' }}>
+            🧠 Neural Pathway Clues
+          </h3>
+          
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem' }}>
+            <div style={{
+              background: 'rgba(0, 0, 0, 0.4)',
+              padding: '1rem',
+              borderRadius: '8px',
+              border: '1px solid rgba(187, 136, 255, 0.3)'
+            }}>
+              <h4 style={{ color: '#ccaaff', marginBottom: '0.5rem' }}>🔁 Wheel A</h4>
+              <p style={{ fontSize: '0.9rem', lineHeight: '1.4', color: '#ccaaff' }}>
+                "The first voice to leave the lips — known as Alif in the tongue of the dunes. Spoken only once before silence returns."
+              </p>
+            </div>
+            
+            <div style={{
+              background: 'rgba(0, 0, 0, 0.4)',
+              padding: '1rem',
+              borderRadius: '8px',
+              border: '1px solid rgba(187, 136, 255, 0.3)'
+            }}>
+              <h4 style={{ color: '#ccaaff', marginBottom: '0.5rem' }}>🔁 Wheel B</h4>
+              <p style={{ fontSize: '0.9rem', lineHeight: '1.4', color: '#ccaaff' }}>
+                "Born of frost, shaped like two pillars — Beh of the north speaks only once before echo fades."
+              </p>
+            </div>
+            
+            <div style={{
+              background: 'rgba(0, 0, 0, 0.4)',
+              padding: '1rem',
+              borderRadius: '8px',
+              border: '1px solid rgba(187, 136, 255, 0.3)'
+            }}>
+              <h4 style={{ color: '#ccaaff', marginBottom: '0.5rem' }}>🔁 Wheel C</h4>
+              <p style={{ fontSize: '0.9rem', lineHeight: '1.4', color: '#ccaaff' }}>
+                "From Athens it curves — some call it Gamma, but it hums twice before settling into clarity."
+              </p>
+            </div>
+            
+            <div style={{
+              background: 'rgba(0, 0, 0, 0.4)',
+              padding: '1rem',
+              borderRadius: '8px',
+              border: '1px solid rgba(187, 136, 255, 0.3)'
+            }}>
+              <h4 style={{ color: '#ccaaff', marginBottom: '0.5rem' }}>🔁 Wheel D</h4>
+              <p style={{ fontSize: '0.9rem', lineHeight: '1.4', color: '#ccaaff' }}>
+                "In mantras, I am da — fourth in the chant, but unstable unless chanted four times. Turn with rhythm."
+              </p>
+            </div>
+            
+            <div style={{
+              background: 'rgba(0, 0, 0, 0.4)',
+              padding: '1rem',
+              borderRadius: '8px',
+              border: '1px solid rgba(187, 136, 255, 0.3)'
+            }}>
+              <h4 style={{ color: '#ccaaff', marginBottom: '0.5rem' }}>🔁 Wheel E</h4>
+              <p style={{ fontSize: '0.9rem', lineHeight: '1.4', color: '#ccaaff' }}>
+                "I sit silent in scrolls, whispered as eh in sacred breath. It takes six calls before I answer."
+              </p>
+            </div>
+          </div>
+        </div>
+
         {/* Neural Node Interface */}
         <div style={{ marginBottom: '2rem' }}>
           <h3 style={{ color: '#bb88ff', marginBottom: '1rem', textAlign: 'center' }}>
