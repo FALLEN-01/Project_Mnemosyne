@@ -42,7 +42,7 @@ const ExitHall = () => {
           return prev
         }
       })
-    }, 3000)
+    }, 4000) // Changed from 3000ms to 1300ms (1.3 seconds)
 
     return () => clearInterval(echoInterval)
   }, [gameState.teamName, navigate])
