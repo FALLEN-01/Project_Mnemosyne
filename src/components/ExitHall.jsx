@@ -49,7 +49,17 @@ const ExitHall = () => {
 
   const handleRiddleSubmit = () => {
     if (riddleAnswer.toLowerCase().trim() === correctAnswer) {
-      setShowDecision(true)
+      // Skip decision and go directly to ending
+      updateGameState({ 
+        finalChoice: 'remember', // Default choice
+        endTime: new Date()
+      })
+      
+      // Mark exit hall as completed
+      completeRoom(5)
+      
+      // Show the ending directly
+      setShowEnding(true)
       setShowRiddle(false)
     } else {
       setRiddleAnswer('')
@@ -237,80 +247,7 @@ const ExitHall = () => {
           </div>
         )}
 
-        {/* Decision Interface */}
-        {showDecision && !showEnding && (
-          <div style={{
-            background: 'rgba(255, 255, 136, 0.2)',
-            border: '2px solid #ffff88',
-            borderRadius: '15px',
-            padding: '2rem',
-            marginBottom: '2rem',
-            animation: 'fadeIn 1s ease-in'
-          }}>
-            <h3 style={{ color: '#ffff88', marginBottom: '2rem', textAlign: 'center' }}>
-              ⚖️ RESTORE ORIGINAL IDENTITY?
-            </h3>
-            
-            <div style={{
-              background: 'rgba(0, 0, 0, 0.6)',
-              padding: '1.5rem',
-              borderRadius: '10px',
-              border: '1px solid rgba(255, 255, 136, 0.5)',
-              marginBottom: '2rem',
-              textAlign: 'center'
-            }}>
-              <p style={{ 
-                fontSize: '1.2rem', 
-                lineHeight: '1.6',
-                marginBottom: '1rem'
-              }}>
-                The decision interface appears before you.
-              </p>
-              <p style={{ 
-                color: '#ffffcc'
-              }}>
-                Will you restore your original identity, or let the purge complete?
-              </p>
-            </div>
-
-            <div style={{ 
-              display: 'flex', 
-              gap: '2rem', 
-              justifyContent: 'center',
-              flexWrap: 'wrap'
-            }}>
-              <button 
-                className="btn" 
-                onClick={() => handleFinalChoice('remember')}
-                style={{ 
-                  background: 'linear-gradient(45deg, #ffff88, #cccc77)',
-                  color: '#000',
-                  fontSize: 'clamp(1rem, 2vw, 1.3rem)',
-                  padding: 'clamp(1rem, 2vw, 1.5rem) clamp(1.5rem, 3vw, 2rem)',
-                  minWidth: 'clamp(120px, 25vw, 150px)',
-                  fontWeight: 'bold'
-                }}
-              >
-                YES
-              </button>
-              
-              <button 
-                className="btn" 
-                onClick={() => handleFinalChoice('forget')}
-                style={{ 
-                  background: 'linear-gradient(45deg, #666666, #999999)',
-                  color: '#fff',
-                  fontSize: 'clamp(1rem, 2vw, 1.3rem)',
-                  padding: 'clamp(1rem, 2vw, 1.5rem) clamp(1.5rem, 3vw, 2rem)',
-                  minWidth: 'clamp(120px, 25vw, 150px)',
-                  fontWeight: 'bold'
-                }}
-              >
-                NO
-              </button>
-            </div>
-          </div>
-        )}
+        {/* Decision Interface - REMOVED: Now goes directly to ending */}
 
         {/* Ending Story */}
         {showEnding && (
@@ -323,7 +260,7 @@ const ExitHall = () => {
             animation: 'fadeIn 1s ease-in'
           }}>
             <h3 style={{ color: '#ffff88', marginBottom: '2rem', textAlign: 'center' }}>
-              {finalChoice === 'remember' ? '📚 CHOICE: REMEMBER' : '🌫️ CHOICE: FORGET'}
+              📚 THE TRUTH REVEALED
             </h3>
             
             <div style={{
@@ -335,80 +272,40 @@ const ExitHall = () => {
               textAlign: 'center',
               lineHeight: '1.8'
             }}>
-              {finalChoice === 'remember' ? (
-                <div>
-                  <p style={{ marginBottom: '1.5rem', color: '#ffff88' }}>
-                    💡 <strong>You chose to remember.</strong>
-                  </p>
-                  
-                  <p style={{ marginBottom: '1.5rem' }}>
-                    The memories flood back—Dr. Eon Vale, the ethics breach, the deaths. 
-                    Your mistake. You feel the weight of every moment you tried to erase.
-                  </p>
-                  
-                  <p style={{ marginBottom: '1.5rem' }}>
-                    The lab doors open with a mechanical hiss.
-                  </p>
-                  
-                  <p style={{ marginBottom: '1.5rem' }}>
-                    You walk out carrying everything—the guilt, the knowledge, the truth.
-                  </p>
-                  
-                  <p style={{ marginBottom: '1.5rem', fontStyle: 'italic', color: '#ffffcc' }}>
-                    But you are no longer whole.
-                  </p>
-                  
-                  <div style={{ 
-                    marginTop: '2rem', 
-                    padding: '1.5rem',
-                    border: '2px solid rgba(255, 255, 136, 0.5)',
-                    borderRadius: '10px',
-                    background: 'rgba(255, 255, 136, 0.1)',
-                    fontWeight: 'bold',
-                    color: '#ffff88'
-                  }}>
-                    🚪 You have escaped—but you carry the burden of truth.
-                  </div>
+              <div>
+                <p style={{ marginBottom: '1.5rem', color: '#ffff88' }}>
+                  💡 <strong>The memories flood back.</strong>
+                </p>
+                
+                <p style={{ marginBottom: '1.5rem' }}>
+                  Dr. Eon Vale, the ethics breach, the deaths. Your mistake. 
+                  You feel the weight of every moment you tried to erase.
+                </p>
+                
+                <p style={{ marginBottom: '1.5rem' }}>
+                  The lab doors open with a mechanical hiss.
+                </p>
+                
+                <p style={{ marginBottom: '1.5rem' }}>
+                  You walk out carrying everything—the guilt, the knowledge, the truth.
+                </p>
+                
+                <p style={{ marginBottom: '1.5rem', fontStyle: 'italic', color: '#ffffcc' }}>
+                  Some truths are too important to forget.
+                </p>
+                
+                <div style={{ 
+                  marginTop: '2rem', 
+                  padding: '1.5rem',
+                  border: '2px solid rgba(255, 255, 136, 0.5)',
+                  borderRadius: '10px',
+                  background: 'rgba(255, 255, 136, 0.1)',
+                  fontWeight: 'bold',
+                  color: '#ffff88'
+                }}>
+                  🚪 You have escaped—carrying the burden and wisdom of truth.
                 </div>
-              ) : (
-                <div>
-                  <p style={{ marginBottom: '1.5rem', color: '#ffff88' }}>
-                    🌊 <strong>You chose to forget.</strong>
-                  </p>
-                  
-                  <p style={{ marginBottom: '1.5rem' }}>
-                    The purge restarts. Neural pathways dissolve.
-                  </p>
-                  
-                  <p style={{ marginBottom: '1.5rem' }}>
-                    You collapse as the memories drain away.
-                  </p>
-                  
-                  <p style={{ marginBottom: '1.5rem' }}>
-                    Fade to white...
-                  </p>
-                  
-                  <p style={{ marginBottom: '1.5rem' }}>
-                    You awaken again, unsure of what was lost. The lab doors open.
-                  </p>
-                  
-                  <p style={{ marginBottom: '1.5rem', fontStyle: 'italic', color: '#ffffcc' }}>
-                    You step out into the unknown with no memory, but a strange calm.
-                  </p>
-                  
-                  <div style={{ 
-                    marginTop: '2rem', 
-                    padding: '1.5rem',
-                    border: '2px solid rgba(255, 255, 136, 0.5)',
-                    borderRadius: '10px',
-                    background: 'rgba(255, 255, 136, 0.1)',
-                    fontWeight: 'bold',
-                    color: '#ffff88'
-                  }}>
-                    🚪 You have escaped—but you are not the same person.
-                  </div>
-                </div>
-              )}
+              </div>
             </div>
           </div>
         )}
