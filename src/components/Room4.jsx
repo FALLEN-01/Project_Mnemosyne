@@ -377,23 +377,6 @@ const Room4 = () => {
               </button>
             </div>
           )}
-
-          {showHint && !showHologram && (
-            <div style={{
-              background: 'rgba(255, 170, 136, 0.1)',
-              border: '1px solid #ffaa88',
-              borderRadius: '10px',
-              padding: '1rem',
-              marginTop: '1rem',
-              color: '#ffaa88'
-            }}>
-              <strong>💡 Neural Alignment Hint:</strong><br />
-              Click each node to rotate it. The correct pattern aligns with the neural pathways. 
-              Try different rotation combinations until all nodes form a harmonious flow pattern.
-              <br /><br />
-              <em>Target rotations: A1(45°), B2(135°), C3(270°), D4(90°), E5(315°)</em>
-            </div>
-          )}
         </div>
 
         {error && (
