@@ -550,9 +550,9 @@ const Room2 = () => {
         onComplete={handleTerminalComplete}
         title="CHEMICAL SEQUENCE ANALYZED"
         commands={[
-          "Molecular structure verified...",
           "Activating retinal scanner...",
-          "Accessing archive level..."
+          "Molecular structure verified...",
+          "Accessing archive level...",
         ]}
       />
     </div>
