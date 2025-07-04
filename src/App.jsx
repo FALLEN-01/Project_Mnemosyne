@@ -189,6 +189,15 @@ function App() {
           // Collect all passwords entered by the team (ignoring for now)
           const passwords = []
 
+          // Debug room entry logic
+          console.log('🔍 ROOM ENTRY DEBUG:');
+          console.log('newState.roomsCompleted:', newState.roomsCompleted);
+          console.log('newState.room1EntryTime:', newState.room1EntryTime);
+          console.log('newState.room2EntryTime:', newState.room2EntryTime);
+          console.log('newState.room3EntryTime:', newState.room3EntryTime);
+          console.log('newState.room4EntryTime:', newState.room4EntryTime);
+          console.log('newState.exitHallEntryTime:', newState.exitHallEntryTime);
+
           const progressData = {
             teamName: newState.teamName,
             entryTime: newState.startTime,
@@ -201,7 +210,7 @@ function App() {
             passwords: passwords
           }
 
-          console.log('📤 Sending progress to Google Sheets:', progressData);
+          console.log('📤 SENDING TO SHEETS:', progressData);
 
           await window.saveProgressToSheets(progressData)
         } catch (error) {

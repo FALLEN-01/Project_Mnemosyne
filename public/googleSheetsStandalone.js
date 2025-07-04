@@ -15,7 +15,27 @@ async function saveProgressToSheets(progressObj) {
     throw new Error('Google Sheets URL or team name missing');
   }
   
-  console.log('Saving progress to Google Sheets for team:', progressObj.teamName);
+  console.log('=== DEBUGGING SAVE PROGRESS ===');
+  console.log('Full progressObj received:', progressObj);
+  console.log('teamName:', progressObj.teamName);
+  console.log('entryTime:', progressObj.entryTime);
+  console.log('room1Entry:', progressObj.room1Entry);
+  console.log('room2Entry:', progressObj.room2Entry);
+  console.log('room3Entry:', progressObj.room3Entry);
+  console.log('room4Entry:', progressObj.room4Entry);
+  console.log('exitHallEntry:', progressObj.exitHallEntry);
+  console.log('completionTime:', progressObj.completionTime);
+  console.log('passwords:', progressObj.passwords);
+  
+  // Additional debug to track when timestamps are being cleared
+  if (progressObj.room3Entry === '') {
+    console.log('🔴 WARNING: Room 3 entry timestamp is empty!');
+  }
+  if (progressObj.room4Entry === '') {
+    console.log('🔴 WARNING: Room 4 entry timestamp is empty!');
+  }
+  
+  console.log('=== END DEBUG ===');
   
   // Use form data approach to avoid CORS preflight for POST
   const formData = new FormData();
