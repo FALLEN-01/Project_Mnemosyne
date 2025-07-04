@@ -14,12 +14,12 @@ const TeamEntry = () => {
     e.preventDefault()
     
     if (!teamName.trim()) {
-      setError('Please enter a team name')
+      setError('Please enter a your name')
       return
     }
 
     if (teamName.trim().length < 2) {
-      setError('Team name must be at least 2 characters')
+      setError('Name must be at least 2 characters')
       return
     }
 
@@ -130,7 +130,7 @@ const TeamEntry = () => {
             marginBottom: '1.5rem',
             fontWeight: 'bold'
           }}>
-            Enter Your Team Name
+            Enter Your Name
           </h3>
           
           <div style={{ marginBottom: '2rem' }}>
@@ -141,7 +141,7 @@ const TeamEntry = () => {
                 setTeamName(e.target.value)
                 setError('')
               }}
-              placeholder="Team Name..."
+              placeholder="Name..."
               style={{
                 width: '100%',
                 padding: '1.2rem 1.5rem',
