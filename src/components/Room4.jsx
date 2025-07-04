@@ -147,8 +147,22 @@ const Room4 = () => {
       
       if (step >= confessionMessages.length) {
         clearInterval(interval)
-        // Set confession step to final value to trigger continue button
+        // Set confession step to final value and auto-redirect after confession
         setConfessionStep(confessionMessages.length)
+        
+        // Auto-redirect to Exit Hall after confession completes
+        setTimeout(() => {
+          completeRoom(4)
+          updateGameState({ 
+            room4_neuralAlignment: neuralNodes.map(n => n.rotation),
+            room4_confessionViewed: true 
+          })
+          setShowMemory(true)
+          
+          setTimeout(() => {
+            navigate('/exit-hall')
+          }, 3000)
+        }, 2000) // Wait 2 seconds after confession ends before starting memory transition
       }
     }, 3000)
   }
@@ -347,33 +361,6 @@ const Room4 = () => {
                 }}
               >
                 Initiate Neural Sync
-              </button>
-            </div>
-          )}
-          
-          {/* Show continue button only after hologram confession completes */}
-          {showHologram && confessionStep >= confessionMessages.length && (
-            <div style={{ textAlign: 'center', marginTop: '1rem' }}>
-              <button 
-                className="btn" 
-                onClick={() => {
-                  completeRoom(4)
-                  updateGameState({ 
-                    room4_neuralAlignment: neuralNodes.map(n => n.rotation),
-                    room4_confessionViewed: true 
-                  })
-                  setShowMemory(true)
-                  
-                  setTimeout(() => {
-                    navigate('/exit-hall')
-                  }, 3000)
-                }}
-                style={{ 
-                  background: 'linear-gradient(45deg, #bb88ff, #9966cc)',
-                  marginRight: '1rem'
-                }}
-              >
-                Continue to Exit Hall
               </button>
             </div>
           )}
