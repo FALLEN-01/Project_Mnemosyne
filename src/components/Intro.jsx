@@ -89,7 +89,7 @@ const Intro = () => {
     
     setTimeout(() => {
       navigate('/room1')
-    }, 3000)
+    }, 13000)
   }
 
   if (showMemory) {

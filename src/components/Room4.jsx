@@ -158,7 +158,7 @@ const Room4 = () => {
           
           setTimeout(() => {
             navigate('/exit-hall')
-          }, 3000)
+          }, 5000)
         }, 2000) // Wait 2 seconds after confession ends before starting memory transition
       }
     }, 3000)

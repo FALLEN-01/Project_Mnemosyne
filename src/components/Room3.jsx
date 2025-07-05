@@ -71,7 +71,7 @@ const Room3 = () => {
     
     setTimeout(() => {
       navigate('/room4')
-    }, 3000)
+    }, 13000)
   }
 
   const handleSegmentSelect = (position, segment) => {
