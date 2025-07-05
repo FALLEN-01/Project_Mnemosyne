@@ -150,9 +150,8 @@ const Room1 = () => {
           maxWidth: '90%'
         }}>
           <p style={{ marginBottom: '1.5rem', lineHeight: '1.6' }}>
-            You enter a corridor of half-lit surveillance pods — shattered screens, bloodied clipboards, 
-            a chair knocked over as if someone left in a panic. Each room in the facility holds a piece of you — 
-            not just clues or codes, but memories you've locked away.
+            Long rows of shattered surveillance pods. Blood on clipboards. Empty chairs still spinning.
+            Whoever was here — they ran. Or tried.
           </p>
           <div style={{ 
             background: 'rgba(0, 255, 255, 0.2)', 
@@ -163,6 +162,9 @@ const Room1 = () => {
           }}>
             <p style={{ color: '#00ffff', fontWeight: 'bold' }}>🎧 LOG ENTRY 017:</p>
             <p>"Subject is beginning re-integration. Neural reconstruction unstable. Memory echoes predicted."</p>
+            <p style={{ fontStyle: 'italic', marginTop: '0.5rem', color: '#ffff88' }}>
+              But it's your voice.
+            </p>
           </div>
         </div>
         
@@ -176,7 +178,9 @@ const Room1 = () => {
           width: '100%'
         }}>
           <p style={{ marginBottom: '2rem', fontSize: '1rem', textAlign: 'center', width: '100%' }}>
-            The surveillance footage shows a movement path. Study the sequence carefully and retrace the path on the floor panel below.
+            CCTV footage shows your movement — jerky, panicked.
+            Below, a 3x3 keypad on the floor.
+            You must follow your ghost through the steps again. Retrace your panic.
           </p>
           
           {/* Surveillance Footage Display */}
@@ -228,10 +232,13 @@ const Room1 = () => {
             marginBottom: '2rem'
           }}>
             <p style={{ marginBottom: '1rem', fontSize: '1rem' }}>
-              A floor panel shows a 3x3 grid of blocks. You must retrace the movement path by stepping on the blocks.
+              A 3x3 keypad on the floor. You must follow your ghost through the steps again.
             </p>
             <p style={{ fontSize: '0.9rem', color: '#ffff88' }}>
-              Follow the exact sequence shown in the surveillance footage. Click the floor blocks in order.
+              Retrace your panic. The door clicks open as you finish the sequence.
+            </p>
+            <p style={{ fontSize: '0.8rem', color: '#cccccc', marginTop: '1rem', fontStyle: 'italic' }}>
+              You don't remember walking it. But your feet do.
             </p>
             <p style={{ fontSize: '0.8rem', color: '#ff4444', marginTop: '1rem' }}>
               Progress: {currentStep}/9 steps completed

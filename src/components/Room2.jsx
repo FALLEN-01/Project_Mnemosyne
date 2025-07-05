@@ -174,8 +174,8 @@ const Room2 = () => {
           width: '100%'
         }}>
           <p style={{ marginBottom: '1.5rem', lineHeight: '1.6' }}>
-            You pass into a colder chamber. Glass canisters line the wall — one shattered. 
-            The fluid trails across the floor, glowing faintly with an unnatural cyan light.
+            Glass cylinders line the wall. One is shattered, leaking a glowing blue fluid that snakes across the floor like veins.
+            A cabinet flashes a warning in pulsing red:
           </p>
           <div style={{ 
             background: 'rgba(255, 102, 102, 0.2)', 
@@ -187,11 +187,15 @@ const Room2 = () => {
           }}>
             <p style={{ color: '#ff6666', fontWeight: 'bold' }}>🚨 LOCKED CABINET DISPLAY:</p>
             <p style={{ color: '#ffcccc' }}>"IN CASE OF IDENTITY COLLAPSE – INJECT CODE: 7R4UM4"</p>
+            <p style={{ fontStyle: 'italic', marginTop: '0.5rem', color: '#cccccc' }}>
+              You don't know what that means. But your heart races. Your hands tremble.
+              Your body remembers something your mind has forgotten.
+            </p>
           </div>
         </div>
         
         <h2 style={{ color: '#00cccc', marginBottom: '1.5rem' }}>
-          QR-CODED VIAL ANALYSIS
+          MOLECULAR RECONSTRUCTION
         </h2>
         <div style={{ 
           marginBottom: '2rem',
@@ -200,6 +204,10 @@ const Room2 = () => {
           alignItems: 'center',
           width: '100%'
         }}>
+          <p style={{ marginBottom: '2rem', fontSize: '1rem', textAlign: 'center', width: '100%' }}>
+            Three vials. QR-coded. Each contains part of a molecule, part of your past.
+            You align the chemical structures, symbols slowly spelling out: 7R4UM4
+          </p>
           <p style={{ marginBottom: '2rem', textAlign: 'center', width: '100%' }}>
             You find 3 QR-coded vials. A digital panel asks for molecular matching. 
             By aligning molecular shapes and symbols, build the emergency access code.

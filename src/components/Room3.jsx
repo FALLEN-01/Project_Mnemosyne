@@ -147,7 +147,8 @@ const Room3 = () => {
           }}>
             <h3 style={{ color: '#ffcc00', marginBottom: '1rem', fontSize: '1rem' }}>📼 ARCHIVE ANALYSIS COMPLETE</h3>
             <p style={{ fontSize: '1rem', fontStyle: 'italic', marginBottom: '1.5rem', lineHeight: '1.6' }}>
-              Here is the message - The timeline clarifies. You remember now... fragments of Dr. Eon Vale surface in your consciousness.
+              You collapse to your knees.
+              You find a scorched ID badge in the panel beneath: Dr. Eon Vale.
             </p>
           </div>
           <div className="loading" style={{ margin: '1.5rem auto' }}></div>
@@ -183,8 +184,13 @@ const Room3 = () => {
           marginBottom: '2rem'
         }}>
           <p style={{ marginBottom: '1.5rem', lineHeight: '1.6' }}>
-            Screens flicker with looping video logs of yourself. You speak, but your past self ignores you.
-            The air hums with digital echoes and fragmented memories.
+            Screens line the walls, looping grainy footage. You see yourself, speaking, pacing, screaming.
+            But no sound.
+            You reach for the controls. The moment you do — your past self looks up and stares directly at you.
+          </p>
+          
+          <p style={{ marginBottom: '1.5rem', lineHeight: '1.6', fontStyle: 'italic', color: '#ffcc88' }}>
+            You freeze.
           </p>
           
           <div style={{
@@ -195,8 +201,9 @@ const Room3 = () => {
             fontStyle: 'italic',
             color: '#ffcc66'
           }}>
-            The screens show six video segments, each corrupted by time and trauma.
-            Arrange them in chronological order to unlock the truth.
+            Memory segments labeled A–F, corrupted.
+            You piece together a coherent sequence using glitches and auditory tones.
+            Correct order plays the full memory: "If you're reading this... I failed." "I am you."
           </div>
         </div>
 

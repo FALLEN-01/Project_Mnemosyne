@@ -61,16 +61,13 @@ const Room4 = () => {
   const correctRotations = [45, 135, 270, 90, 315]
 
   const confessionMessages = [
-    "HOLOGRAM ACTIVATED... DECODING NEURAL CONFESSION...",
-    "Dr. Eon Vale, final recording... If anyone finds this...",
-    "I volunteered for Project Mnemosyne to forget my trauma...",
-    "The guilt... the accident... I thought I could erase it all...",
-    "But the memories fought back. They fragmented, hid, evolved...",
-    "I became both the scientist and the subject...",
-    "M.I.N.D. was supposed to help people forget pain...",
-    "Instead, it created prisoners of their own minds...",
-    "I am you. You are me. We are the same broken soul...",
-    "The choice is yours now. Remember or forget forever."
+    "Your confession begins to play.",
+    "You can't stop it.",
+    "You don't want to hear it — but you do.",
+    "They didn't ask to forget. I made that choice. I thought I was saving them. I thought—",
+    "Static. Then silence.",
+    "The lights flicker.",
+    "You stumble forward."
   ]
 
   useEffect(() => {
@@ -222,9 +219,27 @@ const Room4 = () => {
           width: '100%'
         }}>
           <p style={{ marginBottom: '1.5rem', lineHeight: '1.6' }}>
-            The floor is transparent — below, a pulsating brain model spins slowly. 
-            You're inside the Mnemosyne Core. Neural pathways flicker with electric life.
+            You descend into a cathedral of thought. The floor is glass. Beneath you — a suspended neural map pulses, alive.
+            This is the Mnemosyne Core.
           </p>
+          
+          <p style={{ marginBottom: '1.5rem', lineHeight: '1.6' }}>
+            Live circuits twist and shift.
+            A voice welcomes you — metallic and calm:
+          </p>
+          
+          <div style={{
+            background: 'rgba(0, 0, 0, 0.6)',
+            padding: '1rem',
+            borderRadius: '8px',
+            border: '1px solid rgba(187, 136, 255, 0.5)',
+            fontStyle: 'italic',
+            color: '#ccaaff',
+            textAlign: 'center',
+            marginBottom: '1rem'
+          }}>
+            M.I.N.D.: "Welcome back, Dr. Vale. Proceeding with integrity overwrite."
+          </div>
           
           <div style={{
             background: 'rgba(0, 0, 0, 0.6)',
@@ -234,8 +249,8 @@ const Room4 = () => {
             fontStyle: 'italic',
             color: '#ccaaff'
           }}>
-            Live neural routing interface detected. Rotate nodes to align pulse flows 
-            and activate the core memory systems.
+            You must redirect real-time neural signals across the glass interface — a dance of logic and instinct.
+            As pulses align, the central hologram activates.
           </div>
         </div>
 

@@ -17,9 +17,9 @@ const ExitHall = () => {
 
   const voiceEchoes = [
     "The screen flickers. Static reshapes into your face. But older. Worn. Scarred.",
-    "I couldn't do it. I couldn't carry it anymore. I built this place to forget… to forgive myself.", 
-    "You watch as the version of you — Dr. Vale — confesses. Each word is heavier than the last.",
-    "If you're seeing this, you're stronger than I was. If you're here… it means something inside you refused to stay asleep."
+    "> \"I couldn't do it. I couldn't carry it anymore. I built this place to forget… to forgive myself.\"",
+    "You watch as the version of you — Dr. Vale — confesses.\nEach word is heavier than the last.",
+    "> \"If you're seeing this, you're stronger than I was.\nIf you're here… it means something inside you refused to stay asleep.\""
   ]
 
   const correctAnswer = "forgetting" // Answer to the riddle
@@ -168,19 +168,32 @@ const ExitHall = () => {
               �️ VOICE FRAGMENTS
             </h3>
             
-            <div style={{ textAlign: 'center', minHeight: '60px' }}>
-              {voiceEchoes.slice(0, voiceFragments + 1).map((echo, index) => (
-                <div 
-                  key={index}
-                  style={{ 
-                    marginBottom: '0.5rem',
-                    opacity: index === voiceFragments ? 1 : 0.5,
-                    animation: index === voiceFragments ? 'pulse 2s infinite' : 'none'
-                  }}
-                >
-                  "{echo}"
-                </div>
-              ))}
+            <div style={{ textAlign: 'left', minHeight: '60px' }}>
+              {voiceEchoes.slice(0, voiceFragments + 1).map((echo, index) => {
+                const isVoiceBubble = echo.startsWith('>')
+                const displayText = isVoiceBubble ? echo.substring(1).trim() : echo
+                return (
+                  <div 
+                    key={index}
+                    style={{ 
+                      marginBottom: '1rem',
+                      opacity: index === voiceFragments ? 1 : 0.7,
+                      animation: index === voiceFragments ? 'pulse 2s infinite' : 'none',
+                      padding: isVoiceBubble ? '1rem' : '0.5rem',
+                      background: isVoiceBubble ? 'rgba(255, 255, 136, 0.2)' : 'transparent',
+                      border: isVoiceBubble ? '1px solid rgba(255, 255, 136, 0.4)' : 'none',
+                      borderRadius: isVoiceBubble ? '8px' : '0',
+                      fontStyle: isVoiceBubble ? 'italic' : 'normal',
+                      color: isVoiceBubble ? '#ffffcc' : '#ffff88',
+                      fontSize: isVoiceBubble ? '1.1rem' : '1rem',
+                      lineHeight: '1.6',
+                      whiteSpace: 'pre-line'
+                    }}
+                  >
+                    {displayText}
+                  </div>
+                )
+              })}
             </div>
           </div>
         )}
