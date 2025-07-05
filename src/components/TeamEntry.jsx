@@ -225,7 +225,7 @@ const TeamEntry = () => {
             marginTop: '1.5rem',
             fontStyle: 'italic'
           }}>
-            Your team name will be used throughout the experience
+            Your name will be used throughout the experience
           </p>
         </form>
 
