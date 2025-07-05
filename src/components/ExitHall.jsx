@@ -22,7 +22,7 @@ const ExitHall = () => {
     "> \"If you're seeing this, you're stronger than I was.\nIf you're here… it means something inside you refused to stay asleep.\""
   ]
 
-  const correctAnswer = "forgetting" // Answer to the riddle
+  const correctAnswer = "forget" // Answer to the riddle
 
   useEffect(() => {
     // Redirect to team name entry if no team name is set
