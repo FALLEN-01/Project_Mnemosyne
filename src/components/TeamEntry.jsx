@@ -237,7 +237,6 @@ const TeamEntry = () => {
           animation: 'fadeIn 2s ease-in'
         }}>
           <p>🎮 Estimated completion time: 30-45 minutes</p>
-          <p>👥 Work together and communicate with your team</p>
           <p>🧩 Pay attention to details - every clue matters</p>
         </div>
       </div>
