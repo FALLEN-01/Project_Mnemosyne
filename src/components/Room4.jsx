@@ -258,7 +258,6 @@ const Room4 = () => {
               borderRadius: '8px',
               border: '1px solid rgba(187, 136, 255, 0.3)'
             }}>
-              <h4 style={{ color: '#ccaaff', marginBottom: '0.5rem' }}>🔁 Wheel A</h4>
               <p style={{ fontSize: '0.9rem', lineHeight: '1.4', color: '#ccaaff' }}>
                 "The first voice to leave the lips — known as Alif in the tongue of the dunes. Spoken only once before silence returns."
               </p>
@@ -270,7 +269,6 @@ const Room4 = () => {
               borderRadius: '8px',
               border: '1px solid rgba(187, 136, 255, 0.3)'
             }}>
-              <h4 style={{ color: '#ccaaff', marginBottom: '0.5rem' }}>🔁 Wheel B</h4>
               <p style={{ fontSize: '0.9rem', lineHeight: '1.4', color: '#ccaaff' }}>
                 "Born of frost, shaped like two pillars — Beh of the north speaks only once before echo fades."
               </p>
@@ -282,7 +280,6 @@ const Room4 = () => {
               borderRadius: '8px',
               border: '1px solid rgba(187, 136, 255, 0.3)'
             }}>
-              <h4 style={{ color: '#ccaaff', marginBottom: '0.5rem' }}>🔁 Wheel C</h4>
               <p style={{ fontSize: '0.9rem', lineHeight: '1.4', color: '#ccaaff' }}>
                 "From Athens it curves — some call it Gamma, but it hums twice before settling into clarity."
               </p>
@@ -294,7 +291,6 @@ const Room4 = () => {
               borderRadius: '8px',
               border: '1px solid rgba(187, 136, 255, 0.3)'
             }}>
-              <h4 style={{ color: '#ccaaff', marginBottom: '0.5rem' }}>🔁 Wheel D</h4>
               <p style={{ fontSize: '0.9rem', lineHeight: '1.4', color: '#ccaaff' }}>
                 "In mantras, I am da — fourth in the chant, but unstable unless chanted four times. Turn with rhythm."
               </p>
@@ -306,7 +302,6 @@ const Room4 = () => {
               borderRadius: '8px',
               border: '1px solid rgba(187, 136, 255, 0.3)'
             }}>
-              <h4 style={{ color: '#ccaaff', marginBottom: '0.5rem' }}>🔁 Wheel E</h4>
               <p style={{ fontSize: '0.9rem', lineHeight: '1.4', color: '#ccaaff' }}>
                 "I sit silent in scrolls, whispered as eh in sacred breath. It takes six calls before I answer."
               </p>

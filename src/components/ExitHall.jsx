@@ -16,10 +16,10 @@ const ExitHall = () => {
   const [finalChoice, setFinalChoice] = useState(null)
 
   const voiceEchoes = [
-    "Erase it.",
-    "No, not yet.", 
-    "What if I deserve to remember?",
-    "The truth... or peace?"
+    "The screen flickers. Static reshapes into your face. But older. Worn. Scarred.",
+    "I couldn't do it. I couldn't carry it anymore. I built this place to forget… to forgive myself.", 
+    "You watch as the version of you — Dr. Vale — confesses. Each word is heavier than the last.",
+    "If you're seeing this, you're stronger than I was. If you're here… it means something inside you refused to stay asleep."
   ]
 
   const correctAnswer = "forgetting" // Answer to the riddle
@@ -131,8 +131,13 @@ const ExitHall = () => {
           marginBottom: '2rem'
         }}>
           <p style={{ marginBottom: '1.5rem', lineHeight: '1.6' }}>
-            A clean, round room. In the center: a console. One glowing button.
-            You've reached the Itor Chamber — where the final choice awaits.
+            You step into silence.
+            The air feels… still. Artificial. Like it's waiting.
+          </p>
+          
+          <p style={{ marginBottom: '1.5rem', lineHeight: '1.6' }}>
+            The chamber is a perfect circle. Seamless. Clean.
+            A console rises slowly from the center. No buttons this time. Just a screen, and a voice:
           </p>
           
           <div style={{
@@ -141,9 +146,11 @@ const ExitHall = () => {
             borderRadius: '8px',
             border: '1px solid rgba(255, 255, 136, 0.5)',
             fontStyle: 'italic',
-            color: '#ffffcc'
+            color: '#ffffcc',
+            textAlign: 'center',
+            fontSize: '1.1rem'
           }}>
-            The room echoes with fragments of your voice, trapped memories seeking resolution.
+            "You have reached the event horizon of self."
           </div>
         </div>
 
@@ -274,24 +281,21 @@ const ExitHall = () => {
             }}>
               <div>
                 <p style={{ marginBottom: '1.5rem', color: '#ffff88' }}>
-                  💡 <strong>The memories flood back.</strong>
+                  🎬 <strong>ENDING – Echo</strong>
                 </p>
                 
                 <p style={{ marginBottom: '1.5rem' }}>
-                  Dr. Eon Vale, the ethics breach, the deaths. Your mistake. 
-                  You feel the weight of every moment you tried to erase.
+                  As you exit the facility, you don't speak.
+                  You don't need to.
                 </p>
                 
                 <p style={{ marginBottom: '1.5rem' }}>
-                  The lab doors open with a mechanical hiss.
+                  Whether your mind holds truth or peace, the burden is yours now.
                 </p>
                 
                 <p style={{ marginBottom: '1.5rem' }}>
-                  You walk out carrying everything—the guilt, the knowledge, the truth.
-                </p>
-                
-                <p style={{ marginBottom: '1.5rem', fontStyle: 'italic', color: '#ffffcc' }}>
-                  Some truths are too important to forget.
+                  You step into light.
+                  Not knowing whether you've truly escaped… or just begun again.
                 </p>
                 
                 <div style={{ 
@@ -301,9 +305,10 @@ const ExitHall = () => {
                   borderRadius: '10px',
                   background: 'rgba(255, 255, 136, 0.1)',
                   fontWeight: 'bold',
-                  color: '#ffff88'
+                  color: '#ffff88',
+                  fontStyle: 'italic'
                 }}>
-                  🚪 You have escaped—carrying the burden and wisdom of truth.
+                  Project Mnemosyne ends — but the memory lives on… somewhere.
                 </div>
               </div>
             </div>

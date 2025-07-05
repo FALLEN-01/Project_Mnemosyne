@@ -204,32 +204,8 @@ const Room1 = () => {
               <p style={{ color: '#cccccc', marginBottom: '1rem' }}>
                 MOVEMENT SEQUENCE DETECTED:
               </p>
-              <p style={{ color: '#ffff88', marginBottom: '0.5rem' }}>
-                1. Subject enters from CENTER position
-              </p>
-              <p style={{ color: '#ffff88', marginBottom: '0.5rem' }}>
-                2. Moves to TOP-LEFT corner
-              </p>
-              <p style={{ color: '#ffff88', marginBottom: '0.5rem' }}>
-                3. Proceeds to TOP-CENTER
-              </p>
-              <p style={{ color: '#ffff88', marginBottom: '0.5rem' }}>
-                4. Shifts to MIDDLE-RIGHT
-              </p>
-              <p style={{ color: '#ffff88', marginBottom: '0.5rem' }}>
-                5. Continues to BOTTOM-RIGHT
-              </p>
-              <p style={{ color: '#ffff88', marginBottom: '0.5rem' }}>
-                6. Moves to BOTTOM-CENTER
-              </p>
-              <p style={{ color: '#ffff88', marginBottom: '0.5rem' }}>
-                7. Goes to BOTTOM-LEFT
-              </p>
-              <p style={{ color: '#ffff88', marginBottom: '0.5rem' }}>
-                8. Shifts to TOP-RIGHT
-              </p>
-              <p style={{ color: '#ffff88' }}>
-                9. Ends at MIDDLE-LEFT
+              <p style={{ color: '#ffff88', fontStyle: 'italic', lineHeight: '1.6' }}>
+                At the stroke of 3:47, a shadow stirs at the very heart of the grid — the center square. Drawn by some silent beckoning, it drifts to the upper-left, brushing against the edge of forgotten memories. From there, it slides to the peak's center, like a whisper carried on wind. A sudden twitch, and it darts to the middle-right, as if avoiding something unseen. Its descent begins — spiraling down to the bottom-right, then sweeping to the bottom-center like a pendulum in motion. But it does not rest — it veers left to the bottom corner, a ghost retracing a lost step. Without warning, it leaps to the top-right, the opposite pole. And finally, with purpose fulfilled, it sinks to rest at the middle-left — the final square in a cryptic waltz of nine.
               </p>
             </div>
           </div>
