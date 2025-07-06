@@ -238,8 +238,8 @@ const Room2 = () => {
               minWidth: '250px',
               maxWidth: '280px'
             }}>
-              <h4 style={{ color: '#00ffff', marginBottom: '0.5rem' }}>VIAL Caesar</h4>
-              <p style={{ color: '#66cccc', fontSize: '0.8rem', marginBottom: '0.5rem', fontStyle: 'italic' }}>Caesar</p>
+              <h4 style={{ color: '#00ffff', marginBottom: '0.5rem' }}>VIAL ALPHA</h4>
+              <p style={{ color: '#66cccc', fontSize: '0.8rem', marginBottom: '0.5rem', fontStyle: 'italic' }}>Caesar +1</p>
               <div style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', marginBottom: '0.5rem' }}>🧪</div>
               <div style={{
                 display: 'grid',
@@ -350,7 +350,7 @@ const Room2 = () => {
                   textShadow: '1px 1px 2px rgba(0,0,0,0.8)',
                   backdropFilter: 'blur(1px)'
                 }}>
-                  ELGGO
+                  ELGOOG
                 </div>
               </div>
             </div>
