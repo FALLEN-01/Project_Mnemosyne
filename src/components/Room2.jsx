@@ -238,7 +238,8 @@ const Room2 = () => {
               minWidth: '250px',
               maxWidth: '280px'
             }}>
-              <h4 style={{ color: '#00ffff', marginBottom: '0.5rem' }}>VIAL ALPHA</h4>
+              <h4 style={{ color: '#00ffff', marginBottom: '0.5rem' }}>VIAL Caesar</h4>
+              <p style={{ color: '#66cccc', fontSize: '0.8rem', marginBottom: '0.5rem', fontStyle: 'italic' }}>Caesar</p>
               <div style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', marginBottom: '0.5rem' }}>🧪</div>
               <div style={{
                 display: 'grid',
@@ -304,6 +305,7 @@ const Room2 = () => {
               maxWidth: '280px'
             }}>
               <h4 style={{ color: '#ff6666', marginBottom: '0.5rem' }}>VIAL BETA</h4>
+              <p style={{ color: '#ffaaaa', fontSize: '0.8rem', marginBottom: '0.5rem', fontStyle: 'italic' }}>Reverse</p>
               <div style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', marginBottom: '0.5rem', filter: 'hue-rotate(60deg)' }}>🧪</div>
               <div style={{
                 display: 'grid',
@@ -369,6 +371,7 @@ const Room2 = () => {
               maxWidth: '280px'
             }}>
               <h4 style={{ color: '#66ff66', marginBottom: '0.5rem' }}>VIAL GAMMA</h4>
+              <p style={{ color: '#aaffaa', fontSize: '0.8rem', marginBottom: '0.5rem', fontStyle: 'italic' }}>ROT13</p>
               <div style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', marginBottom: '0.5rem', filter: 'hue-rotate(120deg)' }}>🧪</div>
               <div style={{
                 display: 'grid',
