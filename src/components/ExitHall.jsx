@@ -226,7 +226,7 @@ const ExitHall = () => {
                 textAlign: 'center',
                 fontStyle: 'italic'
               }}>
-                "The more you remember me, the less I exist. What am I?"
+                I vanish when you speak my name. What am I?
               </p>
             </div>
 
