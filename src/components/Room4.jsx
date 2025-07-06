@@ -64,10 +64,9 @@ const Room4 = () => {
     "Your confession begins to play.",
     "You can't stop it.",
     "You don't want to hear it — but you do.",
-    "They didn't ask to forget. I made that choice. I thought I was saving them. I thought—",
-    "Static. Then silence.",
-    "The lights flicker.",
-    "You stumble forward."
+    "I built this place for them to forget their traumas.",
+    "They didn't ask me for this. Nobody did. I made that choice!",
+    "I forced them into this. I thought I was saving them. I though - "
   ]
 
   useEffect(() => {
