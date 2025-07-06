@@ -502,7 +502,7 @@ const Room4 = () => {
                   animation: 'pulse 2s infinite',
                   textAlign: 'center'
                 }}>
-                  Transferring to Exit Hall...
+                  Moving to Exit Hall...
                 </div>
               )}
             </div>
