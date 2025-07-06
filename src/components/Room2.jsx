@@ -4,7 +4,7 @@ import { useGameState } from '../App'
 import CyberpunkTerminal from './CyberpunkTerminal'
 
 // DEVELOPER NOTES - VISUAL & SOUND (Chemical Containment):
-// - Cyan/Red color palette - cold chemical lab with danger warnings
+// - Cyan/Red color palette, sterile clinical environment
 // - Glass canisters lining walls, one dramatically shattered with glowing fluid trails
 // - Ambient sound: liquid drips, gas hissing, occasional glass tinkling
 // - QR vials should glow faintly with different colored chemical reactions
@@ -26,8 +26,8 @@ const Room2 = () => {
   const [statusModalType, setStatusModalType] = useState('') // 'success' or 'error'
   const [showTerminal, setShowTerminal] = useState(false)
 
-  // Chemical containment puzzle: 7R4UM4
-  const correctCode = '7R4UM4'
+  // Chemical containment puzzle: AAGGCC
+  const correctCode = 'AAGGCC'
 
   useEffect(() => {
     // Redirect to team name entry if no team name is set
@@ -186,16 +186,15 @@ const Room2 = () => {
             border: '2px solid rgba(255, 102, 102, 0.4)'
           }}>
             <p style={{ color: '#ff6666', fontWeight: 'bold' }}>🚨 LOCKED CABINET DISPLAY:</p>
-            <p style={{ color: '#ffcccc' }}>"IN CASE OF IDENTITY COLLAPSE – INJECT CODE: 7R4UM4"</p>
+            <p style={{ color: '#ffcccc' }}>"IN CASE OF IDENTITY COLLAPSE – INJECT CODE: AAGGCC"</p>
             <p style={{ fontStyle: 'italic', marginTop: '0.5rem', color: '#cccccc' }}>
-              You don't know what that means. But your heart races. Your hands tremble.
-              Your body remembers something your mind has forgotten.
+              🧬 "Each vial speaks a different language — one moves forward, one looks backward, and one hides in plain sight. Begin with the decoded first letters, and stability lies in repetition."
             </p>
           </div>
         </div>
         
         <h2 style={{ color: '#00cccc', marginBottom: '1.5rem' }}>
-          MOLECULAR RECONSTRUCTION
+          CIPHER DECODE
         </h2>
         <div style={{ 
           marginBottom: '2rem',
@@ -205,15 +204,15 @@ const Room2 = () => {
           width: '100%'
         }}>
           <p style={{ marginBottom: '2rem', fontSize: '1rem', textAlign: 'center', width: '100%' }}>
-            Three vials. QR-coded. Each contains part of a molecule, part of your past.
-            You align the chemical structures, symbols slowly spelling out: 7R4UM4
+            Three vials. Each contains an encrypted message, a fragment of your forgotten past.
+            You must decode each cipher to reveal the hidden words.
           </p>
           <p style={{ marginBottom: '2rem', textAlign: 'center', width: '100%' }}>
-            You find 3 QR-coded vials. A digital panel asks for molecular matching. 
-            By aligning molecular shapes and symbols, build the emergency access code.
+            Each vial uses a different encryption method. Decode the words, take the first letter of each, 
+            then repeat each letter twice to build the emergency access code.
           </p>
           
-          {/* QR-Coded Vials - Side by Side Layout */}
+          {/* Cipher Vials - Side by Side Layout */}
           <div className="vial-grid" style={{ 
             display: 'flex',
             justifyContent: 'center',
@@ -223,7 +222,7 @@ const Room2 = () => {
             maxWidth: '900px',
             marginBottom: '2rem'
           }}>
-            {/* Vial 1 */}
+            {/* Vial 1 - Caesar Cipher */}
             <div style={{ 
               background: 'rgba(0, 255, 255, 0.1)',
               borderRadius: '15px',
@@ -238,28 +237,24 @@ const Room2 = () => {
               minWidth: '250px',
               maxWidth: '280px'
             }}>
-              <div style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', marginBottom: '1rem' }}>🧪</div>
+              <div style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', marginBottom: '1rem' }}>�</div>
               <h4 style={{ color: '#00ffff', marginBottom: '0.5rem' }}>VIAL ALPHA</h4>
               <div style={{ 
-                background: 'rgba(255, 255, 255, 0.9)',
-                padding: 'clamp(0.3rem, 1vw, 0.5rem)',
+                background: 'rgba(0, 20, 20, 0.8)',
+                padding: 'clamp(0.5rem, 1vw, 0.8rem)',
                 borderRadius: '5px',
                 marginBottom: '0.5rem',
                 fontFamily: 'Courier New, monospace',
-                fontSize: 'clamp(0.5rem, 1.5vw, 0.7rem)',
-                color: '#000',
-                lineHeight: '1.2'
+                fontSize: 'clamp(0.8rem, 1.5vw, 1rem)',
+                color: '#00ffff',
+                lineHeight: '1.4',
+                border: '1px solid rgba(0, 255, 255, 0.3)'
               }}>
-                ████████<br/>
-                █    █ █<br/>
-                █ ██ █ █<br/>
-                █    █ █<br/>
-                ████████
+                <strong>Caesar +1:</strong> BQQMF
               </div>
-              <p style={{ fontSize: '1.2rem', color: '#00ffff', fontWeight: 'bold' }}>7</p>
             </div>
 
-            {/* Vial 2 */}
+            {/* Vial 2 - Reverse Cipher */}
             <div style={{ 
               background: 'rgba(255, 102, 102, 0.1)',
               borderRadius: '15px',
@@ -274,28 +269,24 @@ const Room2 = () => {
               minWidth: '250px',
               maxWidth: '280px'
             }}>
-              <div style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', marginBottom: '1rem' }}>🧪</div>
+              <div style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', marginBottom: '1rem' }}>�</div>
               <h4 style={{ color: '#ff6666', marginBottom: '0.5rem' }}>VIAL BETA</h4>
               <div style={{ 
-                background: 'rgba(255, 255, 255, 0.9)',
-                padding: 'clamp(0.3rem, 1vw, 0.5rem)',
+                background: 'rgba(20, 0, 0, 0.8)',
+                padding: 'clamp(0.5rem, 1vw, 0.8rem)',
                 borderRadius: '5px',
                 marginBottom: '0.5rem',
                 fontFamily: 'Courier New, monospace',
-                fontSize: 'clamp(0.5rem, 1.5vw, 0.7rem)',
-                color: '#000',
-                lineHeight: '1.2'
+                fontSize: 'clamp(0.8rem, 1.5vw, 1rem)',
+                color: '#ff6666',
+                lineHeight: '1.4',
+                border: '1px solid rgba(255, 102, 102, 0.3)'
               }}>
-                ████████<br/>
-                █ ██   █<br/>
-                █ █  █ █<br/>
-                █   ██ █<br/>
-                ████████
+                <strong>Reverse:</strong> ELGGO
               </div>
-              <p style={{ fontSize: '1.2rem', color: '#ff6666', fontWeight: 'bold' }}>R4UM4</p>
             </div>
 
-            {/* Vial 3 */}
+            {/* Vial 3 - ROT13 Cipher */}
             <div style={{ 
               background: 'rgba(102, 255, 102, 0.1)',
               borderRadius: '15px',
@@ -310,25 +301,21 @@ const Room2 = () => {
               minWidth: '250px',
               maxWidth: '280px'
             }}>
-              <div style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', marginBottom: '1rem' }}>🧪</div>
+              <div style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', marginBottom: '1rem' }}>�</div>
               <h4 style={{ color: '#66ff66', marginBottom: '0.5rem' }}>VIAL GAMMA</h4>
               <div style={{ 
-                background: 'rgba(255, 255, 255, 0.9)',
-                padding: 'clamp(0.3rem, 1vw, 0.5rem)',
+                background: 'rgba(0, 20, 0, 0.8)',
+                padding: 'clamp(0.5rem, 1vw, 0.8rem)',
                 borderRadius: '5px',
                 marginBottom: '0.5rem',
                 fontFamily: 'Courier New, monospace',
-                fontSize: 'clamp(0.5rem, 1.5vw, 0.7rem)',
-                color: '#000',
-                lineHeight: '1.2'
+                fontSize: 'clamp(0.8rem, 1.5vw, 1rem)',
+                color: '#66ff66',
+                lineHeight: '1.4',
+                border: '1px solid rgba(102, 255, 102, 0.3)'
               }}>
-                ████████<br/>
-                █  ██  █<br/>
-                █ █  █ █<br/>
-                █  ██  █<br/>
-                ████████
+                <strong>ROT13:</strong> PBQR
               </div>
-              <p style={{ fontSize: '1.2rem', color: '#66ff66', fontWeight: 'bold' }}>COMPLETE</p>
             </div>
           </div>
         </div>
@@ -340,7 +327,7 @@ const Room2 = () => {
           marginBottom: '3rem',
           width: '100%'
         }}>
-          <h3 style={{ color: '#00cccc', marginBottom: '1.5rem', textAlign: 'center' }}>MOLECULAR SEQUENCE INPUT</h3>
+          <h3 style={{ color: '#00cccc', marginBottom: '1.5rem', textAlign: 'center' }}>CIPHER SEQUENCE INPUT</h3>
           <div style={{ 
             background: 'rgba(0, 204, 204, 0.1)', 
             padding: '1.5rem', 
@@ -352,10 +339,7 @@ const Room2 = () => {
             marginBottom: '2rem'
           }}>
             <p style={{ marginBottom: '1rem', fontSize: '1rem' }}>
-              Combine the molecular sequences from all three vials to build the emergency access code.
-            </p>
-            <p style={{ fontSize: '0.9rem', color: '#ffcc88' }}>
-              Enter the complete 6-character sequence: 7R4UM4
+              Take the first letter of each decoded word from the three vials.
             </p>
           </div>
 
@@ -465,7 +449,7 @@ const Room2 = () => {
             marginTop: '1rem'
           }}
         >
-          VERIFY MOLECULAR SEQUENCE
+          VERIFY CIPHER SEQUENCE
         </button>
       )}
 
@@ -502,7 +486,7 @@ const Room2 = () => {
               textAlign: 'center',
               fontSize: '1.3rem'
             }}>
-              {statusModalType === 'success' ? '✅ MOLECULAR SEQUENCE VERIFIED' : '❌ CONTAINMENT BREACH'}
+              {statusModalType === 'success' ? '✅ CIPHER SEQUENCE VERIFIED' : '❌ CONTAINMENT BREACH'}
             </h3>
             
             <div style={{
@@ -541,7 +525,7 @@ const Room2 = () => {
                     <>
                       KEYPAD... ACTIVE<br />
                       ACCESS CODE... DENIED<br />
-                      MOLECULAR SEQUENCE... MISALIGNED<br />
+                      CIPHER SEQUENCE... MISALIGNED<br />
                       NEXT CHAMBER... LOCKED
                     </>
                   )}
@@ -556,10 +540,10 @@ const Room2 = () => {
       <CyberpunkTerminal
         isOpen={showTerminal}
         onComplete={handleTerminalComplete}
-        title="CHEMICAL SEQUENCE ANALYZED"
+        title="CIPHER SEQUENCE ANALYZED"
         commands={[
           "Activating retinal scanner...",
-          "Molecular structure verified...",
+          "Cipher patterns verified...",
           "Accessing archive level...",
         ]}
       />
