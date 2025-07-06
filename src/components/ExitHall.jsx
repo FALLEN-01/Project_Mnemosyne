@@ -22,7 +22,7 @@ const ExitHall = () => {
     "> \"If you're seeing this, you're stronger than I was.\nIf you're here… it means something inside you refused to stay asleep.\""
   ]
 
-  const correctAnswer = "Silence"
+  const correctAnswer = "Silence" // Answer to the riddle
 
   useEffect(() => {
     // Redirect to team name entry if no team name is set
@@ -48,7 +48,7 @@ const ExitHall = () => {
   }, [gameState.teamName, navigate])
 
   const handleRiddleSubmit = () => {
-    if (riddleAnswer.toLowerCase().trim() === correctAnswer) {
+    if (riddleAnswer.toLowerCase().trim() === correctAnswer.toLowerCase()) {
       // Skip decision and go directly to ending
       updateGameState({ 
         finalChoice: 'remember', // Default choice
