@@ -118,7 +118,7 @@ const Room4 = () => {
           setShowHologram(true)
           startConfessionSequence()
         }, neuralNodes.length * 500 + 1000)
-      }, 3000)
+      }, 6000)
     } else {
       // Error - show modal
       setStatusModalType('error')
@@ -158,7 +158,7 @@ const Room4 = () => {
           setTimeout(() => {
             navigate('/exit-hall')
           }, 5000)
-        }, 2000) // Wait 2 seconds after confession ends before starting memory transition
+        }, 3000) // Wait 3 seconds after confession ends before starting memory transition
       }
     }, 3000)
   }

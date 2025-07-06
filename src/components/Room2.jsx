@@ -77,7 +77,7 @@ const Room2 = () => {
     
     setTimeout(() => {
       navigate('/room3')
-    }, 13000)
+    }, 10000)
   }
 
   const handleSubmit = () => {

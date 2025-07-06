@@ -83,7 +83,7 @@ const Room1 = () => {
     setShowMemory(true)
     setTimeout(() => {
       navigate('/room2')
-    }, 13000)
+    }, 10000)
   }
 
   if (showMemory) {
