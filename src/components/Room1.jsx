@@ -240,9 +240,6 @@ const Room1 = () => {
             <p style={{ fontSize: '0.8rem', color: '#cccccc', marginTop: '1rem', fontStyle: 'italic' }}>
               You don't remember walking it. But your feet do.
             </p>
-            <p style={{ fontSize: '0.8rem', color: '#ff4444', marginTop: '1rem' }}>
-              Progress: {currentStep}/9 steps completed
-            </p>
           </div>
 
           {/* Movement Path Grid - Floor Blocks */}
