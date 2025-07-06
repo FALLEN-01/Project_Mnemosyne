@@ -228,8 +228,50 @@ const Room2 = () => {
               minWidth: '250px',
               maxWidth: '280px'
             }}>
-              <div style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', marginBottom: '1rem' }}>🧪</div>
               <h4 style={{ color: '#00ffff', marginBottom: '0.5rem' }}>VIAL ALPHA</h4>
+              <div style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', marginBottom: '0.5rem' }}>🧪</div>
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(8, 1fr)',
+                gap: '1px',
+                width: '62px',
+                height: '62px',
+                margin: '0.5rem auto',
+                background: 'rgba(0, 255, 255, 0.2)',
+                border: '1px solid rgba(0, 255, 255, 0.5)',
+                borderRadius: '3px',
+                position: 'relative'
+              }}>
+                {/* QR-like pattern for Caesar cipher */}
+                {[1,1,1,0,1,1,1,0,1,0,0,1,0,0,1,0,1,0,1,1,0,1,0,1,0,1,0,1,0,1,0,1,1,0,1,1,0,1,0,1,0,0,1,0,0,1,0,0,1,1,1,0,1,1,1,0,0,0,0,0,0,0,0,0].map((cell, i) => (
+                  <div key={i} style={{
+                    background: cell ? '#00ffff' : 'transparent',
+                    width: '100%',
+                    height: '100%'
+                  }} />
+                ))}
+                {/* Cipher text overlay - expanded to fill */}
+                <div style={{
+                  position: 'absolute',
+                  top: '0',
+                  left: '0',
+                  right: '0',
+                  bottom: '0',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: '#ffffff',
+                  fontSize: '15px',
+                  fontWeight: 'bold',
+                  fontFamily: 'Courier New, monospace',
+                  background: 'rgba(0, 0, 0, 0.8)',
+                  borderRadius: '3px',
+                  textShadow: '1px 1px 2px rgba(0,0,0,0.8)',
+                  backdropFilter: 'blur(1px)'
+                }}>
+                  BQQMF
+                </div>
+              </div>
               <div style={{ 
                 background: 'rgba(0, 20, 20, 0.8)',
                 padding: 'clamp(0.5rem, 1vw, 0.8rem)',
@@ -260,8 +302,50 @@ const Room2 = () => {
               minWidth: '250px',
               maxWidth: '280px'
             }}>
-              <div style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', marginBottom: '1rem' }}>⚗️</div>
               <h4 style={{ color: '#ff6666', marginBottom: '0.5rem' }}>VIAL BETA</h4>
+              <div style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', marginBottom: '0.5rem', filter: 'hue-rotate(60deg)' }}>🧪</div>
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(8, 1fr)',
+                gap: '1px',
+                width: '62px',
+                height: '62px',
+                margin: '0.5rem auto',
+                background: 'rgba(255, 102, 102, 0.2)',
+                border: '1px solid rgba(255, 102, 102, 0.5)',
+                borderRadius: '3px',
+                position: 'relative'
+              }}>
+                {/* QR-like pattern for Reverse cipher */}
+                {[1,1,1,0,1,1,1,0,1,0,1,0,1,0,1,0,1,0,0,1,1,0,0,1,0,1,1,0,0,1,1,0,1,0,0,1,1,0,0,1,0,1,0,1,0,1,0,1,1,1,1,0,1,1,1,0,0,0,0,0,0,0,0,0].map((cell, i) => (
+                  <div key={i} style={{
+                    background: cell ? '#ff6666' : 'transparent',
+                    width: '100%',
+                    height: '100%'
+                  }} />
+                ))}
+                {/* Cipher text overlay - expanded to fill */}
+                <div style={{
+                  position: 'absolute',
+                  top: '0',
+                  left: '0',
+                  right: '0',
+                  bottom: '0',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: '#ffffff',
+                  fontSize: '11px',
+                  fontWeight: 'bold',
+                  fontFamily: 'Courier New, monospace',
+                  background: 'rgba(0, 0, 0, 0.8)',
+                  borderRadius: '3px',
+                  textShadow: '1px 1px 2px rgba(0,0,0,0.8)',
+                  backdropFilter: 'blur(1px)'
+                }}>
+                  ELGGO
+                </div>
+              </div>
               <div style={{ 
                 background: 'rgba(20, 0, 0, 0.8)',
                 padding: 'clamp(0.5rem, 1vw, 0.8rem)',
@@ -292,8 +376,50 @@ const Room2 = () => {
               minWidth: '250px',
               maxWidth: '280px'
             }}>
-              <div style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', marginBottom: '1rem' }}>🔬</div>
               <h4 style={{ color: '#66ff66', marginBottom: '0.5rem' }}>VIAL GAMMA</h4>
+              <div style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', marginBottom: '0.5rem', filter: 'hue-rotate(120deg)' }}>🧪</div>
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(8, 1fr)',
+                gap: '1px',
+                width: '62px',
+                height: '62px',
+                margin: '0.5rem auto',
+                background: 'rgba(102, 255, 102, 0.2)',
+                border: '1px solid rgba(102, 255, 102, 0.5)',
+                borderRadius: '3px',
+                position: 'relative'
+              }}>
+                {/* QR-like pattern for ROT13 cipher */}
+                {[1,1,1,0,1,1,1,0,1,1,0,0,0,1,1,0,1,0,1,0,1,0,1,0,0,0,1,1,1,0,0,0,1,0,1,0,1,0,1,0,0,1,1,0,0,1,1,0,1,1,1,0,1,1,1,0,0,0,0,0,0,0,0,0].map((cell, i) => (
+                  <div key={i} style={{
+                    background: cell ? '#66ff66' : 'transparent',
+                    width: '100%',
+                    height: '100%'
+                  }} />
+                ))}
+                {/* Cipher text overlay - expanded to fill */}
+                <div style={{
+                  position: 'absolute',
+                  top: '0',
+                  left: '0',
+                  right: '0',
+                  bottom: '0',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: '#ffffff',
+                  fontSize: '11px',
+                  fontWeight: 'bold',
+                  fontFamily: 'Courier New, monospace',
+                  background: 'rgba(0, 0, 0, 0.8)',
+                  borderRadius: '3px',
+                  textShadow: '1px 1px 2px rgba(0,0,0,0.8)',
+                  backdropFilter: 'blur(1px)'
+                }}>
+                  PBQR
+                </div>
+              </div>
               <div style={{ 
                 background: 'rgba(0, 20, 0, 0.8)',
                 padding: 'clamp(0.5rem, 1vw, 0.8rem)',
