@@ -261,7 +261,7 @@ const Room2 = () => {
                   alignItems: 'center',
                   justifyContent: 'center',
                   color: '#ffffff',
-                  fontSize: '15px',
+                  fontSize: '16px',
                   fontWeight: 'bold',
                   fontFamily: 'Courier New, monospace',
                   background: 'rgba(0, 0, 0, 0.8)',
@@ -271,19 +271,6 @@ const Room2 = () => {
                 }}>
                   BQQMF
                 </div>
-              </div>
-              <div style={{ 
-                background: 'rgba(0, 20, 20, 0.8)',
-                padding: 'clamp(0.5rem, 1vw, 0.8rem)',
-                borderRadius: '5px',
-                marginBottom: '0.5rem',
-                fontFamily: 'Courier New, monospace',
-                fontSize: 'clamp(0.8rem, 1.5vw, 1rem)',
-                color: '#00ffff',
-                lineHeight: '1.4',
-                border: '1px solid rgba(0, 255, 255, 0.3)'
-              }}>
-              BQQMF
               </div>
             </div>
 
@@ -335,7 +322,7 @@ const Room2 = () => {
                   alignItems: 'center',
                   justifyContent: 'center',
                   color: '#ffffff',
-                  fontSize: '11px',
+                  fontSize: '16px',
                   fontWeight: 'bold',
                   fontFamily: 'Courier New, monospace',
                   background: 'rgba(0, 0, 0, 0.8)',
@@ -345,19 +332,6 @@ const Room2 = () => {
                 }}>
                   ELGGO
                 </div>
-              </div>
-              <div style={{ 
-                background: 'rgba(20, 0, 0, 0.8)',
-                padding: 'clamp(0.5rem, 1vw, 0.8rem)',
-                borderRadius: '5px',
-                marginBottom: '0.5rem',
-                fontFamily: 'Courier New, monospace',
-                fontSize: 'clamp(0.8rem, 1.5vw, 1rem)',
-                color: '#ff6666',
-                lineHeight: '1.4',
-                border: '1px solid rgba(255, 102, 102, 0.3)'
-              }}>
-                ELGGO
               </div>
             </div>
 
@@ -409,7 +383,7 @@ const Room2 = () => {
                   alignItems: 'center',
                   justifyContent: 'center',
                   color: '#ffffff',
-                  fontSize: '11px',
+                  fontSize: '16px',
                   fontWeight: 'bold',
                   fontFamily: 'Courier New, monospace',
                   background: 'rgba(0, 0, 0, 0.8)',
@@ -419,19 +393,6 @@ const Room2 = () => {
                 }}>
                   PBQR
                 </div>
-              </div>
-              <div style={{ 
-                background: 'rgba(0, 20, 0, 0.8)',
-                padding: 'clamp(0.5rem, 1vw, 0.8rem)',
-                borderRadius: '5px',
-                marginBottom: '0.5rem',
-                fontFamily: 'Courier New, monospace',
-                fontSize: 'clamp(0.8rem, 1.5vw, 1rem)',
-                color: '#66ff66',
-                lineHeight: '1.4',
-                border: '1px solid rgba(102, 255, 102, 0.3)'
-              }}>
-               PBQR
               </div>
             </div>
           </div>
