@@ -2,8 +2,8 @@
 // Usage: Include this file via <script> in index.html or call functions from browser console
 // No import into main React app required
 
-// Set your Google Apps Script Web App URL here:
-const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbzMaXVIngKK2F7MFpkdwNb5M2yxvX_sNoB1_oQZtwKL9pdYcYpE_TN-PHyPEaqCkGLoww/exec';
+// Get Google Apps Script Web App URL from environment or fallback
+const GOOGLE_SHEETS_URL = window.VITE_GOOGLE_SHEETS_STANDALONE_URL || 'https://script.google.com/macros/s/AKfycbzMaXVIngKK2F7MFpkdwNb5M2yxvX_sNoB1_oQZtwKL9pdYcYpE_TN-PHyPEaqCkGLoww/exec';
 
 /**
  * Save team progress to Google Sheets

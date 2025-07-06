@@ -5,7 +5,7 @@
  * 1. Create a new Google Sheet with columns: Team Name, Current Room, Rooms Completed, Start Time, Last Updated, Full State
  * 2. Open script.google.com and create a new project
  * 3. Paste this code and save
- * 4. REPLACE THE SPREADSHEET_ID below with your actual Google Sheet ID
+ * 4. REPLACE THE SPREADSHEET_ID below with the value from your .env file (VITE_GOOGLE_SPREADSHEET_ID)
  * 5. Deploy as web app with execute permissions for "Anyone"
  * 6. Copy the web app URL to your .env file
  * 
@@ -13,10 +13,10 @@
  * Team Name, Entry Time, Room 1 Entry Time, Room 2 Entry Time, Room 3 Entry Time, Room 4 Entry Time, Exit Hall Entry Time, Passwords 
  */
 
-// REPLACE THIS WITH YOUR ACTUAL GOOGLE SHEET ID
+// REPLACE THIS WITH THE VALUE FROM YOUR .env FILE (VITE_GOOGLE_SPREADSHEET_ID)
 // You can find this in the URL of your Google Sheet: https://docs.google.com/spreadsheets/d/SHEET_ID_HERE/edit
-const SPREADSHEET_ID = '1rXXQJR1bhIASh5pQ4nnCCY52GPzgCzunOHW_Vx-JQA0'; // Updated with your actual ID
-const SHEET_NAME = 'Sheet1'; // Change if your sheet has a different name
+const SPREADSHEET_ID = '1rXXQJR1bhIASh5pQ4nnCCY52GPzgCzunOHW_Vx-JQA0'; // From .env: VITE_GOOGLE_SPREADSHEET_ID
+const SHEET_NAME = 'Sheet1'; // From .env: VITE_GOOGLE_SHEET_NAME
 
 function getSheet() {
   try {
