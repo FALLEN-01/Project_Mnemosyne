@@ -16,9 +16,19 @@ const Room2 = () => {
   const [showStatusModal, setShowStatusModal] = useState(false)
   const [statusModalType, setStatusModalType] = useState('') // 'success' or 'error'
   const [showTerminal, setShowTerminal] = useState(false)
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768)
 
   // Chemical containment puzzle: AAGGCC
   const correctCode = 'AAGGCC'
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768)
+    }
+    
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
   useEffect(() => {
     // Redirect to team name entry if no team name is set
@@ -232,10 +242,11 @@ const Room2 = () => {
               <div style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', marginBottom: '0.5rem' }}>🧪</div>
               <div style={{
                 display: 'grid',
-                gridTemplateColumns: 'repeat(8, 1fr)',
+                gridTemplateColumns: isMobile ? 'repeat(12, 1fr)' : 'repeat(8, 1fr)',
+                gridTemplateRows: isMobile ? 'repeat(4, 1fr)' : 'repeat(8, 1fr)',
                 gap: '1px',
-                width: '62px',
-                height: '62px',
+                width: isMobile ? '140px' : '62px',
+                height: isMobile ? '35px' : '62px',
                 margin: '0.5rem auto',
                 background: 'rgba(0, 255, 255, 0.2)',
                 border: '1px solid rgba(0, 255, 255, 0.5)',
@@ -243,7 +254,10 @@ const Room2 = () => {
                 position: 'relative'
               }}>
                 {/* QR-like pattern for Caesar cipher */}
-                {[1,1,1,0,1,1,1,0,1,0,0,1,0,0,1,0,1,0,1,1,0,1,0,1,0,1,0,1,0,1,0,1,1,0,1,1,0,1,0,1,0,0,1,0,0,1,0,0,1,1,1,0,1,1,1,0,0,0,0,0,0,0,0,0].map((cell, i) => (
+                {(isMobile ? 
+                  [1,1,1,0,1,1,1,0,1,0,1,0,1,0,0,1,0,0,1,0,1,0,1,1,0,1,0,1,0,1,0,1,1,0,1,1,0,1,0,1,0,0,1,0,0,1,0,0] :
+                  [1,1,1,0,1,1,1,0,1,0,0,1,0,0,1,0,1,0,1,1,0,1,0,1,0,1,0,1,0,1,0,1,1,0,1,1,0,1,0,1,0,0,1,0,0,1,0,0,1,1,1,0,1,1,1,0,0,0,0,0,0,0,0,0]
+                ).map((cell, i) => (
                   <div key={i} style={{
                     background: cell ? '#00ffff' : 'transparent',
                     width: '100%',
@@ -293,10 +307,11 @@ const Room2 = () => {
               <div style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', marginBottom: '0.5rem', filter: 'hue-rotate(60deg)' }}>🧪</div>
               <div style={{
                 display: 'grid',
-                gridTemplateColumns: 'repeat(8, 1fr)',
+                gridTemplateColumns: isMobile ? 'repeat(12, 1fr)' : 'repeat(8, 1fr)',
+                gridTemplateRows: isMobile ? 'repeat(4, 1fr)' : 'repeat(8, 1fr)',
                 gap: '1px',
-                width: '62px',
-                height: '62px',
+                width: isMobile ? '140px' : '62px',
+                height: isMobile ? '35px' : '62px',
                 margin: '0.5rem auto',
                 background: 'rgba(255, 102, 102, 0.2)',
                 border: '1px solid rgba(255, 102, 102, 0.5)',
@@ -304,7 +319,10 @@ const Room2 = () => {
                 position: 'relative'
               }}>
                 {/* QR-like pattern for Reverse cipher */}
-                {[1,1,1,0,1,1,1,0,1,0,1,0,1,0,1,0,1,0,0,1,1,0,0,1,0,1,1,0,0,1,1,0,1,0,0,1,1,0,0,1,0,1,0,1,0,1,0,1,1,1,1,0,1,1,1,0,0,0,0,0,0,0,0,0].map((cell, i) => (
+                {(isMobile ? 
+                  [1,1,1,0,1,1,1,0,1,0,1,0,1,0,1,0,1,0,0,1,1,0,0,1,0,1,1,0,0,1,1,0,1,0,0,1,1,0,0,1,0,1,0,1,0,1,0,1] :
+                  [1,1,1,0,1,1,1,0,1,0,1,0,1,0,1,0,1,0,0,1,1,0,0,1,0,1,1,0,0,1,1,0,1,0,0,1,1,0,0,1,0,1,0,1,0,1,0,1,1,1,1,0,1,1,1,0,0,0,0,0,0,0,0,0]
+                ).map((cell, i) => (
                   <div key={i} style={{
                     background: cell ? '#ff6666' : 'transparent',
                     width: '100%',
@@ -354,10 +372,11 @@ const Room2 = () => {
               <div style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', marginBottom: '0.5rem', filter: 'hue-rotate(120deg)' }}>🧪</div>
               <div style={{
                 display: 'grid',
-                gridTemplateColumns: 'repeat(8, 1fr)',
+                gridTemplateColumns: isMobile ? 'repeat(12, 1fr)' : 'repeat(8, 1fr)',
+                gridTemplateRows: isMobile ? 'repeat(4, 1fr)' : 'repeat(8, 1fr)',
                 gap: '1px',
-                width: '62px',
-                height: '62px',
+                width: isMobile ? '140px' : '62px',
+                height: isMobile ? '35px' : '62px',
                 margin: '0.5rem auto',
                 background: 'rgba(102, 255, 102, 0.2)',
                 border: '1px solid rgba(102, 255, 102, 0.5)',
@@ -365,7 +384,10 @@ const Room2 = () => {
                 position: 'relative'
               }}>
                 {/* QR-like pattern for ROT13 cipher */}
-                {[1,1,1,0,1,1,1,0,1,1,0,0,0,1,1,0,1,0,1,0,1,0,1,0,0,0,1,1,1,0,0,0,1,0,1,0,1,0,1,0,0,1,1,0,0,1,1,0,1,1,1,0,1,1,1,0,0,0,0,0,0,0,0,0].map((cell, i) => (
+                {(isMobile ? 
+                  [1,1,1,0,1,1,1,0,1,1,0,0,0,1,1,0,1,0,1,0,1,0,1,0,0,0,1,1,1,0,0,0,1,0,1,0,1,0,1,0,0,1,1,0,0,1,1,0] :
+                  [1,1,1,0,1,1,1,0,1,1,0,0,0,1,1,0,1,0,1,0,1,0,1,0,0,0,1,1,1,0,0,0,1,0,1,0,1,0,1,0,0,1,1,0,0,1,1,0,1,1,1,0,1,1,1,0,0,0,0,0,0,0,0,0]
+                ).map((cell, i) => (
                   <div key={i} style={{
                     background: cell ? '#66ff66' : 'transparent',
                     width: '100%',
