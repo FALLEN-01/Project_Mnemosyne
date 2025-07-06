@@ -209,7 +209,15 @@ const Room1 = () => {
                 MOVEMENT SEQUENCE DETECTED:
               </p>
               <p style={{ color: '#ffff88', fontStyle: 'italic', lineHeight: '1.6' }}>
-                At the stroke of 3:47, a shadow stirs at the very heart of the grid — the center square. Drawn by some silent beckoning, it drifts to the upper-left, brushing against the edge of forgotten memories. From there, it slides to the peak's center, like a whisper carried on wind. A sudden twitch, and it darts to the middle-right, as if avoiding something unseen. Its descent begins — spiraling down to the bottom-right, then sweeping to the bottom-center like a pendulum in motion. But it does not rest — it veers left to the bottom corner, a ghost retracing a lost step. Without warning, it leaps to the top-right, the opposite pole. And finally, with purpose fulfilled, it sinks to rest at the middle-left — the final square in a cryptic waltz of nine.
+                At the stroke of 3:47, the silence cracks — from the grid's heart, something stirs.
+                Drawn upward, it brushes past thought and into light, halting at the second square.
+                Without pause, it shifts right — the edge of clarity, sharp and momentary.
+                A pulse — and it spills downward, hugging the side like a falling spark.
+                At the base, it pauses center, as if remembering weight.
+                It drifts left, hugging shadows, pulling against time.
+                Another step, and it folds further — cornered by memory, fading west.
+                In final motion, it rises — not to the center, but the origin's eye.
+                And there, it waits — where beginning becomes end.
               </p>
             </div>
           </div>
