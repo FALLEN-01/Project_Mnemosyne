@@ -21,39 +21,27 @@ const Room3 = () => {
   // Six memory video segments (A-F) that need to be sequenced correctly
   const memorySegments = {
     A: { 
-      content: 'Subject exhibits... abnormal neural activity...',
-      audioTone: 'high-pitch',
-      glitchLevel: 'medium'
+      content: 'Clock visible: 03:42\nLighting: Dim emergency lights\nBackground: Alarms flashing'
     },
     B: { 
-      content: 'Identity fragmentation accelerating... memory gaps forming...',
-      audioTone: 'low-rumble',
-      glitchLevel: 'high'
+      content: 'Clock visible: 03:15\nLighting: Normal fluorescent\nBackground: Quiet office'
     },
     C: { 
-      content: 'Dr. Eon Vale, personal log... what have I done...',
-      audioTone: 'clear',
-      glitchLevel: 'low'
+      content: 'Clock visible: 03:28\nLighting: Flickering\nBackground: Papers scattered'
     },
     D: { 
-      content: 'The board demands results... ethics be damned...',
-      audioTone: 'distorted',
-      glitchLevel: 'extreme'
+      content: 'Clock visible: 03:51\nLighting: Red emergency\nBackground: Smoke visible'
     },
     E: { 
-      content: 'If you find this... I failed... I am you...',
-      audioTone: 'whisper',
-      glitchLevel: 'low'
+      content: 'Clock visible: 03:37\nLighting: Strobe effect\nBackground: Warning signs'
     },
     F: { 
-      content: 'Memory reconstruction protocol... initiating wipe...',
-      audioTone: 'static',
-      glitchLevel: 'high'
+      content: 'Clock visible: 03:59\nLighting: Almost dark\nBackground: Total chaos'
     }
   }
 
-  // Correct sequence based on story chronology: C-A-D-F-B-E
-  const correctSequence = ['C', 'A', 'D', 'F', 'B', 'E']
+  // Correct sequence based on chronological order of clock times: B(03:15)-C(03:28)-E(03:37)-A(03:42)-D(03:51)-F(03:59)
+  const correctSequence = ['B', 'C', 'E', 'A', 'D', 'F']
 
   useEffect(() => {
     // Redirect to team name entry if no team name is set
@@ -202,8 +190,8 @@ const Room3 = () => {
             color: '#ffcc66'
           }}>
             Memory segments labeled A–F, corrupted.
-            You piece together a coherent sequence using glitches and auditory tones.
-            Correct order plays the full memory: "If you're reading this... I failed." "I am you."
+            You piece together the chronological sequence using timestamps and visual details.
+            Correct order reveals the full memory: "If you're reading this... I failed." "I am you."
           </div>
         </div>
 
@@ -254,12 +242,38 @@ const Room3 = () => {
                 </div>
                 
                 <div style={{
-                  fontSize: '0.9rem',
+                  fontSize: '0.8rem',
                   color: '#ffcc99',
                   marginBottom: '0.5rem',
-                  fontStyle: 'italic'
+                  lineHeight: '1.3',
+                  fontFamily: 'Courier New, monospace'
                 }}>
-                  Audio: {segment.audioTone} | Glitch: {segment.glitchLevel}
+                  {segment.content.split('\n').map((line, lineIndex) => {
+                    if (line.startsWith('Clock visible:')) {
+                      const timeMatch = line.match(/(\d{2}:\d{2})/)
+                      if (timeMatch) {
+                        const time = timeMatch[1]
+                        const beforeTime = line.substring(0, line.indexOf(time))
+                        const afterTime = line.substring(line.indexOf(time) + time.length)
+                        return (
+                          <div key={lineIndex}>
+                            {beforeTime}
+                            <span style={{ 
+                              color: '#ff9900', 
+                              fontWeight: 'bold',
+                              backgroundColor: 'rgba(255, 153, 0, 0.2)',
+                              padding: '2px 4px',
+                              borderRadius: '3px'
+                            }}>
+                              {time}
+                            </span>
+                            {afterTime}
+                          </div>
+                        )
+                      }
+                    }
+                    return <div key={lineIndex}>{line}</div>
+                  })}
                 </div>
 
                 {playingSegment === id && (
