@@ -3,15 +3,6 @@ import { useNavigate } from 'react-router-dom'
 import { useGameState } from '../App'
 import CyberpunkTerminal from './CyberpunkTerminal'
 
-// DEVELOPER NOTES - VISUAL & SOUND (Chemical Containment):
-// - Cyan/Red color palette, sterile clinical environment
-// - Glass canisters lining walls, one dramatically shattered with glowing fluid trails
-// - Ambient sound: liquid drips, gas hissing, occasional glass tinkling
-// - QR vials should glow faintly with different colored chemical reactions
-// - Molecular matching interface: holographic/AR-style floating symbols
-// - Retinal scanner: blue scanning beam effect with iris recognition animation
-// - Locked cabinet should have warning lights and biohazard symbols
-// - Success: mechanical hiss of pressure release, cabinet opening sound
 
 const Room2 = () => {
   const navigate = useNavigate()
@@ -237,7 +228,7 @@ const Room2 = () => {
               minWidth: '250px',
               maxWidth: '280px'
             }}>
-              <div style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', marginBottom: '1rem' }}>�</div>
+              <div style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', marginBottom: '1rem' }}>🧪</div>
               <h4 style={{ color: '#00ffff', marginBottom: '0.5rem' }}>VIAL ALPHA</h4>
               <div style={{ 
                 background: 'rgba(0, 20, 20, 0.8)',
@@ -250,7 +241,7 @@ const Room2 = () => {
                 lineHeight: '1.4',
                 border: '1px solid rgba(0, 255, 255, 0.3)'
               }}>
-                <strong>Caesar +1:</strong> BQQMF
+              BQQMF
               </div>
             </div>
 
@@ -269,7 +260,7 @@ const Room2 = () => {
               minWidth: '250px',
               maxWidth: '280px'
             }}>
-              <div style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', marginBottom: '1rem' }}>�</div>
+              <div style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', marginBottom: '1rem' }}>⚗️</div>
               <h4 style={{ color: '#ff6666', marginBottom: '0.5rem' }}>VIAL BETA</h4>
               <div style={{ 
                 background: 'rgba(20, 0, 0, 0.8)',
@@ -282,7 +273,7 @@ const Room2 = () => {
                 lineHeight: '1.4',
                 border: '1px solid rgba(255, 102, 102, 0.3)'
               }}>
-                <strong>Reverse:</strong> ELGGO
+                ELGGO
               </div>
             </div>
 
@@ -301,7 +292,7 @@ const Room2 = () => {
               minWidth: '250px',
               maxWidth: '280px'
             }}>
-              <div style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', marginBottom: '1rem' }}>�</div>
+              <div style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', marginBottom: '1rem' }}>🔬</div>
               <h4 style={{ color: '#66ff66', marginBottom: '0.5rem' }}>VIAL GAMMA</h4>
               <div style={{ 
                 background: 'rgba(0, 20, 0, 0.8)',
@@ -314,7 +305,7 @@ const Room2 = () => {
                 lineHeight: '1.4',
                 border: '1px solid rgba(102, 255, 102, 0.3)'
               }}>
-                <strong>ROT13:</strong> PBQR
+               PBQR
               </div>
             </div>
           </div>
