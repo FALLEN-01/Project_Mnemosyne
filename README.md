@@ -85,7 +85,6 @@ Project_Mnemosyne/
 - **React 19.1.0** - UI framework
 - **React Router DOM** - Client-side routing
 - **Vite** - Build tool and development server
-- **ESLint** - Code linting
 - **Google Sheets API** - Progress tracking and data collection
 
 ## 📊 Data Integration
